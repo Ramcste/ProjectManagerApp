@@ -1,0 +1,166 @@
+﻿@model ProjectManagerApp.Models.DAL.Output.Project
+@{
+    ViewBag.Title = "Home Page";
+}
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/datetimepicker")
+
+
+<h1>Logs Entry</h1>
+<div class="row">
+    <div class="container body-content">
+
+        <div class="content">
+            <div class="col-md-2">
+                <div class="form-group">
+                    <input type="text" style="height: 35px" id="description" placeholder="What have you done?"class="form-control" />
+                    
+                </div>
+            </div>
+            <div class="col-md-2">
+               
+                @Html.DropDownListFor(model=>model.Id,  new SelectList(ViewBag.Projects,"Id","Name"),"Select Project",new { @class="form-control"})
+
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <div class="input-group date" id='datetimepicker1'>
+                        <input type='text' class="form-control" id="workstartingtime" />
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-time"></span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <div class="input-group date" id='datetimepicker2'>
+                        <input type='text' class="form-control" id="workendingtime" />
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-time"></span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-1">
+                <div class="form-group">
+                    <input type="text" id="duration" style="height: 35px; width: 70px" placeholder="00:00" class="form-control" />
+                </div>
+               
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <div class="input-group date" id='datetimepicker3'>
+                        <input type='text' class="form-control" />
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-1">
+                <input type="button" value="Save" class="btn btn-default" onclick="save();" />
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<div id="temptable">
+
+
+
+</div>
+
+<script type="text/javascript">
+        $(document).ready(function () {
+            $('#datetimepicker1').datetimepicker({
+              
+                format: 'h:mm a'
+             
+            });
+        });
+
+        $(document).ready(function () {
+            $('#datetimepicker2').datetimepicker({
+              
+                format:'h:mm a'
+               
+            });
+        });
+
+        $(document).ready(function () {
+            $('#datetimepicker3').datetimepicker({
+                format:'M/D'
+        });
+        });
+
+
+        function ConvertTimeformat(format,str)
+        {
+            // workstarting time
+            var time = $('#workstartingtime').val();
+            var hours = Number(time.match(/^(\d+)/)[1]);
+            var minutes = Number(time.match(/:(\d+)/)[1]);
+            var AMPM = time.match(/\s(.*)$/)[1];
+            if (AMPM == "pm" && hours < 12) hours = hours + 12;
+            if (AMPM == "am" && hours == 12) hours = hours - 12;
+            var sHours = hours;
+            var sMinutes = minutes;
+            if (hours < 10) sHours = "0" + sHours;
+            if (minutes < 10) sMinutes = "0" + sMinutes;
+            //alert(sHours + ":" + sMinutes);
+
+            //workending time
+            var time1 = $('#workendingtime').val();
+            var hours1 = Number(time1.match(/^(\d+)/)[1]);
+            var minutes1 = Number(time1.match(/:(\d+)/)[1]);
+            var AMPM1 = time1.match(/\s(.*)$/)[1];
+            if (AMPM1 == "pm" && hours1 < 12) hours1 = hours1 + 12;
+            if (AMPM1 == "am" && hours1 == 12) hours1 = hours1 - 12;
+            var sHours1 = hours1;
+            var sMinutes1 = minutes1;
+            if (hours1 < 10) sHours1 = "0" + sHours1;
+            if (minutes1 < 10) sMinutes1 = "0" + sMinutes1;
+
+            var diff1 = Math.abs(sHours1 - sHours);
+            var diff2= Math.abs(sMinutes1 - sMinutes);
+
+            $('#duration').val(diff1 + ":" + diff2);
+}
+        $(document).ready(function() {
+            $('#datetimepicker2').mouseleave( function () {
+               
+                ConvertTimeformat("24", $('#workstartingtime').val());
+                ConvertTimeformat("24", $('#workendingtime').val());
+               
+                
+            });
+        });
+
+
+        function save() {
+            var description = $('#description').val();
+            var project = $('#model.Id').val();
+            var duration = $('#duration').val();
+            var workstime = $('#workstartingtime').val();
+            var worketime = $('#workendingtime').val();
+
+
+            var html = '<tr>' +
+                '<td>'+description+'</td>' +
+                '<td>'+project+'</td>' +
+                '<td>'+duration+'</td>' +
+                '<td>'+workstime+'</td>' +
+                '<td>'+"-"+'</td>' +
+                '<td>'+worketime+'</td>' +
+
+                '</tr>'
+        }
+
+      
+</script>
+
