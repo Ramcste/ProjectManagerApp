@@ -74,7 +74,7 @@
                         </div>
 
                         <div class="col-md-1">
-                            <input type="button" id="savebutton" value="Add" class="btn btn-default" />
+                            <input type="button" id="addbutton" value="Add" class="btn btn-default" />
                         </div>
                     </div>
                 </div>
@@ -87,6 +87,15 @@
 <div id="temptable">
 </div>
 
+<div class="row">
+    <div class="col-md-10"></div>
+    <div class="col-md-1"></div>
+    <div class="col-md-1">
+        <div class="form-group">
+            <input  type="button" id="savebutton" value="Save" class="btn btn-default"/>
+        </div>
+    </div>
+</div>
 
 <script type="text/javascript">
     $(document).ready(function() {
@@ -136,10 +145,19 @@
         if (hours1 < 10) sHours1 = "0" + sHours1;
         if (minutes1 < 10) sMinutes1 = "0" + sMinutes1;
 
-        var diff1 = Math.abs(sHours1 - sHours);
-        var diff2 = Math.abs(sMinutes1 - sMinutes);
+        var diff1 = sHours1 - sHours;
+        var diff2 = sMinutes1 - sMinutes;
 
-        $('#duration').val(diff1 + ":" + diff2);
+        if (diff1 < 0||diff2< 0) {
+            diff1 = diff1- 1;
+            diff2 = diff2 + 60;
+            $('#duration').val(diff1 + ":" + diff2);
+        }
+        else {
+            $('#duration').val(diff1 + ":" + diff2);
+        }
+
+      
     }
 
     $(document).ready(function() {
@@ -156,7 +174,7 @@
     
 
     $(document).ready(function () {
-        $('#savebutton').click(function() {
+        $('#addbutton').click(function() {
                 var description = $('#description').val();
            //   var projectid = $('#dropdown').val();
                 var id = document.getElementById("dropdown");
@@ -180,11 +198,34 @@
                 '<div class="col-md-1">' + date + '</div>');
              html.push('</div>');            
              $('#temptable').append(html.join(''));
-               
+            reset();
+
         });
        
         });
     
+
+    function reset() {
+        document.getElementById("description").value = "";
+        document.getElementById("duration").value = "";
+        document.getElementById("date").value = "";
+        document.getElementById("dropdown").value = "";
+        document.getElementById("workstartingtime").value = "";
+        document.getElementById("workendingtime").value = "";
+    }
+
+    $(document).ready(function() {
+        $('#savebutton').click(function() {
+            //var divHeight = document.getElementById("temptable").style.lineHeight;
+            //alert(divHeight);
+
+            var divheight = $("#temptable").height();
+            var lineheight = $("#temptable").css('line-height');
+            console.log(Math.round(divheight / parseInt(lineheight)));
+
+        });
+    });
+  
 
 </script>
 
