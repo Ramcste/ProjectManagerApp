@@ -1,4 +1,5 @@
-﻿@model ProjectManagerApp.Models.DAL.Output.Project
+﻿@using Microsoft.AspNet.Identity
+@model ProjectManagerApp.Models.DAL.Output.Project
 @{
     ViewBag.Title = "Home Page";
 }
@@ -84,9 +85,37 @@
         </div>
     </div>
 
-<div id="temptable">
+<!--
+    
+-->
+<div id="logrowedit">
+    <div id="editorcontainer" style="color: darkgrey">
+
+        <input type="checkbox" class="logrowcheckbox"/>
+        <div class="dropdown" style="display: inline-block">
+            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                <span class="caret"></span>
+            </button>
+
+            <ul class="dropdown-menu">
+                <li><a id="bulkedit">Bulk Edit </a></li>
+                <li><a id="delete">Delete</a></li>
+            </ul>
+        </div>
+
+        <!--<input type="checkbox" id="logrowcheckbox"/> -->
+        @*<select id="editoption">
+          <option value="0" id="bulkedit">Bulk Edit</option>
+            <option value="1" id="delete">Delete</option>
+        </select>*@
+    </div>
 </div>
 
+
+
+<div id="temptable">
+    
+</div>
 <div class="row">
     <div class="col-md-10"></div>
     <div class="col-md-1"></div>
@@ -98,6 +127,12 @@
 </div>
 
 <script type="text/javascript">
+
+    @*var id=@HttpContext.Current.User.Identity.GetUserId();
+    alert(id);*@
+  
+    
+    $('#savebutton').hide();
     $(document).ready(function() {
         $('#datetimepicker1').datetimepicker({
             format: 'h:mm a'
@@ -127,8 +162,10 @@
         var AMPM = time.match(/\s(.*)$/)[1];
         if (AMPM == "pm" && hours < 12) hours = hours + 12;
         if (AMPM == "am" && hours == 12) hours = hours - 12;
+        // var sHours = hours;
         var sHours = hours;
         var sMinutes = minutes;
+        // var sMinutes = minutes;
         if (hours < 10) sHours = "0" + sHours;
         if (minutes < 10) sMinutes = "0" + sMinutes;
         //alert(sHours + ":" + sMinutes);
@@ -145,19 +182,31 @@
         if (hours1 < 10) sHours1 = "0" + sHours1;
         if (minutes1 < 10) sMinutes1 = "0" + sMinutes1;
 
-        var diff1 = sHours1 - sHours;
-        var diff2 = sMinutes1 - sMinutes;
+        if (sHours > sHours1) {
+            alert("wrong data input");
+        
+        } else {
 
-        if (diff1 < 0||diff2< 0) {
-            diff1 = diff1- 1;
-            diff2 = diff2 + 60;
-            $('#duration').val(diff1 + ":" + diff2);
-        }
-        else {
-            $('#duration').val(diff1 + ":" + diff2);
-        }
 
-      
+            var diff1 = sHours1 - sHours;
+            var diff2 = sMinutes1 - sMinutes;
+
+            if (diff1 < 0 || diff2 < 0) {
+                diff1 = diff1 - 1;
+                diff2 = diff2 + 60;
+                if (diff1 < 0)
+                {
+                    alert("work finshed time must be greater than work start time.");
+                }
+
+                else {
+                    $('#duration').val(diff1 + ":" + diff2);
+
+                }
+                //$('#duration').val(diff1 + ":" + diff2);
+            } 
+
+        }
     }
 
     $(document).ready(function() {
@@ -170,41 +219,61 @@
         });
     });
 
-    
-    
 
-    $(document).ready(function () {
+    var count = 0;
+
+    $(document).ready(function() {
         $('#addbutton').click(function() {
-                var description = $('#description').val();
-           //   var projectid = $('#dropdown').val();
-                var id = document.getElementById("dropdown");
-                var name = id.options[id.selectedIndex].text;
-                var duration = $('#duration').val();
-                var workstime = $('#workstartingtime').val();
-                var worketime = $('#workendingtime').val();
-                var date = $('#date').val();
+            var description = $('#description').val();
+            var projectid = $('#dropdown').val();
+            var id = document.getElementById("dropdown");
+            var name = id.options[id.selectedIndex].text;
+            var duration = $('#duration').val();
+            var workstime = $('#workstartingtime').val();
+            var worketime = $('#workendingtime').val();
+            var date = $('#date').val();
 
-            
+            if (description != "" && name != "" && duration != "" && workstime != "" && worketime != "" && date != "") {
 
                 var html = new Array();
-                html.push('<div class="row">');
-            html.push(
-                '<div class="col-md-2">' + description + '</div>' +
-                '<div class="col-md-2">' + name + '</div>' +
-                '<div class="col-md-2">' + duration + '</div>' +
-                '<div class="col-md-2">' + workstime + '</div>' +
-                '<div class="col-md-1">' + "-" + '</div>' +
-                '<div class="col-md-2">' + worketime + '</div>' +
-                '<div class="col-md-1">' + date + '</div>');
-             html.push('</div>');            
-             $('#temptable').append(html.join(''));
-            reset();
 
-        });
-       
-        });
-    
+                html.push('<div class="logrow row">');
+                html.push('<div class="col-md-2 roweditor" >' +
+                    '<span>' +
+                    '<input type="checkbox" class="rowcheckbox"/>' +
+                    '<select class="editoption" onchange="editor(this);">' +
+                    '<option value="0" id="bulkedit">Bulk edit</option>' +
+                    '<option value="1" id="delete">Delete</option>' +
+                    '</select>' +
+                    '</span>' +
+                    '</div>' +
+                    '<div class="col-md-2 description">' + description + '</div>' +
+                    '<div class="col-md-2 projectName">' + name + '<input type="hidden" class="projectId" value="' + projectid + '"/>' + '</div>' +
+                    '<div class="col-md-2 duration">' + duration + '</div>' +
+                    '<div class="col-md-1 workstime">' + workstime + '</div>' +
+                    '<div class="col-md-1">' + "-" + '</div>' +
+                    '<div class="col-md-1 worketime">' + worketime + '</div>' +
+                    '<div class="col-md-1 date">' + date + '</div>' +
+                    '<input type="hidden" class="developerId" value="' + @HttpContext.Current.User.Identity.GetUserId() + '"/>'
+                );
 
+                html.push('</div>');
+                $('#temptable').append(html.join(''));
+                count++;
+
+
+                $('#savebutton').show();
+
+                reset();
+            } else {
+                alert("input field value is missing");
+            }
+        });
+
+
+    });
+
+    //clearing the fields after adding
     function reset() {
         document.getElementById("description").value = "";
         document.getElementById("duration").value = "";
@@ -214,18 +283,103 @@
         document.getElementById("workendingtime").value = "";
     }
 
+    // for hiding editing option of logrow 
+
+    //saving logdata into databas
+
     $(document).ready(function() {
         $('#savebutton').click(function() {
-            //var divHeight = document.getElementById("temptable").style.lineHeight;
-            //alert(divHeight);
 
-            var divheight = $("#temptable").height();
-            var lineheight = $("#temptable").css('line-height');
-            console.log(Math.round(divheight / parseInt(lineheight)));
+            // var description = $('.logrow .projectid').html();
+
+            // alert(description);
+
+            //fetching data from div by iteration and converting them to xml and json
+            var html = new Array();
+            html.push('<logs>');
+            $.each($('#temptable .logrow'), function(index, rec) {
+                var description = $($(rec).children('.description')).html();
+                var projectid = $($(rec).children('.projectName').find('input[type=hidden].projectId')).val();
+                var duration = $($(rec).children('.duration')).html();
+                var workstime = $($(rec).children('.workstime')).html();
+                var worketime = $($(rec).children('.worketime')).html();
+                var date = $($(rec).children('.date')).html();
+                var developerid = $($(rec).children('.developerId')).val();
+                html.push('<LineItem ');
+                html.push('Description="' + description + '"');
+                html.push('ProjectId="' + projectid + '"');
+                html.push('Duration="' + duration + '"');
+                html.push('WorkStartTime="' + workstime + '"');
+                html.push('WorkEndTime="' + worketime + '"');
+                html.push('Date="' + date + '"');
+                html.push('DeveloperId="' + developerid + '"');
+                html.push('></LineItem>');
+                //console.log(projectid);
+            });
+            html.push('</logs>');
+            console.log(html.join(''));
+            var logXML = html.join(' ');
+            // var json = sys.Serialization.JavaScriptSerializer.serialize(logXML);
+            var json = '{"logXML":' + JSON.stringify(logXML) + '}';
+            console.log(json);
+
+            //to count the no of rows inside div
+            // var count = $('#temptable .logrow').length;
+
+            $.ajax({
+                type: 'POST',
+                url: '/API/Log/SaveReport',
+                data: json,
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                success: function(data) {
+                    alert("Data Saved Successfully");
+
+                }
+            });
 
         });
+
     });
-  
+
+    $(document).ready(function() {
+        $('.logrowcheckbox').click(function() {
+
+
+            //if ($(this).is(':checked')) {
+
+            //    alert("checked");
+            //} 
+        });
+    });
+
+
+    function editor(obj) {
+        //var selectedText = $(obj).find('option:selected').text();
+        //var selectedValue = $(obj).val();
+        //alert("Selected Text:" + selectedText + "Value: " + selectedValue);
+        var option = obj.value;
+        if (option == 1) {
+            alert("are you sure you want to delete it?");
+
+            $('.logrow').children().css("background-color", "red");
+          //  $('.logrow').children('div').eq(count).remove();
+
+
+            $('.logrow').children().remove();
+
+
+            alert(count);
+
+
+        } 
+    }
+
 
 </script>
 
+<style>
+ .highlight {
+    border: 1px solid red;
+}   
+</style>

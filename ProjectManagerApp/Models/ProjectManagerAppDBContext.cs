@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Web;
+using ProjectManagerApp.Models.DAL.Input;
 
 namespace ProjectManagerApp.Models
 {
@@ -17,5 +18,7 @@ namespace ProjectManagerApp.Models
         {
 
         }
+
+        //public DbSet<Report> Reports { get; set; } 
     }
 }

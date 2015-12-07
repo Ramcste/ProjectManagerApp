@@ -1,11 +1,11 @@
-E:\Workspace\ProjectManagerApp\ProjectManagerApp\bin\roslyn\Microsoft.CSharp.Core.targets
-E:\Workspace\ProjectManagerApp\ProjectManagerApp\bin\roslyn\System.Collections.Immutable.dll
 E:\Workspace\ProjectManagerApp\ProjectManagerApp\bin\roslyn\csc.exe
 E:\Workspace\ProjectManagerApp\ProjectManagerApp\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
 E:\Workspace\ProjectManagerApp\ProjectManagerApp\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
 E:\Workspace\ProjectManagerApp\ProjectManagerApp\bin\roslyn\Microsoft.CodeAnalysis.dll
 E:\Workspace\ProjectManagerApp\ProjectManagerApp\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+E:\Workspace\ProjectManagerApp\ProjectManagerApp\bin\roslyn\Microsoft.CSharp.Core.targets
 E:\Workspace\ProjectManagerApp\ProjectManagerApp\bin\roslyn\Microsoft.VisualBasic.Core.targets
+E:\Workspace\ProjectManagerApp\ProjectManagerApp\bin\roslyn\System.Collections.Immutable.dll
 E:\Workspace\ProjectManagerApp\ProjectManagerApp\bin\roslyn\System.Reflection.Metadata.dll
 E:\Workspace\ProjectManagerApp\ProjectManagerApp\bin\roslyn\vbc.exe
 E:\Workspace\ProjectManagerApp\ProjectManagerApp\bin\roslyn\VBCSCompiler.exe
@@ -33,7 +33,10 @@ E:\Workspace\ProjectManagerApp\ProjectManagerApp\bin\Microsoft.Owin.Security.Twi
 E:\Workspace\ProjectManagerApp\ProjectManagerApp\bin\Microsoft.Web.Infrastructure.dll
 E:\Workspace\ProjectManagerApp\ProjectManagerApp\bin\Newtonsoft.Json.dll
 E:\Workspace\ProjectManagerApp\ProjectManagerApp\bin\Owin.dll
+E:\Workspace\ProjectManagerApp\ProjectManagerApp\bin\System.Net.Http.Formatting.dll
 E:\Workspace\ProjectManagerApp\ProjectManagerApp\bin\System.Web.Helpers.dll
+E:\Workspace\ProjectManagerApp\ProjectManagerApp\bin\System.Web.Http.dll
+E:\Workspace\ProjectManagerApp\ProjectManagerApp\bin\System.Web.Http.WebHost.dll
 E:\Workspace\ProjectManagerApp\ProjectManagerApp\bin\System.Web.Mvc.dll
 E:\Workspace\ProjectManagerApp\ProjectManagerApp\bin\System.Web.Optimization.dll
 E:\Workspace\ProjectManagerApp\ProjectManagerApp\bin\System.Web.Razor.dll
@@ -42,6 +45,10 @@ E:\Workspace\ProjectManagerApp\ProjectManagerApp\bin\System.Web.WebPages.dll
 E:\Workspace\ProjectManagerApp\ProjectManagerApp\bin\System.Web.WebPages.Razor.dll
 E:\Workspace\ProjectManagerApp\ProjectManagerApp\bin\WebGrease.dll
 E:\Workspace\ProjectManagerApp\ProjectManagerApp\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+E:\Workspace\ProjectManagerApp\ProjectManagerApp\bin\Newtonsoft.Json.xml
+E:\Workspace\ProjectManagerApp\ProjectManagerApp\bin\System.Net.Http.Formatting.xml
+E:\Workspace\ProjectManagerApp\ProjectManagerApp\bin\System.Web.Http.xml
+E:\Workspace\ProjectManagerApp\ProjectManagerApp\bin\System.Web.Http.WebHost.xml
 E:\Workspace\ProjectManagerApp\ProjectManagerApp\bin\System.Web.Helpers.xml
 E:\Workspace\ProjectManagerApp\ProjectManagerApp\bin\System.Web.Mvc.xml
 E:\Workspace\ProjectManagerApp\ProjectManagerApp\bin\System.Web.Optimization.xml
@@ -50,7 +57,6 @@ E:\Workspace\ProjectManagerApp\ProjectManagerApp\bin\System.Web.WebPages.xml
 E:\Workspace\ProjectManagerApp\ProjectManagerApp\bin\System.Web.WebPages.Deployment.xml
 E:\Workspace\ProjectManagerApp\ProjectManagerApp\bin\System.Web.WebPages.Razor.xml
 E:\Workspace\ProjectManagerApp\ProjectManagerApp\bin\Antlr3.Runtime.pdb
-E:\Workspace\ProjectManagerApp\ProjectManagerApp\bin\Newtonsoft.Json.xml
 E:\Workspace\ProjectManagerApp\ProjectManagerApp\bin\EntityFramework.xml
 E:\Workspace\ProjectManagerApp\ProjectManagerApp\bin\EntityFramework.SqlServer.xml
 E:\Workspace\ProjectManagerApp\ProjectManagerApp\bin\Microsoft.AspNet.Identity.Core.xml
@@ -71,4 +77,3 @@ E:\Workspace\ProjectManagerApp\ProjectManagerApp\obj\Debug\ProjectManagerApp.Mig
 E:\Workspace\ProjectManagerApp\ProjectManagerApp\obj\Debug\ProjectManagerApp.csproj.GenerateResource.Cache
 E:\Workspace\ProjectManagerApp\ProjectManagerApp\obj\Debug\ProjectManagerApp.dll
 E:\Workspace\ProjectManagerApp\ProjectManagerApp\obj\Debug\ProjectManagerApp.pdb
-E:\Workspace\ProjectManagerApp\ProjectManagerApp\obj\Debug\ProjectManagerApp.csprojResolveAssemblyReference.cache
