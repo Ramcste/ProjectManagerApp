@@ -182,36 +182,37 @@
         if (hours1 < 10) sHours1 = "0" + sHours1;
         if (minutes1 < 10) sMinutes1 = "0" + sMinutes1;
 
-        if (sHours > sHours1) {
+        var diff1 = sHours1 - sHours;
+        var diff2 = sMinutes1 - sMinutes;
+
+        if (sHours>sHours1) {
             alert("wrong data input");
         
-        } else {
+        }
+       
+        else {
 
-
-            var diff1 = sHours1 - sHours;
-            var diff2 = sMinutes1 - sMinutes;
-
-            if (diff1 < 0 || diff2 < 0) {
+           
+            if (diff1 < 0||diff2<0) {
                 diff1 = diff1 - 1;
                 diff2 = diff2 + 60;
-                if (diff1 < 0)
-                {
-                    alert("work finshed time must be greater than work start time.");
-                }
 
-                else {
+                $('#duration').val(diff1 + ":" + diff2);
+
+            } else {
+              
                     $('#duration').val(diff1 + ":" + diff2);
-
                 }
-                //$('#duration').val(diff1 + ":" + diff2);
-            } 
+             
 
+                //alert("wrong");
+            }
+            
         }
-    }
+
 
     $(document).ready(function() {
         $('#datetimepicker2').mouseleave(function() {
-
             ConvertTimeformat("24", $('#workstartingtime').val());
             ConvertTimeformat("24", $('#workendingtime').val());
 
@@ -240,7 +241,7 @@
                 html.push('<div class="logrow row">');
                 html.push('<div class="col-md-2 roweditor" >' +
                     '<span>' +
-                    '<input type="checkbox" class="rowcheckbox"/>' +
+                    '<input type="checkbox" class="rowcheckbox" onclick="check(this);"/>' +
                     '<select class="editoption" onchange="editor(this);">' +
                     '<option value="0" id="bulkedit">Bulk edit</option>' +
                     '<option value="1" id="delete">Delete</option>' +
@@ -342,44 +343,35 @@
 
     });
 
-    $(document).ready(function() {
-        $('.logrowcheckbox').click(function() {
 
+    // for deleting specific columns selected
+  function editor(ob) {
+      var option = ob.value;
+      //alert(option);
 
-            //if ($(this).is(':checked')) {
+      if (option == 1) {
+          alert("Are you sure want to delete?");
+          $(ob).parent().parent().parent().remove();
+      }
+  }
+     
 
-            //    alert("checked");
-            //} 
-        });
-    });
+    // for highlighting specific checked column
+    function check(obj) {
+       // console.log("sasasasa",obj);
+       $(obj).parent().parent().parent().toggleClass("highlight");
+        }
 
-
-    function editor(obj) {
-        //var selectedText = $(obj).find('option:selected').text();
-        //var selectedValue = $(obj).val();
-        //alert("Selected Text:" + selectedText + "Value: " + selectedValue);
-        var option = obj.value;
-        if (option == 1) {
-            alert("are you sure you want to delete it?");
-
-            $('.logrow').children().css("background-color", "red");
-          //  $('.logrow').children('div').eq(count).remove();
-
-
-            $('.logrow').children().remove();
-
-
-            alert(count);
-
-
-        } 
-    }
+    
+    //$(".logrow").on('click', 'delete', function () {
+    //    $(this).parent().parent().remove();
+    //});
 
 
 </script>
 
 <style>
  .highlight {
-    border: 1px solid red;
+    background-color:red ;
 }   
 </style>
