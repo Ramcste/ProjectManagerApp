@@ -226,6 +226,7 @@
     </Compile>
     <Compile Include="Models\DAL\Input\Report.cs" />
     <Compile Include="Models\DAL\Input\XmlInput.cs" />
+    <Compile Include="Models\DAL\Output\Loghistory.cs" />
     <Compile Include="Models\DAL\Output\Project.cs" />
     <Compile Include="Models\DAL\ProjectDAL.cs" />
     <Compile Include="Models\DAL\StoredProContext.cs" />
@@ -427,7 +428,6 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Views\Home\index.html" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -463,6 +463,7 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Account\Info.cshtml" />
+    <Content Include="Views\Home\Logshistory.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

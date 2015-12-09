@@ -1,5 +1,6 @@
 ﻿@using Microsoft.AspNet.Identity
-@model ProjectManagerApp.Models.DAL.Output.Project
+@model ProjectManagerApp.Models.Project
+
 @{
     ViewBag.Title = "Home Page";
 }
@@ -24,7 +25,7 @@
                         <div class="col-md-5">
 
                             <div class="form-group">
-                                @Html.DropDownListFor(model => model.Id, new SelectList(ViewBag.Projects, "Id", "Name"), "Select Project", new { @class = "form-control", id = "dropdown" })
+                                @Html.DropDownListFor(model => model.Id, new SelectList(ViewBag.Projects, "id", "Name"), "Select Project", new { @class = "form-control", id = "dropdown" })
 
                             </div>
 
@@ -126,28 +127,34 @@
     </div>
 </div>
 
+<h2>Logs History</h2>
+<div id="loghistory">
+    <table></table>
+   
+
+</div>
 <script type="text/javascript">
 
-    @*var id=@HttpContext.Current.User.Identity.GetUserId();
+    @*var id=@HttpContext.Current.User.identity.GetUserid();
     alert(id);*@
-  
-    
+
+
     $('#savebutton').hide();
-    $(document).ready(function() {
+    $(document).ready(function () {
         $('#datetimepicker1').datetimepicker({
             format: 'h:mm a'
 
         });
     });
 
-    $(document).ready(function() {
+    $(document).ready(function () {
         $('#datetimepicker2').datetimepicker({
             format: 'h:mm a'
 
         });
     });
 
-    $(document).ready(function() {
+    $(document).ready(function () {
         $('#datetimepicker3').datetimepicker({
             format: 'M/D'
         });
@@ -185,34 +192,36 @@
         var diff1 = sHours1 - sHours;
         var diff2 = sMinutes1 - sMinutes;
 
-        if (sHours>sHours1) {
+        if (sHours > sHours1) {
             alert("wrong data input");
-        
+
         }
-       
+
         else {
 
-           
-            if (diff1 < 0||diff2<0) {
+
+            if (diff1 < 0) {
                 diff1 = diff1 - 1;
                 diff2 = diff2 + 60;
 
                 $('#duration').val(diff1 + ":" + diff2);
 
-            } else {
-              
-                    $('#duration').val(diff1 + ":" + diff2);
-                }
-             
-
-                //alert("wrong");
             }
-            
+
+            else {
+
+                $('#duration').val(diff1 + ":" + diff2);
+            }
+
+
+            //alert("wrong");
         }
 
+    }
 
-    $(document).ready(function() {
-        $('#datetimepicker2').mouseleave(function() {
+
+    $(document).ready(function () {
+        $('#datetimepicker2').mouseleave(function () {
             ConvertTimeformat("24", $('#workstartingtime').val());
             ConvertTimeformat("24", $('#workendingtime').val());
 
@@ -223,8 +232,8 @@
 
     var count = 0;
 
-    $(document).ready(function() {
-        $('#addbutton').click(function() {
+    $(document).ready(function () {
+        $('#addbutton').click(function () {
             var description = $('#description').val();
             var projectid = $('#dropdown').val();
             var id = document.getElementById("dropdown");
@@ -249,13 +258,13 @@
                     '</span>' +
                     '</div>' +
                     '<div class="col-md-2 description">' + description + '</div>' +
-                    '<div class="col-md-2 projectName">' + name + '<input type="hidden" class="projectId" value="' + projectid + '"/>' + '</div>' +
+                    '<div class="col-md-2 projectName">' + name + '<input type="hidden" class="projectid" value="' + projectid + '"/>' + '</div>' +
                     '<div class="col-md-2 duration">' + duration + '</div>' +
                     '<div class="col-md-1 workstime">' + workstime + '</div>' +
                     '<div class="col-md-1">' + "-" + '</div>' +
                     '<div class="col-md-1 worketime">' + worketime + '</div>' +
                     '<div class="col-md-1 date">' + date + '</div>' +
-                    '<input type="hidden" class="developerId" value="' + @HttpContext.Current.User.Identity.GetUserId() + '"/>'
+                    '<input type="hidden" class="developerid" value="' + @HttpContext.Current.User.Identity.GetUserId() + '"/>'
                 );
 
                 html.push('</div>');
@@ -284,12 +293,12 @@
         document.getElementById("workendingtime").value = "";
     }
 
-    // for hiding editing option of logrow 
+    // for hiding editing option of logrow
 
     //saving logdata into databas
 
-    $(document).ready(function() {
-        $('#savebutton').click(function() {
+    $(document).ready(function () {
+        $('#savebutton').click(function () {
 
             // var description = $('.logrow .projectid').html();
 
@@ -298,7 +307,7 @@
             //fetching data from div by iteration and converting them to xml and json
             var html = new Array();
             html.push('<logs>');
-            $.each($('#temptable .logrow'), function(index, rec) {
+            $.each($('#temptable .logrow'), function (index, rec) {
                 var description = $($(rec).children('.description')).html();
                 var projectid = $($(rec).children('.projectName').find('input[type=hidden].projectId')).val();
                 var duration = $($(rec).children('.duration')).html();
@@ -308,12 +317,12 @@
                 var developerid = $($(rec).children('.developerId')).val();
                 html.push('<LineItem ');
                 html.push('Description="' + description + '"');
-                html.push('ProjectId="' + projectid + '"');
+                html.push('Projectid="' + projectid + '"');
                 html.push('Duration="' + duration + '"');
                 html.push('WorkStartTime="' + workstime + '"');
                 html.push('WorkEndTime="' + worketime + '"');
                 html.push('Date="' + date + '"');
-                html.push('DeveloperId="' + developerid + '"');
+                html.push('Developerid="' + developerid + '"');
                 html.push('></LineItem>');
                 //console.log(projectid);
             });
@@ -333,9 +342,12 @@
                 data: json,
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
-                success: function(data) {
+                success: function (data) {
                     alert("Data Saved Successfully");
 
+                },
+                error:function() {
+                    alert("something went wrong while  saving. try again!!");
                 }
             });
 
@@ -345,27 +357,22 @@
 
 
     // for deleting specific columns selected
-  function editor(ob) {
-      var option = ob.value;
-      //alert(option);
+    function editor(ob) {
+        var option = ob.value;
+        //alert(option);
 
-      if (option == 1) {
-          alert("Are you sure want to delete?");
-          $(ob).parent().parent().parent().remove();
-      }
-  }
-     
+        if (option == 1) {
+            alert("Are you sure want to delete?");
+            $(ob).parent().parent().parent().remove();
+        }
+    }
+
 
     // for highlighting specific checked column
     function check(obj) {
-       // console.log("sasasasa",obj);
-       $(obj).parent().parent().parent().toggleClass("highlight");
-        }
-
-    
-    //$(".logrow").on('click', 'delete', function () {
-    //    $(this).parent().parent().remove();
-    //});
+        // console.log("sasasasa",obj);
+        $(obj).parent().parent().parent().toggleClass("highlight");
+    }
 
 
 </script>

@@ -22,7 +22,7 @@ namespace ProjectManagerApp.Models.DAL.Input
 
         [StoredProcAttributes.Name("ProjectId")]
         [StoredProcAttributes.Direction(System.Data.ParameterDirection.Input)]
-        [StoredProcAttributes.ParameterType(System.Data.SqlDbType.VarChar)]
+        [StoredProcAttributes.ParameterType(System.Data.SqlDbType.Int)]
         public int ProjectId  { get; set; }
 
 
@@ -51,7 +51,7 @@ namespace ProjectManagerApp.Models.DAL.Input
         [StoredProcAttributes.Name("DeveloperId")]
         [StoredProcAttributes.Direction(System.Data.ParameterDirection.Input)]
         [StoredProcAttributes.ParameterType(System.Data.SqlDbType.Int)]
-        public string DeveloperId { get; set; }
+        public int DeveloperId { get; set; }
 
 
     }

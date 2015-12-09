@@ -37,6 +37,23 @@ namespace ProjectManagerApp.Models.DAL
             return projects;
         }
 
+        public List<Report> GetLogsHistory(int id)
+        {
+          
+              Loghistory inputparams = new Loghistory()
+            {
+                DeveloperId = id
+            };
+
+
+            List<Report> report = db.LogsResultSheetProc.CallStoredProc(inputparams).ToList<Report>();
+
+               
+            
+ 
+
+            return report;
+        } 
        
     }
 }

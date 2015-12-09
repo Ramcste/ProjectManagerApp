@@ -19,6 +19,6 @@ namespace ProjectManagerApp.Models
 
         }
 
-        //public DbSet<Report> Reports { get; set; } 
+    
     }
 }

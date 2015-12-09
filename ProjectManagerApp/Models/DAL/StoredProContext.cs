@@ -21,6 +21,14 @@ namespace ProjectManagerApp.Models.DAL
 
         public StoredProc ProjectResultSheetProc { get; set; }
 
+
+        // Getting log history
+        [StoredProcAttributes.Name("[Logs.ResultSheet]")]
+ 
+        [StoredProcAttributes.ReturnTypes(typeof(Report))]
+
+        public StoredProc<Loghistory> LogsResultSheetProc { get; set; }
+
         public StoredProContext()
         {
             this.InitializeStoredProcs();
