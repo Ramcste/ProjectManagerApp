@@ -15,10 +15,10 @@ namespace ProjectManagerApp.Models
     using System.Data.Entity.Core.Objects;
     using System.Linq;
     
-    public partial class ProjectManagerAppEntities : DbContext
+    public partial class ProjectManagerAppEntities1 : DbContext
     {
-        public ProjectManagerAppEntities()
-            : base("name=ProjectManagerAppEntities")
+        public ProjectManagerAppEntities1()
+            : base("name=ProjectManagerAppEntities1")
         {
         }
     
@@ -35,9 +35,27 @@ namespace ProjectManagerApp.Models
         public virtual DbSet<Log> Logs { get; set; }
         public virtual DbSet<Project> Projects { get; set; }
     
+        public virtual ObjectResult<Logs_ResultSheet_Result> Logs_ResultSheet(Nullable<int> developerId)
+        {
+            var developerIdParameter = developerId.HasValue ?
+                new ObjectParameter("DeveloperId", developerId) :
+                new ObjectParameter("DeveloperId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Logs_ResultSheet_Result>("Logs_ResultSheet", developerIdParameter);
+        }
+    
         public virtual ObjectResult<Project_ResultSheet_Result> Project_ResultSheet()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Project_ResultSheet_Result>("Project_ResultSheet");
+        }
+    
+        public virtual int ReportSave_Complete(string logXML)
+        {
+            var logXMLParameter = logXML != null ?
+                new ObjectParameter("LogXML", logXML) :
+                new ObjectParameter("LogXML", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ReportSave_Complete", logXMLParameter);
         }
     }
 }

@@ -19,7 +19,7 @@ namespace ProjectManagerApp.Controllers
         private ProjectManagerAppDBContext db=new ProjectManagerAppDBContext();
         public ActionResult Index()
         {
-            ViewBag.Projects = new ProjectDAL().GetProjectsResultSheet();
+            ViewBag.Projects = new ProjectDal().GetProjectsResultSheet();
            
             var  model=  new Project();
 
@@ -28,7 +28,7 @@ namespace ProjectManagerApp.Controllers
 
         public ActionResult Logshistory()
         {
-            ViewBag.Projects = new ProjectDAL().GetProjectsResultSheet();
+            ViewBag.Projects = new ProjectDal().GetProjectsResultSheet();
 
             var model = new Project();
 

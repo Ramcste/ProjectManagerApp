@@ -10,16 +10,14 @@
 namespace ProjectManagerApp.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class Log
+    public partial class Logs_ResultSheet_Result
     {
-        public int Id { get; set; }
         public string Description { get; set; }
         public int ProjectId { get; set; }
+        public string Duration { get; set; }
         public string WorkStartTime { get; set; }
         public string WorkEndTime { get; set; }
-        public string Duration { get; set; }
         public string Date { get; set; }
         public Nullable<int> DeveloperId { get; set; }
     }

@@ -1,15 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using ProjectManagerApp.Models.DAL.Output;
-using CodeFirstStoredProcs;
-using Newtonsoft.Json.Linq;
 using ProjectManagerApp.Models.DAL.Input;
 
 namespace ProjectManagerApp.Models.DAL
 {
-    public class ProjectDAL
+    public class ProjectDal
     {
         private  StoredProContext db=new StoredProContext();
 
@@ -25,7 +21,7 @@ namespace ProjectManagerApp.Models.DAL
                 
                 db.SaveReportCompleteProc.CallStoredProc(inputParams);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 // ignored
             }
@@ -46,13 +42,22 @@ namespace ProjectManagerApp.Models.DAL
             };
 
 
-            List<Report> report = db.LogsResultSheetProc.CallStoredProc(inputparams).ToList<Report>();
+            var report = db.LogsResultSheetProc.CallStoredProc(inputparams).ToList<Report>();
 
-               
-            
- 
+           return report;
+        }
 
-            return report;
+        public List<Report> GetLogHistoryAcDate(string date)
+        {
+            LoghistoryAcDate inputparams = new LoghistoryAcDate()
+            {
+                Date = date
+            };
+
+            var reports = db.LogsResultSheetProcAcDate.CallStoredProc(inputparams).ToList<Report>();
+
+
+            return reports;
         } 
        
     }

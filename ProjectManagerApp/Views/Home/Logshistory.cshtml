@@ -1,12 +1,10 @@
 ﻿@using Microsoft.AspNet.Identity
 @model ProjectManagerApp.Models.Project
-
 @{
     ViewBag.Title = "Logshistory";
 }
 
 @Scripts.Render("~/bundles/jquery")
-@Scripts.Render("~/bundles/jqueryval")
 @Scripts.Render("~/bundles/datetimepicker")
 
 <h2>Logs History</h2>
@@ -24,8 +22,8 @@
     </div>
     <div class="col-md-2">
         <div class="form-group">
-            <div class="input-group date" id='datetimepicker'>
-                <input type='text' class="form-control" id="logdate" />
+            <div class="input-group date" id='datetimepicker' onclick="loadhistory();">
+                <input type='text' class="form-control" id='logdate' />
                 <span class="input-group-addon">
                     <span class="glyphicon glyphicon-calendar"></span>
                 </span>
@@ -37,13 +35,17 @@
     </div>
 </div>
 <div id="logshistory">
-    <table></table>
+    <h2>LogHistory According to Developer</h2>
+    <table class="logtable"></table>
+    <h2>Log History according to Date</h2>
+    <table class="logtable1"></table>
+
 </div>
 
 
 <script>
 
-    $(document).ready(function () {
+    $(document).ready(function() {
         $('#datetimepicker').datetimepicker({
             format: 'M/D'
         });
@@ -53,45 +55,105 @@
     //Get loghistory from database according to developerid
 
     $(document).ready(function() {
-      var developerid=@HttpContext.Current.User.Identity.GetUserId();
-        $.ajax({
-            type: "GET",
-            url: "/API/Log/GetLogsHistory",
-         //  data: {DeveloperId:developerid},
-            data:'{"DeveloperId":' + JSON.stringify(developerid) + '}',
-            dataType: "json",
-           // contentType: "application/json;charset=utf-8",
-            sucess: function(data) {
-            console.log(data);
+        var did = @HttpContext.Current.User.Identity.GetUserId();
+        var url = '/API/Log/GetLogsHistory';
+        $.get(url, { id: did }, function(data) {
 
-                //$.getJSON(url, function(response) {
-
-                    //$.each(data, function(key, val) {
-
-                    //    var report = '<tr>' +
-                    //        '<td>' + val.Description + '</td>' +
-                    //        '<td>' + val.ProjectId + '</td>' +
-                    //        '<td>' + val.Duration + '</td>' +
-                    //        '<td>' + val.WorkStartTime + '</td>' +
-                    //        '<td>' + val.WorkEndTime + '</td>' +
-                    //        '<td>' + val.Date + '</td>' +
-                    //        '</tr>';
-
-                    //    $('#loghistory table').append(report);
-                    //});
-                //});
-                alert("Successfully");
-            },
-            error: function() {
-                   alert("Failed!Please try again.");
-
-
-                //alert(xhr.status+ajaxOptions+thrownError);
-               
+            var report = "";
+            var len = data.length;
+            for (var i = 0; i < len; i++) {
+                report += '<tr>' +
+                    '<td>' + data[i].Description + '</td>' +
+                    '<td>' + data[i].ProjectId + '</td>' +
+                    '<td>' + data[i].Duration + '</td>' +
+                    '<td>' + data[i].WorkStartTime + '</td>' +
+                    '<td>' + data[i].WorkEndTime + '</td>' +
+                    '<td>' + data[i].Date + '</td>' +
+                    '</tr>';
             }
 
+            if (report != "") {
+                $('#logshistory .logtable').append(report);
+            }
+
+            //console.log("success");
         });
+
+
+        //function loadhistory() {
+            var logdate = $('#logdate').val();
+           // alert(logdate);
+            var url = '/API/Log/GetLogsHistoryAcDate';
+            $.get(url, { date:"12/8"},function(data) {
+                console.log(data);
+                var len = data.length; 
+                var report = "";
+
+                for(var i=0;i<len;i++) {
+                    report += '<tr>' +
+                       '<td>' + data[i].Description + '</td>' +
+                       '<td>' + data[i].ProjectId + '</td>' +
+                       '<td>' + data[i].Duration + '</td>' +
+                       '<td>' + data[i].WorkStartTime + '</td>' +
+                       '<td>' + data[i].WorkEndTime + '</td>' +
+                       '<td>' + data[i].Date + '</td>' +
+                       '</tr>';
+               
+                }
+                if (report != "") {
+                    $('#logshistory').find('.logtable1').append(report);
+                }
+               
+            
+                console.log("success");
+            });
+        //}
 
     });
 
+    // Get loghistory according to date
+    //date:"12/8"
+
+    function loadhistory() {
+        var logdate = $('#logdate').val();
+        alert(logdate);
+        var url = '/API/Log/GetLogsHistoryAcDate';
+        $.get(url, { date:logdate},function(data) {
+            console.log(data);
+            var len = data.length; 
+            var report = "";
+
+            for(var i=0;i<len;i++) {
+                 report += '<tr>' +
+                    '<td>' + data[i].Description + '</td>' +
+                    '<td>' + data[i].ProjectId + '</td>' +
+                    '<td>' + data[i].Duration + '</td>' +
+                    '<td>' + data[i].WorkStartTime + '</td>' +
+                    '<td>' + data[i].WorkEndTime + '</td>' +
+                    '<td>' + data[i].Date + '</td>' +
+                    '</tr>';
+               
+            }
+            if (report != "") {
+                $('#logshistory .logtable1').append(report);
+            }
+               
+            
+            console.log("success");
+        });
+    }
+
 </script>
+
+<style>
+    .logtable,.logtable1 {
+    border: 1px solid #666;   
+    width: 100%;
+}
+td {
+  background: #f8f8f8; 
+  font-weight: bold;    
+    padding: 2px;
+}
+
+</style>

@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
+﻿using System.Collections.Generic;
 using System.Web.Http;
-using System.Web.Mvc;
-using Microsoft.AspNet.Identity;
+using System.Web.Http.Results;
 using Newtonsoft.Json.Linq;
 using ProjectManagerApp.Models.DAL;
 using ProjectManagerApp.Models.DAL.Input;
@@ -14,36 +9,46 @@ namespace ProjectManagerApp.API
 {
     public class LogController : ApiController
     {
+        ProjectDal dal=new ProjectDal();
         //[HttpGet]
         //public string Get()
         //{
         //    return "asasa";
         //}
 
-            [System.Web.Http.HttpPost]
+            [HttpPost]
         public object ReportSave(JObject jObject)
         {
             JToken cObjToken = jObject;
             string logxml = cObjToken.SelectToken("logXML").ToString();
 
-            new ProjectDAL().SaveReport(logxml);
+            new ProjectDal().SaveReport(logxml);
 
             return null;
 
         }
 
 
-        [System.Web.Http.HttpGet]
-       
-        public JsonResult GetLogsHistory()
-                {
-            //  int DeveloperId = 1;//(developerid.HasValue) ? developerid.Value : User.Identity.GetUserId<int>();
-            int id = User.Identity.GetUserId<int>();
-            List<Report> reports = new List<Report>();
+        [HttpGet]
 
-            reports = new ProjectDAL().GetLogsHistory(id);
+        public JsonResult<List<Report>> GetLogsHistory(int id)
+        {
+            //int DeveloperId = 1;//(developerid.HasValue) ? developerid.Value : User.Identity.GetUserId<int>();
 
-            return new JsonResult { Data = reports, JsonRequestBehavior = JsonRequestBehavior.AllowGet};
+            var reports = dal.GetLogsHistory(id);
+            return Json(reports);
+
         }
+
+
+        [HttpGet]
+        public JsonResult<List<Report>> GetLogsHistoryAcDate(string date)
+        {
+           // date = "8/10";
+            var records = dal.GetLogHistoryAcDate(date);
+            return Json(records);
+        }
+
+
     }
 }

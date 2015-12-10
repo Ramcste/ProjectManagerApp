@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using CodeFirstStoredProcs;
+﻿using CodeFirstStoredProcs;
 using ProjectManagerApp.Models.DAL.Input;
 using ProjectManagerApp.Models.DAL.Output;
 
@@ -22,12 +18,21 @@ namespace ProjectManagerApp.Models.DAL
         public StoredProc ProjectResultSheetProc { get; set; }
 
 
-        // Getting log history
+        // Getting log history according to developerid
         [StoredProcAttributes.Name("[Logs.ResultSheet]")]
  
         [StoredProcAttributes.ReturnTypes(typeof(Report))]
 
         public StoredProc<Loghistory> LogsResultSheetProc { get; set; }
+
+
+        //Getting loghistory according to date
+        [StoredProcAttributes.Name("[Logs.ResultSheetAcDate]")]
+
+        [StoredProcAttributes.ReturnTypes(typeof(Report))]
+
+        public StoredProc<LoghistoryAcDate> LogsResultSheetProcAcDate { get; set; }
+
 
         public StoredProContext()
         {
