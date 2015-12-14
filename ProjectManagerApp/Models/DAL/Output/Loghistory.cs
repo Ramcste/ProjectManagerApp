@@ -13,5 +13,22 @@ namespace ProjectManagerApp.Models.DAL.Output
         [StoredProcAttributes.Direction(System.Data.ParameterDirection.Input)]
         [StoredProcAttributes.ParameterType(System.Data.SqlDbType.Int)]
         public int DeveloperId { get; set; }
+
+        [StoredProcAttributes.Name("ProjectId")]
+        [StoredProcAttributes.Direction(System.Data.ParameterDirection.Input)]
+        [StoredProcAttributes.ParameterType(System.Data.SqlDbType.Int)]
+        public int ProjectId { get; set; }
+
+        [StoredProcAttributes.Name("FromDate")]
+        [StoredProcAttributes.Direction(System.Data.ParameterDirection.Input)]
+        [StoredProcAttributes.ParameterType(System.Data.SqlDbType.VarChar)]
+        public string FromDate { get; set; }
+
+        [StoredProcAttributes.Name("ToDate")]
+        [StoredProcAttributes.Direction(System.Data.ParameterDirection.Input)]
+        [StoredProcAttributes.ParameterType(System.Data.SqlDbType.VarChar)]
+        public string ToDate { get; set; }
+
+
     }
 }

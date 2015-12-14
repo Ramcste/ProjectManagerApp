@@ -2,8 +2,10 @@
 using System.Web.Http;
 using System.Web.Http.Results;
 using Newtonsoft.Json.Linq;
+using ProjectManagerApp.Models;
 using ProjectManagerApp.Models.DAL;
 using ProjectManagerApp.Models.DAL.Input;
+
 
 namespace ProjectManagerApp.API
 {
@@ -15,6 +17,8 @@ namespace ProjectManagerApp.API
         //{
         //    return "asasa";
         //}
+
+            private ProjectManagerAppEntities db =new ProjectManagerAppEntities();
 
             [HttpPost]
         public object ReportSave(JObject jObject)
@@ -31,24 +35,27 @@ namespace ProjectManagerApp.API
 
         [HttpGet]
 
-        public JsonResult<List<Report>> GetLogsHistory(int id)
+        public JsonResult<List<Report>> GetLogsHistory(int id,int projectid,string fromdate,string todate)
         {
             //int DeveloperId = 1;//(developerid.HasValue) ? developerid.Value : User.Identity.GetUserId<int>();
 
-            var reports = dal.GetLogsHistory(id);
+            var reports = dal.GetLogsHistory(id,projectid,fromdate,todate);
             return Json(reports);
 
         }
 
-
         [HttpGet]
-        public JsonResult<List<Report>> GetLogsHistoryAcDate(string date)
+        public void GetSeletedLogsDelete(int id)
         {
-           // date = "8/10";
-            var records = dal.GetLogHistoryAcDate(date);
-            return Json(records);
-        }
+            //Log remove = db.Logs.Find(id);
+            //db.Logs.Remove(remove);
+            //db.SaveChanges();
 
+            dal.GetSelectedLogDeleted(id);
+        }
+        
+            
+        
 
     }
 }

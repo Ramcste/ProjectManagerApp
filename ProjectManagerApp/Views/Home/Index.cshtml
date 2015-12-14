@@ -9,6 +9,7 @@
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/datetimepicker")
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
 
 <h1>Logs Entry</h1>
     <div class="container body-content">
@@ -113,8 +114,10 @@
 
 
 <div id="temptable">
-    
+
 </div>
+<br/>
+<br/>
 <div class="row">
     <div class="col-md-10"></div>
     <div class="col-md-1"></div>
@@ -153,9 +156,10 @@
         });
     });
 
+    // workstarting time
 
-    function ConvertTimeformat(format, str) {
-        // workstarting time
+    function ConvertTimeFormat(format, str) {
+        
         var time = $('#workstartingtime').val();
         var hours = Number(time.match(/^(\d+)/)[1]);
         var minutes = Number(time.match(/:(\d+)/)[1]);
@@ -168,9 +172,12 @@
         // var sMinutes = minutes;
         if (hours < 10) sHours = "0" + sHours;
         if (minutes < 10) sMinutes = "0" + sMinutes;
-        //alert(sHours + ":" + sMinutes);
+        return (sHours + "." + sMinutes);
+    }
 
         //workending time
+    function ConvertTimeFormat1(format,str) {
+        
         var time1 = $('#workendingtime').val();
         var hours1 = Number(time1.match(/^(\d+)/)[1]);
         var minutes1 = Number(time1.match(/:(\d+)/)[1]);
@@ -181,47 +188,53 @@
         var sMinutes1 = minutes1;
         if (hours1 < 10) sHours1 = "0" + sHours1;
         if (minutes1 < 10) sMinutes1 = "0" + sMinutes1;
-
-        var diff1 = sHours1 - sHours;
-        var diff2 = sMinutes1 - sMinutes;
-
-        if (sHours > sHours1) {
-            alert("wrong data input");
-
-        }
-
-        else {
-
-
-            if (diff1 < 0) {
-                diff1 = diff1 - 1;
-                diff2 = diff2 + 60;
-
-                $('#duration').val(diff1 + ":" + diff2);
-
-            }
-
-            else {
-
-                $('#duration').val(diff1 + ":" + diff2);
-            }
-
-
-            //alert("wrong");
-        }
-
+    
+        return (sHours1+"."+sMinutes1);
     }
 
+    // function to check if workstartime is greater than workendtime
 
     $(document).ready(function () {
         $('#datetimepicker2').mouseleave(function () {
-            ConvertTimeformat("24", $('#workstartingtime').val());
-            ConvertTimeformat("24", $('#workendingtime').val());
+            var starttime = parseFloat(ConvertTimeFormat("24", $('#workstartingtime').val()));
+            var endtime = parseFloat(ConvertTimeFormat1("24", $('#workendingtime').val()));
 
+            var workstime = starttime.toString().split('.');
+            var worketime = endtime.toString().split('.');
+            var shours = parseInt(workstime[0]);
+            var sminute = parseInt(workstime[1]);
+            var ehours = parseInt(worketime[0]);
+            var eminute = parseInt(worketime[1]);
+            var hdiff = ehours - shours;
+            var mdiff = eminute - sminute;
+
+            if (endtime > starttime) {
+              //  alert(" endtime is greater");
+                
+                 //alert(hdiff);
+                //alert(mdiff);
+                if (mdiff < 0) {
+                    mdiff = mdiff + 60;
+                    hdiff = hdiff - 1;
+                    $('#duration').val(hdiff + ":" + mdiff);
+                } else {
+                    $('#duration').val(hdiff + ":" + mdiff);
+                }
+            
+                //alert(endtime);
+            }
+
+            else if (endtime == starttime) {
+     
+                $('#duration').val(hdiff + ":" + mdiff);
+            }
+            else {
+                alert("work finished time must be greater than work start time");
+                $('#duration').val("00" + ":" + "00");
+            }
 
         });
     });
-
 
     var count = 0;
 
@@ -236,34 +249,35 @@
             var worketime = $('#workendingtime').val();
             var date = $('#date').val();
 
-            if (description != "" && name != "" && duration != "" && workstime != "" && worketime != "" && date != "") {
+            if (description !== "" && name !== "" && duration !== "" && workstime !== "" && worketime !== "" && date !== "") {
 
                 var html = new Array();
 
                 html.push('<div class="logrow row">');
-                html.push('<div class="col-md-2 roweditor" >' +
-                    '<span>' +
-                    '<input type="checkbox" class="rowcheckbox" onclick="check(this);"/>' +
-                    '<select class="editoption" onchange="editor(this);">' +
-                    '<option value="0" id="bulkedit">Bulk edit</option>' +
-                    '<option value="1" id="delete">Delete</option>' +
-                    '</select>' +
-                    '</span>' +
-                    '</div>' +
-                    '<div class="col-md-2 description">' + description + '</div>' +
+                //html.push('<div class="col-md-2 roweditor" >' +
+                //    '<span>' +
+                //    '<input type="checkbox" class="rowcheckbox" onclick="check(this);"/>' +
+                //    '<select class="editoption" onchange="editor(this);">' +
+                //    '<option value="0" id="bulkedit">Bulk edit</option>' +
+                //    '<option value="1" id="delete">Delete</option>' +
+                //    '</select>' +
+                //    '</span>' +
+                //    '</div>' +
+                    html.push('<div class="col-md-3 description">' + description + '</div>' +
                     '<div class="col-md-2 projectName">' + name + '<input type="hidden" class="projectid" value="' + projectid + '"/>' + '</div>' +
                     '<div class="col-md-2 duration">' + duration + '</div>' +
                     '<div class="col-md-1 workstime">' + workstime + '</div>' +
                     '<div class="col-md-1">' + "-" + '</div>' +
                     '<div class="col-md-1 worketime">' + worketime + '</div>' +
                     '<div class="col-md-1 date">' + date + '</div>' +
-                    '<input type="hidden" class="developerid" value="' + @HttpContext.Current.User.Identity.GetUserId() + '"/>'
+                    '<input type="hidden" class="developerid" value="' + @HttpContext.Current.User.Identity.GetUserId() + '"/>'+
+                    '<button class="col-md-1 delete" onclick="operation(this);">'  + '<i class="fa fa-close" style="font-size:24px;color:red">' + '</i>' + '</button>'
                 );
 
                 html.push('</div>');
                 $('#temptable').append(html.join(''));
                 count++;
-
+                
 
                 $('#savebutton').show();
 
@@ -348,6 +362,11 @@
 
     });
 
+
+    //function for button to delete
+    function operation(ob) {
+        $(ob).parent().remove();
+    }
 
     // for deleting specific columns selected
     function editor(ob) {

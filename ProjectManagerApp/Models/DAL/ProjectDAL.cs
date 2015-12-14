@@ -33,12 +33,38 @@ namespace ProjectManagerApp.Models.DAL
             return projects;
         }
 
-        public List<Report> GetLogsHistory(int id)
+        public List<Report> GetLogsHistory(int? id,int? projectid,string fromdate,string todate)
         {
-          
-              Loghistory inputparams = new Loghistory()
+
+            if (fromdate== null)
             {
-                DeveloperId = id
+                fromdate="";
+            }
+
+            else
+            {
+                fromdate = fromdate.ToString();
+            }
+
+            if (todate == null)
+            {
+                todate = "";
+            }
+            else
+            {
+                todate = todate.ToString();
+            }
+
+            id = (id == null) ? 1 : id;
+            projectid = (projectid == null) ? 1 : projectid;
+
+            Loghistory inputparams = new Loghistory()
+            {
+                DeveloperId = (int) id,
+                ProjectId=(int) projectid,
+                FromDate =  fromdate,
+                ToDate = todate
+
             };
 
 
@@ -47,18 +73,20 @@ namespace ProjectManagerApp.Models.DAL
            return report;
         }
 
-        public List<Report> GetLogHistoryAcDate(string date)
+
+        public void GetSelectedLogDeleted(int id)
         {
-            LoghistoryAcDate inputparams = new LoghistoryAcDate()
+            RemoveLogInput inputparams = new RemoveLogInput()
             {
-                Date = date
+                LogId = id,
+               
             };
 
-            var reports = db.LogsResultSheetProcAcDate.CallStoredProc(inputparams).ToList<Report>();
+            db.RemoveLogProc.CallStoredProc(inputparams);
+        }
 
 
-            return reports;
-        } 
-       
+   
+
     }
 }

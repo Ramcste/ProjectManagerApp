@@ -6,40 +6,52 @@
 
 @Scripts.Render("~/bundles/jquery")
 @Scripts.Render("~/bundles/datetimepicker")
+@Scripts.Render("~/bundles/bootstrap")
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
 
 <h2>Logs History</h2>
 <div class="menu row">
-    <div class="col-md-4">
+    <div class="col-md-2">
         <div class="form-group">
             @Html.DropDownListFor(model => model.Id, new SelectList(ViewBag.Projects, "id", "Name"), "Select Project", new {@class = "form-control", id = "dropdown"})
 
         </div>
     </div>
-    <div class="col-md-2">
-        
-            Search According to date
-        
-    </div>
+    <div class="col-md-1">From</div>
     <div class="col-md-2">
         <div class="form-group">
-            <div class="input-group date" id='datetimepicker' onclick="loadhistory();">
-                <input type='text' class="form-control" id='logdate' />
+            <div class="input-group date" id='datetimepicker'>
+                <input type='text' class="form-control" id='fromdate'/>
                 <span class="input-group-addon">
                     <span class="glyphicon glyphicon-calendar"></span>
                 </span>
             </div>
         </div>
     </div>
-    <div class="col-md-4">
-        
+    <div clas="col-md-2"></div>
+    <div class="col-md-1">To</div>
+    <div class="col-md-2">
+        <div class="form-group">
+            <div class="input-group date" id='datetimepicker1'>
+                <input type='text' class="form-control" id='todate' />
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+        </div>  
+    </div>
+    <div class="col-md-2">
+        <div class="form-group">
+            <input type="submit" value="Search" id="searchbutton"/>
+        </div>
     </div>
 </div>
 <div id="logshistory">
-    <h2>LogHistory According to Developer</h2>
-    <table class="logtable"></table>
-    <h2>Log History according to Date</h2>
-    <table class="logtable1"></table>
-
+    <h2>Log History</h2>
+    <table class="logtable">
+      
+    </table>
+    
 </div>
 
 
@@ -49,26 +61,55 @@
         $('#datetimepicker').datetimepicker({
             format: 'M/D'
         });
+
+        $('#datetimepicker1').datetimepicker({
+            format: 'M/D'
+        });
+
+        //var pid = ($('#dropdown').val()=="")? '1':$('#dropdown').val();
+        //var date = ($('#logdate').val()=="")? '3/15':$('#logdate').val();
+        //alert(date);
+        //alert(pid);
+
     });
 
 
     //Get loghistory from database according to developerid
 
     $(document).ready(function() {
-        var did = @HttpContext.Current.User.Identity.GetUserId();
-        var url = '/API/Log/GetLogsHistory';
-        $.get(url, { id: did }, function(data) {
 
+        var did = @HttpContext.Current.User.Identity.GetUserId();
+        var pid = ($('#dropdown').val()=="")? '1':$('#dropdown').val();
+        var fromdate = ($('#fromdate').val()=="")? '12/1':$('#fromdate').val();
+        var todate=($('#todate').val()=="")? moment().format('YYYY/M/D'):$('#todate').val();
+        if (pid == "" || did == "" || fromdate == "" || todate == "") {
+            alert("fill out all the blanks and select project.");
+        }
+        else{
+        //alert(fromdate);
+        //alert(pid);
+        //alert(todate);
+
+        
+        var url = '/API/Log/GetLogsHistory';
+        $.get(url, { id: did,projectid:pid,fromdate:fromdate,todate:todate }, function(data) {
+            console.log(data);
             var report = "";
             var len = data.length;
             for (var i = 0; i < len; i++) {
                 report += '<tr>' +
-                    '<td>' + data[i].Description + '</td>' +
-                    '<td>' + data[i].ProjectId + '</td>' +
-                    '<td>' + data[i].Duration + '</td>' +
-                    '<td>' + data[i].WorkStartTime + '</td>' +
-                    '<td>' + data[i].WorkEndTime + '</td>' +
-                    '<td>' + data[i].Date + '</td>' +
+                    '<td>' + '<input type="hidden" class="logid" value="' + data[i].Id + '"/>'+ '</td>' +
+                    '<td class="description">' + data[i].Description + '</td>' +
+                    '<td class="projectid">' + data[i].ProjectId + '</td>' +
+                    '<td class="duration">' + data[i].Duration + '</td>' +
+                    '<td class="workstime">' + data[i].WorkStartTime + '</td>' +
+                    '<td class="worketime">' + data[i].WorkEndTime + '</td>' +
+                    '<td class="date">' + data[i].Date + '</td>' +
+                    '<td>' +'<input type="checkbox" class="rowcheckbox" onclick="check(this);"/>' +
+                    '<select class="editoption" onchange="editor(this);">' +
+                    '<option value="0" id="bulkedit">Bulk edit</option>' +
+                    '<option value="1" id="delete">Delete</option>' +
+                    '</select>' +'</td>'+
                     '</tr>';
             }
 
@@ -76,84 +117,120 @@
                 $('#logshistory .logtable').append(report);
             }
 
-            //console.log("success");
+        console.log("success");
         });
-
-
-        //function loadhistory() {
-            var logdate = $('#logdate').val();
-           // alert(logdate);
-            var url = '/API/Log/GetLogsHistoryAcDate';
-            $.get(url, { date:"12/8"},function(data) {
-                console.log(data);
-                var len = data.length; 
-                var report = "";
-
-                for(var i=0;i<len;i++) {
-                    report += '<tr>' +
-                       '<td>' + data[i].Description + '</td>' +
-                       '<td>' + data[i].ProjectId + '</td>' +
-                       '<td>' + data[i].Duration + '</td>' +
-                       '<td>' + data[i].WorkStartTime + '</td>' +
-                       '<td>' + data[i].WorkEndTime + '</td>' +
-                       '<td>' + data[i].Date + '</td>' +
-                       '</tr>';
-               
-                }
-                if (report != "") {
-                    $('#logshistory').find('.logtable1').append(report);
-                }
-               
-            
-                console.log("success");
-            });
-        //}
-
+}
     });
 
-    // Get loghistory according to date
-    //date:"12/8"
 
-    function loadhistory() {
-        var logdate = $('#logdate').val();
-        alert(logdate);
-        var url = '/API/Log/GetLogsHistoryAcDate';
-        $.get(url, { date:logdate},function(data) {
-            console.log(data);
-            var len = data.length; 
-            var report = "";
 
-            for(var i=0;i<len;i++) {
-                 report += '<tr>' +
-                    '<td>' + data[i].Description + '</td>' +
-                    '<td>' + data[i].ProjectId + '</td>' +
-                    '<td>' + data[i].Duration + '</td>' +
-                    '<td>' + data[i].WorkStartTime + '</td>' +
-                    '<td>' + data[i].WorkEndTime + '</td>' +
-                    '<td>' + data[i].Date + '</td>' +
-                    '</tr>';
-               
-            }
-            if (report != "") {
-                $('#logshistory .logtable1').append(report);
-            }
-               
-            
-            console.log("success");
+    // for search button click operation
+
+    $(function() {
+        $('#searchbutton').click(function() {
+
+        var did = @HttpContext.Current.User.Identity.GetUserId();
+            var pid = $('#dropdown').val();
+            var fromdate = $('#fromdate').val();
+            var todate = $('#todate').val();
+
+            //alert(fromdate);
+            //alert(pid);
+            //  alert(todate);
+
+
+            var url = '/API/Log/GetLogsHistory';
+            $.get(url, { id: did, projectid: pid, fromdate: fromdate, todate: todate }, function(data) {
+                console.log(data);
+                var report = "";
+                var len = data.length;
+                for (var i = 0; i < len; i++) {
+                    report += '<tr>' +
+                        '<td>' + '<input type="hidden" class="logid" value="' + data[i].Id + '"/>'+ '</td>' +
+                        '<td class="description">' + data[i].Description + '</td>' +
+                        '<td class="projectid">' + data[i].ProjectId + '</td>' +
+                        '<td class="duration">' + data[i].Duration + '</td>' +
+                        '<td class="workstime">' + data[i].WorkStartTime + '</td>' +
+                        '<td class="worketime">' + data[i].WorkEndTime + '</td>' +
+                        '<td class="date">' + data[i].Date + '</td>' +
+                        '<td>' +
+                        '<input type="checkbox" class="rowcheckbox" onclick="check(this);"/>' +
+                        '<select class="editoption" onchange="editor(this);">' +
+                        '<option value="0" id="edit">Edit</option>' +
+                        '<option value="1" id="delete">Delete</option>' +
+                        '</select>' + '</td>' +
+                        '</tr>';
+                }
+
+                if (report != "") {
+                    $('#logshistory .logtable1').append(report);
+
+
+                } else {
+                    alert("no data to show");
+                }
+
+                console.log("success");
+            });
+
         });
-    }
+    });
+
+
+    // for deleting specific columns selected
+    function editor(ob) {
+        var option = ob.value;
+        //alert(option);
+
+        if (option == 1) {
+            alert("Are you sure want to delete it from database?");
+
+
+            var url = '/API/Log/GetSeletedLogsDelete';
+            //var did = @HttpContext.Current.User.Identity.GetUserId();
+            var logid = $('.logtable .logid').val();
+            alert(logid);
+
+            $.get(url, { id: logid }, function(data) {
+                console.log(data);
+                alert("success");
+
+            });
+            $(ob).parent().parent().parent().remove();
+        } 
+       
+        if(option==0){
+            
+   //  @Html.Partial("_Bulkedit");
+            
+        }
+}
+
+
+    // for highlighting specific checked column
+    function check(obj) {
+        $(".logtable tr").click(function() {
+            $(this).find('td').toggleClass("highlight");
+        });
+  }
 
 </script>
 
 <style>
     .logtable,.logtable1 {
-    border: 1px solid #666;   
-    width: 100%;
-}
-td {
-  background: #f8f8f8; 
-  font-weight: bold;    
-    padding: 2px;
-}
+        border: 1px solid #666;   
+        width: 100%;
+    }
+    td {
+        background: #f8f8f8; 
+        font-weight: bold;    
+        padding: 2px;
+    }
+      .highlight {
+         background-color: red;
+     }
+ 
 
 </style>
+
+

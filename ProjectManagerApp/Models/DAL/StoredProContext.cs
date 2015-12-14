@@ -18,22 +18,19 @@ namespace ProjectManagerApp.Models.DAL
         public StoredProc ProjectResultSheetProc { get; set; }
 
 
-        // Getting log history according to developerid
+        // Getting log history according to developerid,projectid and date
         [StoredProcAttributes.Name("[Logs.ResultSheet]")]
  
         [StoredProcAttributes.ReturnTypes(typeof(Report))]
 
         public StoredProc<Loghistory> LogsResultSheetProc { get; set; }
+   
 
+        [StoredProcAttributes.Name("[Logs.DeleteSelected]")]
 
-        //Getting loghistory according to date
-        [StoredProcAttributes.Name("[Logs.ResultSheetAcDate]")]
+        public StoredProc<RemoveLogInput> RemoveLogProc { get; set; } 
 
-        [StoredProcAttributes.ReturnTypes(typeof(Report))]
-
-        public StoredProc<LoghistoryAcDate> LogsResultSheetProcAcDate { get; set; }
-
-
+       
         public StoredProContext()
         {
             this.InitializeStoredProcs();

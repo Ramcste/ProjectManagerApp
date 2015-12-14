@@ -144,12 +144,8 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Function Name="Logs_ResultSheet" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="Logs.ResultSheet">
-          <Parameter Name="DeveloperId" Type="int" Mode="In" />
-        </Function>
-        <Function Name="Project_ResultSheet" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="Project.ResultSheet" />
-        <Function Name="ReportSave_Complete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="ReportSave.Complete">
-          <Parameter Name="LogXML" Type="varchar(max)" Mode="In" />
+        <Function Name="Logs_DeleteSelected" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="Logs.DeleteSelected">
+          <Parameter Name="LogId" Type="int" Mode="In" />
         </Function>
         <EntityContainer Name="ProjectManagerAppModelStoreContainer">
           <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
@@ -295,7 +291,7 @@
           <End Role="AspNetRoles" Type="Self.AspNetRole" Multiplicity="*" />
           <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="*" />
         </Association>
-        <EntityContainer Name="ProjectManagerAppEntities1" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="ProjectManagerAppEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRole" />
           <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaim" />
@@ -315,33 +311,16 @@
             <End Role="AspNetRoles" EntitySet="AspNetRoles" />
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
           </AssociationSet>
-          <FunctionImport Name="Logs_ResultSheet" ReturnType="Collection(ProjectManagerAppModel.Logs_ResultSheet_Result)">
-            <Parameter Name="DeveloperId" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="Project_ResultSheet" ReturnType="Collection(ProjectManagerAppModel.Project_ResultSheet_Result)" />
-          <FunctionImport Name="ReportSave_Complete">
-            <Parameter Name="LogXML" Mode="In" Type="String" />
+          <FunctionImport Name="Logs_DeleteSelected">
+            <Parameter Name="LogId" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
-        <ComplexType Name="Logs_ResultSheet_Result">
-          <Property Type="String" Name="Description" Nullable="false" />
-          <Property Type="Int32" Name="ProjectId" Nullable="false" />
-          <Property Type="String" Name="Duration" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="WorkStartTime" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="WorkEndTime" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="Date" Nullable="false" MaxLength="50" />
-          <Property Type="Int32" Name="DeveloperId" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="Project_ResultSheet_Result">
-          <Property Type="Int32" Name="Id" Nullable="false" />
-          <Property Type="String" Name="Name" Nullable="false" />
-        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="ProjectManagerAppModelStoreContainer" CdmEntityContainer="ProjectManagerAppEntities1">
+        <EntityContainerMapping StorageEntityContainer="ProjectManagerAppModelStoreContainer" CdmEntityContainer="ProjectManagerAppEntities">
           <EntitySetMapping Name="C__MigrationHistory">
             <EntityTypeMapping TypeName="ProjectManagerAppModel.C__MigrationHistory">
               <MappingFragment StoreEntitySet="__MigrationHistory">
@@ -429,28 +408,7 @@
               <ScalarProperty Name="Id" ColumnName="UserId" />
             </EndProperty>
           </AssociationSetMapping>
-          <FunctionImportMapping FunctionImportName="Logs_ResultSheet" FunctionName="ProjectManagerAppModel.Store.Logs_ResultSheet">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ProjectManagerAppModel.Logs_ResultSheet_Result">
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
-                <ScalarProperty Name="Duration" ColumnName="Duration" />
-                <ScalarProperty Name="WorkStartTime" ColumnName="WorkStartTime" />
-                <ScalarProperty Name="WorkEndTime" ColumnName="WorkEndTime" />
-                <ScalarProperty Name="Date" ColumnName="Date" />
-                <ScalarProperty Name="DeveloperId" ColumnName="DeveloperId" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="Project_ResultSheet" FunctionName="ProjectManagerAppModel.Store.Project_ResultSheet">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ProjectManagerAppModel.Project_ResultSheet_Result">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="ReportSave_Complete" FunctionName="ProjectManagerAppModel.Store.ReportSave_Complete" />
+          <FunctionImportMapping FunctionImportName="Logs_DeleteSelected" FunctionName="ProjectManagerAppModel.Store.Logs_DeleteSelected" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

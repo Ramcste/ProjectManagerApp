@@ -1,0 +1,75 @@
+﻿
+
+
+<div class="edit">
+    <div class="container">
+
+
+    </div>
+
+</div>
+
+
+<script>
+    
+    $('#datetimepicker').datetimepicker({
+        format: 'YYYY/M/D'
+    });
+
+
+
+</script>
+
+<style>
+    #edit
+    {
+        height: 200px;
+        width: 200px;
+        overflow-y: auto;
+    }
+</style>
+
+
+     //  <!-- Button to launch modal popover -->
+<a href="#popupBottom" role="button" class="btn btn-default" data-toggle="modal-popover" data-placement="left"></a>
+
+<!-- Define content -->
+<div id="popupBottom" class="popover">
+    <div class="arrow"></div>
+    <h3 class="popover-title">Edit</h3>
+    <div class="popover-content">
+        <div class="info row">
+            <div class="col-md-10">Edit</div>
+            <div class="col-md-2">
+                <button id="closebutton"><i class="fa fa-times"></i></button>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8">
+                <div class="form-group">
+                    <input type="text" class="form-control" id="changedescription" />
+                </div>
+            </div>
+            <div class="col-md-4">
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8">
+                <div class="form-group">
+                    <div class="input-group date" id='datetimepicker'>
+                        <input type='text' class="form-control" id='changedate' />
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <input type="submit" id="changeapply" value="Apply" />
+            </div>
+        </div>
+    </div>
+</div>

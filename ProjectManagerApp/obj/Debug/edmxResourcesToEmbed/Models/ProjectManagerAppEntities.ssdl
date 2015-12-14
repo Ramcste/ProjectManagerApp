@@ -139,12 +139,8 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Function Name="Logs_ResultSheet" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="Logs.ResultSheet">
-    <Parameter Name="DeveloperId" Type="int" Mode="In" />
-  </Function>
-  <Function Name="Project_ResultSheet" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="Project.ResultSheet" />
-  <Function Name="ReportSave_Complete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="ReportSave.Complete">
-    <Parameter Name="LogXML" Type="varchar(max)" Mode="In" />
+  <Function Name="Logs_DeleteSelected" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="Logs.DeleteSelected">
+    <Parameter Name="LogId" Type="int" Mode="In" />
   </Function>
   <EntityContainer Name="ProjectManagerAppModelStoreContainer">
     <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />

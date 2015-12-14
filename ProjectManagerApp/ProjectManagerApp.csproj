@@ -224,18 +224,15 @@
     <Compile Include="Models\C__MigrationHistory.cs">
       <DependentUpon>ProjectManagerAppEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\DAL\Input\RemoveLogInput.cs" />
     <Compile Include="Models\DAL\Input\Report.cs" />
     <Compile Include="Models\DAL\Input\XmlInput.cs" />
     <Compile Include="Models\DAL\Output\Loghistory.cs" />
-    <Compile Include="Models\DAL\Output\LoghistoryAcDate.cs" />
     <Compile Include="Models\DAL\Output\Project.cs" />
     <Compile Include="Models\DAL\ProjectDal.cs" />
     <Compile Include="Models\DAL\StoredProContext.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Log.cs">
-      <DependentUpon>ProjectManagerAppEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Logs_ResultSheet_Result.cs">
       <DependentUpon>ProjectManagerAppEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ManageViewModels.cs" />
@@ -258,12 +255,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ProjectManagerAppEntities.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Models\Project_ResultSheet_Result.cs">
-      <DependentUpon>ProjectManagerAppEntities.tt</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
-    <Compile Include="ViewModel\ViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-datetimepicker.css" />
@@ -469,6 +462,7 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Account\Info.cshtml" />
     <Content Include="Views\Home\Logshistory.cshtml" />
+    <Content Include="Views\Home\_Bulkedit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

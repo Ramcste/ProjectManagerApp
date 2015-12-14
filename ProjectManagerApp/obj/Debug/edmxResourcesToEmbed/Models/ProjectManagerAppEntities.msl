@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="ProjectManagerAppModelStoreContainer" CdmEntityContainer="ProjectManagerAppEntities1">
+  <EntityContainerMapping StorageEntityContainer="ProjectManagerAppModelStoreContainer" CdmEntityContainer="ProjectManagerAppEntities">
     <EntitySetMapping Name="C__MigrationHistory">
       <EntityTypeMapping TypeName="ProjectManagerAppModel.C__MigrationHistory">
         <MappingFragment StoreEntitySet="__MigrationHistory">
@@ -88,27 +88,6 @@
         <ScalarProperty Name="Id" ColumnName="UserId" />
       </EndProperty>
     </AssociationSetMapping>
-    <FunctionImportMapping FunctionImportName="Logs_ResultSheet" FunctionName="ProjectManagerAppModel.Store.Logs_ResultSheet">
-      <ResultMapping>
-        <ComplexTypeMapping TypeName="ProjectManagerAppModel.Logs_ResultSheet_Result">
-          <ScalarProperty Name="Description" ColumnName="Description" />
-          <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
-          <ScalarProperty Name="Duration" ColumnName="Duration" />
-          <ScalarProperty Name="WorkStartTime" ColumnName="WorkStartTime" />
-          <ScalarProperty Name="WorkEndTime" ColumnName="WorkEndTime" />
-          <ScalarProperty Name="Date" ColumnName="Date" />
-          <ScalarProperty Name="DeveloperId" ColumnName="DeveloperId" />
-        </ComplexTypeMapping>
-      </ResultMapping>
-    </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="Project_ResultSheet" FunctionName="ProjectManagerAppModel.Store.Project_ResultSheet">
-      <ResultMapping>
-        <ComplexTypeMapping TypeName="ProjectManagerAppModel.Project_ResultSheet_Result">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-        </ComplexTypeMapping>
-      </ResultMapping>
-    </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="ReportSave_Complete" FunctionName="ProjectManagerAppModel.Store.ReportSave_Complete" />
+    <FunctionImportMapping FunctionImportName="Logs_DeleteSelected" FunctionName="ProjectManagerAppModel.Store.Logs_DeleteSelected" />
   </EntityContainerMapping>
 </Mapping>
