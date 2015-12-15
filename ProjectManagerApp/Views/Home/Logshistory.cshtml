@@ -49,20 +49,27 @@
 <div id="logshistory">
     <h2>Log History</h2>
     <table class="logtable">
-      
-    </table>
-    
-</div>
 
+    </table>
+
+</div>
+<br/>
 
 <script>
 
+
+    // hide edit div 
+    $('#edit').hide();
     $(document).ready(function() {
         $('#datetimepicker').datetimepicker({
             format: 'M/D'
         });
 
         $('#datetimepicker1').datetimepicker({
+            format: 'YYYY/M/D'
+        });
+
+        $('#datetimepicker2').datetimepicker({
             format: 'M/D'
         });
 
@@ -79,49 +86,51 @@
     $(document).ready(function() {
 
         var did = @HttpContext.Current.User.Identity.GetUserId();
-        var pid = ($('#dropdown').val()=="")? '1':$('#dropdown').val();
-        var fromdate = ($('#fromdate').val()=="")? '12/1':$('#fromdate').val();
-        var todate=($('#todate').val()=="")? moment().format('YYYY/M/D'):$('#todate').val();
+        var pid = ($('#dropdown').val() == "") ? '1' : $('#dropdown').val();
+        var fromdate = ($('#fromdate').val() == "") ? '12/1' : $('#fromdate').val();
+        var todate = ($('#todate').val() == "") ? moment().format('YYYY/M/D') : $('#todate').val();
         if (pid == "" || did == "" || fromdate == "" || todate == "") {
             alert("fill out all the blanks and select project.");
+        } else {
+            //alert(fromdate);
+            //alert(pid);
+            //alert(todate);
+
+
+            var url = '/API/Log/GetLogsHistory';
+            $.get(url, { id: did, projectid: pid, fromdate: fromdate, todate: todate }, function(data) {
+                console.log(data);
+                var report = "";
+                var len = data.length;
+                for (var i = 0; i < len; i++) {
+                    report += '<tr>' +
+                        '<td>' + '<input type="hidden" class="logid" value="' + data[i].Id + '"/>' + '</td>' +
+                        '<td class="description">' + data[i].Description + '</td>' +
+                        '<td class="projectid">' + data[i].ProjectId + '</td>' +
+                        '<td class="duration">' + data[i].Duration + '</td>' +
+                        '<td class="workstime">' + data[i].WorkStartTime + '</td>' +
+                        '<td class="worketime">' + data[i].WorkEndTime + '</td>' +
+                        '<td class="date">' + data[i].Date + '</td>' +
+                        '<td>' + '<input type="checkbox" class="rowcheckbox" onclick="check(this);"/>' +
+                        '<select class="editoption" onchange="editor(this);">' +
+                         '<option>Select Option</option>' +
+                        '<option value="0" id="bulkedit">Bulk edit</option>' +
+                        '<option value="1" id="delete">Delete</option>' +
+                        '</select>' + '</td>' +
+                        '</tr>';
+                }
+
+                if (report != "") {
+                    $('#logshistory .logtable').append(report);
+                    console.log("success");
+                } else {
+                    console.log("no logs to show");
+                }
+
+
+            });
         }
-        else{
-        //alert(fromdate);
-        //alert(pid);
-        //alert(todate);
-
-        
-        var url = '/API/Log/GetLogsHistory';
-        $.get(url, { id: did,projectid:pid,fromdate:fromdate,todate:todate }, function(data) {
-            console.log(data);
-            var report = "";
-            var len = data.length;
-            for (var i = 0; i < len; i++) {
-                report += '<tr>' +
-                    '<td>' + '<input type="hidden" class="logid" value="' + data[i].Id + '"/>'+ '</td>' +
-                    '<td class="description">' + data[i].Description + '</td>' +
-                    '<td class="projectid">' + data[i].ProjectId + '</td>' +
-                    '<td class="duration">' + data[i].Duration + '</td>' +
-                    '<td class="workstime">' + data[i].WorkStartTime + '</td>' +
-                    '<td class="worketime">' + data[i].WorkEndTime + '</td>' +
-                    '<td class="date">' + data[i].Date + '</td>' +
-                    '<td>' +'<input type="checkbox" class="rowcheckbox" onclick="check(this);"/>' +
-                    '<select class="editoption" onchange="editor(this);">' +
-                    '<option value="0" id="bulkedit">Bulk edit</option>' +
-                    '<option value="1" id="delete">Delete</option>' +
-                    '</select>' +'</td>'+
-                    '</tr>';
-            }
-
-            if (report != "") {
-                $('#logshistory .logtable').append(report);
-            }
-
-        console.log("success");
-        });
-}
     });
-
 
 
     // for search button click operation
@@ -129,7 +138,7 @@
     $(function() {
         $('#searchbutton').click(function() {
 
-        var did = @HttpContext.Current.User.Identity.GetUserId();
+            var did = @HttpContext.Current.User.Identity.GetUserId();
             var pid = $('#dropdown').val();
             var fromdate = $('#fromdate').val();
             var todate = $('#todate').val();
@@ -146,7 +155,7 @@
                 var len = data.length;
                 for (var i = 0; i < len; i++) {
                     report += '<tr>' +
-                        '<td>' + '<input type="hidden" class="logid" value="' + data[i].Id + '"/>'+ '</td>' +
+                        '<td>' + '<input type="hidden" class="logid" value="' + data[i].Id + '"/>' + '</td>' +
                         '<td class="description">' + data[i].Description + '</td>' +
                         '<td class="projectid">' + data[i].ProjectId + '</td>' +
                         '<td class="duration">' + data[i].Duration + '</td>' +
@@ -155,7 +164,8 @@
                         '<td class="date">' + data[i].Date + '</td>' +
                         '<td>' +
                         '<input type="checkbox" class="rowcheckbox" onclick="check(this);"/>' +
-                        '<select class="editoption" onchange="editor(this);">' +
+                        '<select class="editoption"  onchange="editor(this);">' +
+                         '<option>Select Option</option>' +
                         '<option value="0" id="edit">Edit</option>' +
                         '<option value="1" id="delete">Delete</option>' +
                         '</select>' + '</td>' +
@@ -163,14 +173,14 @@
                 }
 
                 if (report != "") {
-                    $('#logshistory .logtable1').append(report);
-
+                    $('#logshistory .logtable').append(report);
+                    console.log("success");
 
                 } else {
-                    alert("no data to show");
+                    console.log("no data to show");
                 }
 
-                console.log("success");
+
             });
 
         });
@@ -180,31 +190,65 @@
     // for deleting specific columns selected
     function editor(ob) {
         var option = ob.value;
-        //alert(option);
+        console.log(option);
 
         if (option == 1) {
-            alert("Are you sure want to delete it from database?");
-
-
-            var url = '/API/Log/GetSeletedLogsDelete';
-            //var did = @HttpContext.Current.User.Identity.GetUserId();
+            //alert("Are you sure want to delete it from database?");
+            var con = confirm("Are you sure want to delete it?");
             var logid = $('.logtable .logid').val();
-            alert(logid);
+           // alert(logid);
+            if (con == true) {
 
-            $.get(url, { id: logid }, function(data) {
-                console.log(data);
-                alert("success");
+                var url = '/API/Log/GetSeletedLogsDelete';
+                $.get(url, { id: logid }, function(data) {
+                    //    console.log(data);
+                    //    alert("success");
 
-            });
-            $(ob).parent().parent().parent().remove();
-        } 
-       
-        if(option==0){
-            
-   //  @Html.Partial("_Bulkedit");
-            
+                });
+                //   $(ob).parent().parent().remove();
+            }
+
+            else {
+                //do nothing
+              //  alert("you pressed false");
+            }
+
+
+
         }
-}
+        else if(option==0) {
+            alert("okay");
+
+            var logid = $('.logtable .logid').val();
+
+            var description, projectid, duration, workstime, worketime, date;
+
+            alert(logid);
+            $('input:checked').each(function () {
+                $this = $(this);
+                 description = $this.parent().siblings('td').eq(0).text();
+                 projectid = $this.parent().siblings('td').eq(1).text();
+                 duration =$this.parent().siblings('td').eq(2).text();
+                 workstime =$this.parent().siblings('td').eq(3).text();
+                 worketime =$this.parent().siblings('td').eq(4).text();
+                 date =$this.parent().siblings('td').eq(5).text();
+                alert(description + ' ' + projectid + ' ' + duration+' '+ workstime+' '+worketime+' '+date);
+
+
+          
+
+                //or just 
+                //stringresult += $this.parent().siblings('td').text();
+            });
+           // alert('This is the whole string: '+stringresult);
+
+            editlog(logid, description, projectid, duration, date);
+
+            
+
+        }
+    }
+
 
 
     // for highlighting specific checked column
@@ -212,12 +256,51 @@
         $(".logtable tr").click(function() {
             $(this).find('td').toggleClass("highlight");
         });
-  }
+    }
+
+    // for confirmation to delete recors or not
+
+
+    // for editing logs
+
+    function editlog(logid, description, projectid, date) {
+        //var messageContent = $('<div></div>');
+        //messageContent.append('<label>Are you sure you want to delete?</label>');
+        //dialogAddItem = new BootstrapDialog({
+        //    title: 'Delete ?',
+        //    type: BootstrapDialog.TYPE_PRIMARY,
+        //    message: messageContent,
+        //    autodestroy: true,
+        //    buttons: [
+        //            {
+        //                label: 'Delete',
+        //                cssClass: 'btn-danger',
+        //                action: function (dialog) {
+        //                    // setTimeout(function () { $(".quick-cart").addClass("open"); }, 0, false);
+        //                    dialog.close();
+        //                    me.addItem(logid, description, projectid, date,false, false, true, true);
+        //                }
+        //            },
+        //             {
+        //                 label: 'Cancel',
+        //                 cssClass: 'btn-success',
+        //                 action: function (dialog) {
+        //                     setTimeout(function () { $(".quick-cart").addClass("open"); }, 0, false);
+        //                     dialog.close();
+        //                 }
+        //             }
+        //    ]
+        //});
+        //dialogAddItem.open();
+
+        alert("Hello there");
+    }
 
 </script>
 
+
 <style>
-    .logtable,.logtable1 {
+    .logtable{
         border: 1px solid #666;   
         width: 100%;
     }
@@ -229,8 +312,8 @@
       .highlight {
          background-color: red;
      }
- 
 
+    
 </style>
 
 

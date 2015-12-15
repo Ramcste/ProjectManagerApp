@@ -103,11 +103,7 @@
             </ul>
         </div>
 
-        <!--<input type="checkbox" id="logrowcheckbox"/> -->
-        @*<select id="editoption">
-          <option value="0" id="bulkedit">Bulk Edit</option>
-            <option value="1" id="delete">Delete</option>
-        </select>*@
+    
     </div>
 </div>
 
@@ -213,7 +209,7 @@
                 
                  //alert(hdiff);
                 //alert(mdiff);
-                if (mdiff < 0) {
+                if (hdiff < 0 || mdiff<0) {
                     mdiff = mdiff + 60;
                     hdiff = hdiff - 1;
                     $('#duration').val(hdiff + ":" + mdiff);
@@ -316,20 +312,20 @@
             html.push('<logs>');
             $.each($('#temptable .logrow'), function (index, rec) {
                 var description = $($(rec).children('.description')).html();
-                var projectid = $($(rec).children('.projectName').find('input[type=hidden].projectId')).val();
+                var projectid = $($(rec).children('.projectName').find('input[type=hidden].projectid')).val();
                 var duration = $($(rec).children('.duration')).html();
                 var workstime = $($(rec).children('.workstime')).html();
                 var worketime = $($(rec).children('.worketime')).html();
                 var date = $($(rec).children('.date')).html();
-                var developerid = $($(rec).children('.developerId')).val();
+                var developerid = $($(rec).children('.developerid')).val();
                 html.push('<LineItem ');
                 html.push('Description="' + description + '"');
-                html.push('Projectid="' + projectid + '"');
+                html.push('ProjectId="' + projectid + '"');
                 html.push('Duration="' + duration + '"');
                 html.push('WorkStartTime="' + workstime + '"');
                 html.push('WorkEndTime="' + worketime + '"');
                 html.push('Date="' + date + '"');
-                html.push('Developerid="' + developerid + '"');
+                html.push('DeveloperId="' + developerid + '"');
                 html.push('></LineItem>');
                 //console.log(projectid);
             });

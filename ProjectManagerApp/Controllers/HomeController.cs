@@ -35,6 +35,10 @@ namespace ProjectManagerApp.Controllers
             return View(model);
         }
 
+        public ActionResult LogEdit()
+        {
+            return PartialView("_Logedit");
+        }
 
         public ActionResult About()
         {
