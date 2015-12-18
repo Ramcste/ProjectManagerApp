@@ -100,8 +100,8 @@
             //alert(todate);
 
 
-            var url = '/API/Log/GetLogsHistory';
-            $.get(url, { id: did, projectid: pid, fromdate: fromdate, todate: todate }, function(data) {
+            var url = '/API/Log/GetLogHistoryAscProjectId';
+            $.get(url,{developerid:did},function(data) {
                 console.log(data);
                 var report = "";
                 var len = data.length;
@@ -109,7 +109,8 @@
                     report += '<tr>' +
                         '<td>' + '<input type="hidden" class="logid" value="' + data[i].Id + '"/>' + '</td>' +
                         '<td class="description">' + data[i].Description + '</td>' +
-                        '<td class="projectid">' + data[i].ProjectId + '</td>' +
+                        // '<td class="projectid">' + data[i].ProjectId + '</td>' +
+                        '<td class="projectname">' + data[i].Name + '</td>' +
                         '<td class="duration">' + data[i].Duration + '</td>' +
                         '<td class="workstime">' + data[i].WorkStartTime + '</td>' +
                         '<td class="worketime">' + data[i].WorkEndTime + '</td>' +
@@ -128,6 +129,8 @@
                     console.log("success");
                 } else {
                     console.log("no logs to show");
+
+                    alert("no data to show");
                 }
 
 
@@ -142,52 +145,58 @@
         $('#searchbutton').click(function() {
 
             var did = @HttpContext.Current.User.Identity.GetUserId();
-            var pid = $('#dropdown').val();
-            var fromdate = $('#fromdate').val();
-            var todate = $('#todate').val();
+            var pid = ($('#dropdown').val() == "") ? '1' : $('#dropdown').val();
+            var fromdate = ($('#fromdate').val() == "") ? '12/1' : $('#fromdate').val();
+            var todate = ($('#todate').val() == "") ? moment().format('YYYY/M/D') : $('#todate').val();
 
-             //alert(fromdate);
-             // alert(pid);
-             // alert(todate);
+            if (pid== "" || formdate== "" || todate== "") {
+                alert("fill out all the blanks and then proceed");
+            }
+                //alert(fromdate);
+                // alert(pid);
+                // alert(todate);
+            else {
+                // to remove exisiting records of table
+                $('.logtable tr').remove();
 
-            // to remove exisiting records of table
-            $('.logtable tr').remove();
+                var url = '/API/Log/GetLogsHistory';
+                $.get(url, { id: did, projectid: pid, fromdate: fromdate, todate: todate }, function(data) {
+                    console.log(data);
+                    var report = "";
+                    var len = data.length;
+                    for (var i = 0; i < len; i++) {
+                        report += '<tr>' +
+                            '<td>' + '<input type="hidden" class="logid" value="' + data[i].Id + '"/>' + '</td>' +
+                            '<td class="description">' + data[i].Description + '</td>' +
+                           '<td class="projectname">' + data[i].Name + '</td>' +
+                            '<td class="duration">' + data[i].Duration + '</td>' +
+                            '<td class="workstime">' + data[i].WorkStartTime + '</td>' +
+                            '<td class="worketime">' + data[i].WorkEndTime + '</td>' +
+                            '<td class="date">' + data[i].Date + '</td>' +
+                            '<td>' +
+                            '<input type="checkbox" class="rowcheckbox" onclick="check(this);"/>' +
+                            '<select class="editoption"  onchange="editor(this);">' +
+                            '<option>Select Option</option>' +
+                            '<option value="0" id="edit">Edit</option>' +
+                            '<option value="1" id="delete">Delete</option>' +
+                            '</select>' + '</td>' +
+                            '</tr>';
+                    }
 
-            var url = '/API/Log/GetLogsHistory';
-            $.get(url, { id: did, projectid: pid, fromdate: fromdate, todate: todate }, function(data) {
-                console.log(data);
-                var report = "";
-                var len = data.length;
-                for (var i = 0; i < len; i++) {
-                    report += '<tr>' +
-                        '<td>' + '<input type="hidden" class="logid" value="' + data[i].Id + '"/>' + '</td>' +
-                        '<td class="description">' + data[i].Description + '</td>' +
-                        '<td class="projectid">' + data[i].ProjectId + '</td>' +
-                        '<td class="duration">' + data[i].Duration + '</td>' +
-                        '<td class="workstime">' + data[i].WorkStartTime + '</td>' +
-                        '<td class="worketime">' + data[i].WorkEndTime + '</td>' +
-                        '<td class="date">' + data[i].Date + '</td>' +
-                        '<td>' +
-                        '<input type="checkbox" class="rowcheckbox" onclick="check(this);"/>' +
-                        '<select class="editoption"  onchange="editor(this);">' +
-                         '<option>Select Option</option>' +
-                        '<option value="0" id="edit">Edit</option>' +
-                        '<option value="1" id="delete">Delete</option>' +
-                        '</select>' + '</td>' +
-                        '</tr>';
-                }
+                    if (report != "") {
+                        $('#logshistory .logtable').append(report);
+                        console.log("success");
 
-                if (report != "") {
-                    $('#logshistory .logtable').append(report);
-                    console.log("success");
-
-                } else {
-                    console.log("no data to show");
-                }
+                    } else {
+                        console.log("no data to show");
+                    }
 
 
-            });
-
+                });
+            }
+            
+          
+            
         });
     });
 
@@ -233,7 +242,7 @@
             $('input:checked').each(function () {
                 $this = $(this);
                  description = $this.parent().siblings('td').eq(1).text();
-                 projectid = $this.parent().siblings('td').eq(2).text();
+                 projectname = $this.parent().siblings('td').eq(2).text();
                  duration =$this.parent().siblings('td').eq(3).text();
                  workstime =$this.parent().siblings('td').eq(4).text();
                  worketime =$this.parent().siblings('td').eq(5).text();
@@ -241,7 +250,7 @@
             });
          
           //  alert(date);
-            editlog(logid, description, projectid, duration, workstime, worketime, date, developerid);
+            editlog(logid, description, projectname, duration, workstime, worketime, date, developerid);
           //  alert(description);
            // alert(description + ' ' + projectid + ' ' + duration+' '+ workstime+' '+worketime+' '+date);
 
@@ -263,7 +272,7 @@
 
     // for editing logs
 
-    function editlog(logid, description, projectid, duration, workstime, worketime, date, developerid) {
+    function editlog(logid, description, projectname, duration, workstime, worketime, date, developerid) {
        //  alert(description);
       //  alert(date);
        // alert(projectid);
@@ -281,7 +290,7 @@
 
                     '<div class="col-md-4">'+
                     '<select id="projectname" class="form-control"  style="width:120px">'+
-               
+                     '<option>"'+projectname+'"</option>'+
                     '</select>'+
                     '</div>'+
 
@@ -324,8 +333,9 @@
                         format: 'M/D'
                     });
                     getprojectname();
-                   // $("#projectname option[value='+pid+']").prop('selected', true);
+                  
                 },
+                draggable: true,
                 buttons: [{
                 label: 'Apply',
                 cssClass: 'btn-success',
@@ -404,9 +414,12 @@
                      options.push('<option value="',
                        data[i].Id, '">',
                        data[i].Name, '</option>');
+                    
+                     if ($(this).text() == projectname)
+                         $(this).attr("selected","selected");
                  }
                  $("#projectname").html(options.join(''));
-
+                //$('#projectname')
                
             }
             });

@@ -37,25 +37,6 @@ namespace ProjectManagerApp.Models.DAL
         public List<Report> GetLogsHistory(int? id,int? projectid,string fromdate,string todate)
         {
 
-            if (fromdate== null)
-            {
-                fromdate="";
-            }
-
-            else
-            {
-                fromdate = fromdate.ToString();
-            }
-
-            if (todate == null)
-            {
-                todate = "";
-            }
-            else
-            {
-                todate = todate.ToString();
-            }
-
             id = (id == null) ? 1 : id;
             projectid = (projectid == null) ? 1 : projectid;
 
@@ -67,14 +48,24 @@ namespace ProjectManagerApp.Models.DAL
                 ToDate = todate
 
             };
-
+            
 
             var report = db.LogsResultSheetProc.CallStoredProc(inputparams).ToList<Report>();
 
            return report;
         }
 
+        public List<Report> GetLogsHistoryByProjectId(int id)
+        {
+            LogHistoryByDeveloperId inputparams = new LogHistoryByDeveloperId()
+            {
+                DeveloperId = id
+            };
 
+            var report = db.LogsResultAscProjectIdSheetProc.CallStoredProc(inputparams).ToList<Report>();
+
+            return report;
+        }
         public void GetSelectedLogDeleted(int id)
         {
             RemoveLogInput inputparams = new RemoveLogInput()
@@ -85,7 +76,6 @@ namespace ProjectManagerApp.Models.DAL
 
             db.RemoveLogProc.CallStoredProc(inputparams);
         }
-
 
         public List<Report> GetEditLogsUpdate(string editlog)
         {

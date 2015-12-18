@@ -25,6 +25,11 @@ namespace ProjectManagerApp.Models.DAL.Input
         [StoredProcAttributes.ParameterType(System.Data.SqlDbType.Int)]
         public int ProjectId  { get; set; }
 
+        [StoredProcAttributes.Name("Name")]
+        [StoredProcAttributes.Direction(System.Data.ParameterDirection.Input)]
+        [StoredProcAttributes.ParameterType(System.Data.SqlDbType.VarChar)]
+        public string Name { get; set; }
+
 
         [StoredProcAttributes.Name("Duration")]
         [StoredProcAttributes.Direction(System.Data.ParameterDirection.Input)]

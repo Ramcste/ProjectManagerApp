@@ -24,7 +24,14 @@ namespace ProjectManagerApp.Models.DAL
         [StoredProcAttributes.ReturnTypes(typeof(Report))]
 
         public StoredProc<Loghistory> LogsResultSheetProc { get; set; }
-   
+
+
+        [StoredProcAttributes.Name("[Logs.ResultSheetAscProjectId]")]
+
+        [StoredProcAttributes.ReturnTypes(typeof(Report))]
+
+        public StoredProc<LogHistoryByDeveloperId> LogsResultAscProjectIdSheetProc { get; set; }
+
 
         [StoredProcAttributes.Name("[Logs.DeleteSelected]")]
 

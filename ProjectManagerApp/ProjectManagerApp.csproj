@@ -229,6 +229,7 @@
     <Compile Include="Models\DAL\Input\Report.cs" />
     <Compile Include="Models\DAL\Input\XmlInput.cs" />
     <Compile Include="Models\DAL\Output\Loghistory.cs" />
+    <Compile Include="Models\DAL\Output\LogHistoryByDeveloperId.cs" />
     <Compile Include="Models\DAL\Output\Project.cs" />
     <Compile Include="Models\DAL\ProjectDal.cs" />
     <Compile Include="Models\DAL\StoredProContext.cs" />

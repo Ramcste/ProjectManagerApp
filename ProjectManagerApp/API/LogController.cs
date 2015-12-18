@@ -20,7 +20,8 @@ namespace ProjectManagerApp.API
 
             private ProjectManagerAppEntities db =new ProjectManagerAppEntities();
 
-            [HttpPost]
+
+        [HttpPost]
         public object ReportSave(JObject jObject)
         {
             JToken cObjToken = jObject;
@@ -34,17 +35,27 @@ namespace ProjectManagerApp.API
 
 
         [HttpGet]
+        [Route("API/Log/GetLogHistoryAscProjectId")]
+        public JsonResult<List<Report>> GetLogHistoryAscProjectId(int developerid)
+        {
+            var reports = dal.GetLogsHistoryByProjectId(developerid);
+            return Json(reports);
+        }
 
+
+        [HttpGet]
+        [Route("API/Log/GetLogsHistory")]
         public JsonResult<List<Report>> GetLogsHistory(int id,int projectid,string fromdate,string todate)
         {
             //int DeveloperId = 1;//(developerid.HasValue) ? developerid.Value : User.Identity.GetUserId<int>();
-
+           
             var reports = dal.GetLogsHistory(id,projectid,fromdate,todate);
             return Json(reports);
 
         }
 
         [HttpGet]
+        [Route("API/Log/GetSeletedLogsDelete")]
         public void GetSeletedLogsDelete(int id)
         {
             //Log remove = db.Logs.Find(id);
@@ -54,6 +65,7 @@ namespace ProjectManagerApp.API
             dal.GetSelectedLogDeleted(id);
         }
 
+
         [HttpGet]
         [Route("API/Log/GetAllProjectName")]
         public JsonResult<List<Project>> GetAllProjectName()
@@ -62,6 +74,7 @@ namespace ProjectManagerApp.API
         
             return Json(projects);
         }
+
 
         [HttpPost]
         [Route("API/Log/GetLogsUpdate")]
