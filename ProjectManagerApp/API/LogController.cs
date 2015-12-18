@@ -53,9 +53,28 @@ namespace ProjectManagerApp.API
 
             dal.GetSelectedLogDeleted(id);
         }
-        
-            
-        
 
+        [HttpGet]
+        [Route("API/Log/GetAllProjectName")]
+        public JsonResult<List<Project>> GetAllProjectName()
+        {
+            var projects = dal.GetProjectsResultSheet();
+        
+            return Json(projects);
+        }
+
+        [HttpPost]
+        [Route("API/Log/GetLogsUpdate")]
+        public object GetLogUpdate(JObject jObject)
+        {
+            JToken cObjToken = jObject;
+          //  string desc = jObject.GetValue("des").ToString();
+            string logxml = cObjToken.SelectToken("editlogXML").ToString();
+
+            new ProjectDal().GetEditLogsUpdate(logxml);
+
+            return null;
+
+        }
     }
 }

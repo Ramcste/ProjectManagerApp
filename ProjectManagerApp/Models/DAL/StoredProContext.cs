@@ -28,9 +28,15 @@ namespace ProjectManagerApp.Models.DAL
 
         [StoredProcAttributes.Name("[Logs.DeleteSelected]")]
 
-        public StoredProc<RemoveLogInput> RemoveLogProc { get; set; } 
+        public StoredProc<RemoveLogInput> RemoveLogProc { get; set; }
 
-       
+
+        [StoredProcAttributes.Name("[Logs.ResultSheet.Update]")]
+
+        public StoredProc<Logedit> LogsUpdate { get; set; }
+
+
+
         public StoredProContext()
         {
             this.InitializeStoredProcs();

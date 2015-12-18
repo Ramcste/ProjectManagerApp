@@ -21,6 +21,8 @@ namespace ProjectManagerApp
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js",
+                    //   "~/Scripts/bootstrap-dialog.js",
+                        "~/Scripts/bootstrap-dialog.min.js",
                       "~/Scripts/respond.js"));
 
             //datetimepicker
@@ -29,9 +31,14 @@ namespace ProjectManagerApp
                 "~/Scripts/bootstrap-datetimepicker.js"));
             
 
+            // css:start
+
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
+
+            bundles.Add(new StyleBundle("~/Content/bootstrap-dialog-css").Include(
+                    "~/Content/bootstrap-dialog.min.css"));
         }
     }
 }

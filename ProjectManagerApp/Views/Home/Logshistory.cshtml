@@ -7,6 +7,8 @@
 @Scripts.Render("~/bundles/jquery")
 @Scripts.Render("~/bundles/datetimepicker")
 @Scripts.Render("~/bundles/bootstrap")
+@Styles.Render("~/bundles/bootstrap")
+@Styles.Render("~/Content/bootstrap-dialog-css")
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
 
 <h2>Logs History</h2>
@@ -73,11 +75,12 @@
             format: 'M/D'
         });
 
-        //var pid = ($('#dropdown').val()=="")? '1':$('#dropdown').val();
-        //var date = ($('#logdate').val()=="")? '3/15':$('#logdate').val();
-        //alert(date);
-        //alert(pid);
-
+        @*var did = @HttpContext.Current.User.Identity.GetUserId();
+        var pid = ($('#dropdown').val()=="")? '1':$('#dropdown').val();
+        var date = ($('#logdate').val()=="")? '2015/3/15':$('#logdate').val();
+        alert(date);
+        alert(pid);
+        alert(did)*@;
     });
 
 
@@ -143,10 +146,12 @@
             var fromdate = $('#fromdate').val();
             var todate = $('#todate').val();
 
-            //alert(fromdate);
-            //alert(pid);
-            //  alert(todate);
+             //alert(fromdate);
+             // alert(pid);
+             // alert(todate);
 
+            // to remove exisiting records of table
+            $('.logtable tr').remove();
 
             var url = '/API/Log/GetLogsHistory';
             $.get(url, { id: did, projectid: pid, fromdate: fromdate, todate: todate }, function(data) {
@@ -217,36 +222,31 @@
 
         }
         else if(option==0) {
-            alert("okay");
+           // alert("okay");
 
-            var logid = $('.logtable .logid').val();
+           // var logid = $('.logtable .logid').val();
 
             var description, projectid, duration, workstime, worketime, date;
-
-            alert(logid);
+            var logid = $('.logtable .logid').val();
+            //alert(logid);
+            var developerid=@HttpContext.Current.User.Identity.GetUserId();
             $('input:checked').each(function () {
                 $this = $(this);
-                 description = $this.parent().siblings('td').eq(0).text();
-                 projectid = $this.parent().siblings('td').eq(1).text();
-                 duration =$this.parent().siblings('td').eq(2).text();
-                 workstime =$this.parent().siblings('td').eq(3).text();
-                 worketime =$this.parent().siblings('td').eq(4).text();
-                 date =$this.parent().siblings('td').eq(5).text();
-                alert(description + ' ' + projectid + ' ' + duration+' '+ workstime+' '+worketime+' '+date);
-
-
-          
-
-                //or just 
-                //stringresult += $this.parent().siblings('td').text();
+                 description = $this.parent().siblings('td').eq(1).text();
+                 projectid = $this.parent().siblings('td').eq(2).text();
+                 duration =$this.parent().siblings('td').eq(3).text();
+                 workstime =$this.parent().siblings('td').eq(4).text();
+                 worketime =$this.parent().siblings('td').eq(5).text();
+                 date =$this.parent().siblings('td').eq(6).text();       
             });
-           // alert('This is the whole string: '+stringresult);
-
-            editlog(logid, description, projectid, duration, date);
-
-            
+         
+          //  alert(date);
+            editlog(logid, description, projectid, duration, workstime, worketime, date, developerid);
+          //  alert(description);
+           // alert(description + ' ' + projectid + ' ' + duration+' '+ workstime+' '+worketime+' '+date);
 
         }
+      
     }
 
 
@@ -263,42 +263,158 @@
 
     // for editing logs
 
-    function editlog(logid, description, projectid, date) {
-        //var messageContent = $('<div></div>');
-        //messageContent.append('<label>Are you sure you want to delete?</label>');
-        //dialogAddItem = new BootstrapDialog({
-        //    title: 'Delete ?',
-        //    type: BootstrapDialog.TYPE_PRIMARY,
-        //    message: messageContent,
-        //    autodestroy: true,
-        //    buttons: [
-        //            {
-        //                label: 'Delete',
-        //                cssClass: 'btn-danger',
-        //                action: function (dialog) {
-        //                    // setTimeout(function () { $(".quick-cart").addClass("open"); }, 0, false);
-        //                    dialog.close();
-        //                    me.addItem(logid, description, projectid, date,false, false, true, true);
-        //                }
-        //            },
-        //             {
-        //                 label: 'Cancel',
-        //                 cssClass: 'btn-success',
-        //                 action: function (dialog) {
-        //                     setTimeout(function () { $(".quick-cart").addClass("open"); }, 0, false);
-        //                     dialog.close();
-        //                 }
-        //             }
-        //    ]
-        //});
-        //dialogAddItem.open();
+    function editlog(logid, description, projectid, duration, workstime, worketime, date, developerid) {
+       //  alert(description);
+      //  alert(date);
+       // alert(projectid);
+       
+        dialogAddItem = new BootstrapDialog({
+               
+                title: 'Are you sure you want to edit it?',
+                message:
+                    '<div class="modal-body">'+
+                    //first row
+                    '<div class="row">'+
+                    '<div class="col-md-8">'+
+                    '<input type="text" class="form-control" id="editdescription" value="'+description+'" style="width:230px" />'+
+                    '</div>'+
 
-        alert("Hello there");
+                    '<div class="col-md-4">'+
+                    '<select id="projectname" class="form-control"  style="width:120px">'+
+               
+                    '</select>'+
+                    '</div>'+
+
+                    '</div>'+
+                    
+                    '<br/>'+
+                    //second row
+
+                    '<div class="row">'+ 
+
+                    '<div class="col-md-3">'+
+                    '<label class="form-control" style="width:80px">'+"Date"+'</label>'+
+                    '</div>'+
+
+                    '<div class="col-md-4">'+
+                    '<div class="form-group">'+
+                                '<div class="input-group date" id="datetimepicker3" style="width:120px">'+
+                                    '<input type="text" class="form-control" value="'+date+'" id="editdate" />'+
+                                    '<span class="input-group-addon">'+
+                                        '<span class="glyphicon glyphicon-calendar"></span>'+
+                                    '</span>'+
+                                '</div>'+
+                            '</div>'+
+                    '</div>'+
+                    
+
+                    '<div class="col-md-5">'+
+                    //'<input type="submit" id="applyButton" value="Apply" onclick="editSave();" class="btn btn-success"/>'+
+                    '</div>'+
+
+                    '</div>'
+                    
+
+                ,
+                onshow: function(dialogRef){
+                 //   alert('Dialog is popping up, its message is ');
+                },
+                onshown: function(dialogRef){
+                    $('#datetimepicker3').datetimepicker({
+                        format: 'M/D'
+                    });
+                    getprojectname();
+                   // $("#projectname option[value='+pid+']").prop('selected', true);
+                },
+                buttons: [{
+                label: 'Apply',
+                cssClass: 'btn-success',
+                action: function(dialog) {
+
+                    var description = $('#editdescription').val();
+                    var edate = $('#editdate').val();
+                    var projectid = $('#projectname').val();
+                    alert(projectid);
+                   // var developerid=@HttpContext.Current.User.Identity.GetUserId();
+                   // console.log(description+'   '+editdate+'   '+logid+'   '+projectid+'    '+did);
+
+                    var html = new Array();
+                    html.push('<logs>');
+                    html.push('<LineItem ');
+                    html.push('Id="' + logid + '"');
+                    html.push('D="' + description + '"');
+                    html.push('pr="' + projectid + '"');
+                    html.push('wst="' + workstime + '"');
+                    html.push('wet="' + worketime + '"');
+                    html.push('d="' + duration + '"');
+                    html.push('date="' + edate + '"');
+                    html.push('did="' + developerid + '"');
+                    html.push('></LineItem>');
+                    //console.log(projectid);
+                
+        html.push('</logs>');
+        console.log(html.join(''));
+        var editlogXML = html.join(' ');
+        // var json = sys.Serialization.JavaScriptSerializer.serialize(logXML);
+        var json = '{"editlogXML":' + JSON.stringify(editlogXML) + '}';
+        console.log(json);
+
+                    //console.log(json);
+                    $.ajax({
+                        type: 'POST',
+                        url: '/API/Log/GetLogsUpdate',
+                        data: json,
+                        dataType: 'json',
+                        contentType: 'application/json; charset=utf-8',
+                        success: function (data) {
+                            alert("Data Updated Successfully");
+
+                        },
+                        error:function() {
+                            alert("something went wrong while  saving. try again!!");
+                        }
+                    });
+
+                 //   alert("Hello");
+
+                    dialog.close();
+                
+                }
+            }]
+        });
+
+        dialogAddItem.open();
+       
+        // alert("Hello there");
+    }
+
+
+    //loading projectsname in dropdown
+    function getprojectname() {
+
+        $.ajax({
+            url:'/API/Log/GetAllProjectName',
+            type:'GET',
+            dataType: 'json',
+            success: function(data){
+ 
+                 console.log(data);
+                 var options = [];
+                 for (var i = 0; i < data.length; i++) {
+                     options.push('<option value="',
+                       data[i].Id, '">',
+                       data[i].Name, '</option>');
+                 }
+                 $("#projectname").html(options.join(''));
+
+               
+            }
+            });
+                
+              
     }
 
 </script>
-
-
 <style>
     .logtable{
         border: 1px solid #666;   
@@ -312,7 +428,16 @@
       .highlight {
          background-color: red;
      }
-
+         
+      /*.modal-dialog {
+          width: 800px;
+          height: 600px;
+               
+     }*/  
+      .modal-body {
+          width: 350px;
+          height: 150px;
+      } 
     
 </style>
 

@@ -224,6 +224,7 @@
     <Compile Include="Models\C__MigrationHistory.cs">
       <DependentUpon>ProjectManagerAppEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\DAL\Input\Logedit.cs" />
     <Compile Include="Models\DAL\Input\RemoveLogInput.cs" />
     <Compile Include="Models\DAL\Input\Report.cs" />
     <Compile Include="Models\DAL\Input\XmlInput.cs" />
@@ -261,6 +262,7 @@
   <ItemGroup>
     <Content Include="Content\bootstrap-datetimepicker.css" />
     <Content Include="Content\bootstrap-datetimepicker.min.css" />
+    <Content Include="Content\bootstrap-dialog.min.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -465,7 +467,6 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Account\Info.cshtml" />
     <Content Include="Views\Home\Logshistory.cshtml" />
-    <Content Include="Views\Home\_Logedit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

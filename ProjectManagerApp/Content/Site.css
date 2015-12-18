@@ -22,3 +22,9 @@ select,
 textarea {
     max-width: 280px;
 }
+
+
+/**modal backdrop*/
+.modal-backdrop {
+    z-index: 0 !important;
+}

@@ -348,6 +348,9 @@
                 success: function (data) {
                     alert("Data Saved Successfully");
 
+                    // to empty temptable after saving records in database
+                    $('#temptable').empty();
+
                 },
                 error:function() {
                     alert("something went wrong while  saving. try again!!");

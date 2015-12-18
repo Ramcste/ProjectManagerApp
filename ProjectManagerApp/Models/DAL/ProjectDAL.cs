@@ -28,6 +28,7 @@ namespace ProjectManagerApp.Models.DAL
         }
         public List<Project> GetProjectsResultSheet()
         {
+           
             var projects = db.ProjectResultSheetProc.CallStoredProc().ToList<Project>();
 
             return projects;
@@ -86,7 +87,18 @@ namespace ProjectManagerApp.Models.DAL
         }
 
 
-   
+        public List<Report> GetEditLogsUpdate(string editlog)
+        {
+            Logedit inputParams = new Logedit()
+            {
+           
+                EditLogXML = editlog
+            };
+
+            var report = db.LogsUpdate.CallStoredProc(inputParams).ToList<Report>();
+            return report;
+        }
+
 
     }
 }
