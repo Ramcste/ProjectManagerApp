@@ -52,23 +52,25 @@
 
 <h2>Log History</h2>
 <div class="projectlogedit row">
-    <div class="col-md-10"></div>
     <div class="col-md-2">
         <div id="bulkeditoroption" style="color: darkgrey">
 
-            <input type="checkbox" class="logrowchechbox"  onclick="bulkcheck(this);" />
+            <input type="checkbox" class="logrowcheckbox" onclick="bulkcheck(this);" />
             <select class="bulkeditoption" onchange="bulkeditor(this);">
-                
+
                 <option>Select Option</option>
-                
+
                 @*<option value="0" id="bulkedit">Bulk Edit</option>*@
-                
+
                 <option value="1" id="bulkdelete"> Bulk Delete</option>
-                
+
             </select>
 
 
         </div>
+    </div>
+    <div class="col-md-10">
+       
     </div>
  
 </div>
@@ -141,20 +143,21 @@
                 var len = data.length;
                 for (var i = 0; i < len; i++) {
                     report += '<tr>' +
+                        '<td>'+'<input type="checkbox" class="rowcheckbox" onclick="check(this);"/>'+' </td>'+
                         '<td>' + '<input type="hidden" class="logid" value="' + data[i].Id + '"/>' + '</td>' +
                         '<td class="description">' + data[i].Description + '</td>' +
-                        // '<td class="projectid">' + data[i].ProjectId + '</td>' +
+                    // '<td class="projectid">' + data[i].ProjectId + '</td>' +
                         '<td class="projectname">' + data[i].Name + '</td>' +
                         '<td class="duration">' + data[i].Duration + '</td>' +
                         '<td class="workstime">' + data[i].WorkStartTime + '</td>' +
                         '<td class="worketime">' + data[i].WorkEndTime + '</td>' +
                         '<td class="date">' + data[i].Date + '</td>' +
-                        '<td>' + '<input type="checkbox" class="rowcheckbox" onclick="check(this);"/>' +
-                        '<select class="editoption" onchange="editor(this);">' +
-                         '<option>Select Option</option>' +
-                        '<option value="0" id="bulkedit">Edit</option>' +
-                        '<option value="1" id="delete">Delete</option>' +
-                        '</select>' + '</td>' +
+                        '<td>'+
+                         '<span style="display:inline;">'+
+                             '<input type="button" id="editbutton" onclick="editbuttonclick(this);" value="Edit"/>'+ 
+                              '<input type="button" id="deletebutton" onclick="deletebuttonclick(this);" value="Delete"/>'+
+                             '<span>'
+                        + '</td>' +
                         '</tr>';
                 }
 
@@ -200,21 +203,20 @@
                     var len = data.length;
                     for (var i = 0; i < len; i++) {
                         report += '<tr>' +
-                            
+                            '<td>'+'<input type="checkbox" class="rowcheckbox" onclick="check(this);"/>'+' </td>'+ 
                             '<td>' + '<input type="hidden" class="logid" value="' + data[i].Id + '"/>' + '</td>' +
                             '<td class="description">' + data[i].Description + '</td>' +
-                           '<td class="projectname">' + data[i].Name + '</td>' +
+                            '<td class="projectname">' + data[i].Name + '</td>' +
                             '<td class="duration">' + data[i].Duration + '</td>' +
                             '<td class="workstime">' + data[i].WorkStartTime + '</td>' +
                             '<td class="worketime">' + data[i].WorkEndTime + '</td>' +
                             '<td class="date">' + data[i].Date + '</td>' +
                             '<td>' +
-                            '<input type="checkbox" class="rowcheckbox" onclick="check(this);"/>' +
-                            '<select class="editoption"  onchange="editor(this);">' +
-                            '<option>Select Option</option>' +
-                            '<option value="0" id="edit">Edit</option>' +
-                            '<option value="1" id="delete">Delete</option>' +
-                            '</select>' + '</td>' +
+                             '<span style="display:inline;">'+
+                             '<input type="button" id="editbutton" onclick="editbuttonclick(this);" value="Edit"/>'+
+                              '<input type="button" id="deletebutton" onclick="deletebuttonclick(this);" value="Delete"/>'+
+                             '<span>'+               
+                            '</td>' +
                             '</tr>';
                     }
 
@@ -249,6 +251,47 @@
     var developerid=@HttpContext.Current.User.Identity.GetUserId();
     
    
+    // for deleting specific log columns from database
+    function deletebuttonclick(ob) {
+        var con = confirm("Are you sure want to delete it?");
+        logid = $(ob).closest("tr").find(".logid").val(); 
+        console.log(logid);
+           
+        if (con == true) {
+
+            var url = '/API/Log/GetSeletedLogsDelete';
+            $.get(url, { id: logid }, function(data) {
+                   
+
+            });
+              
+        } else {
+            console.log(logid);
+        }
+
+    }
+    // for editing specific log columns from database
+    function editbuttonclick(ob) {
+        
+        var result=confirm("Are you sure you want to edit it?");
+
+        if (result == true) {
+
+
+            logid = $(ob).closest("tr").find(".logid").val();
+            description = $(ob).closest("tr").find(".description").text(); // Finds the closest row <tr> // Gets a descendent with class="nr"    // Retrieves the text within <td>
+            projectname = $(ob).closest("tr").find(".projectname").text();
+            duration = $(ob).closest("tr").find(".duration").text();
+            workstime = $(ob).closest("tr").find(".workstime").text();
+            worketime = $(ob).closest("tr").find(".description").text();
+            date = $(ob).closest("tr").find(".date").text();
+
+            editlog(logid, description, projectname, duration, workstime, worketime, date, developerid);
+           // alert("edit button clicked");
+        } 
+            
+        
+}
     // for deleting specific columns selected
     function editor(ob) {
         var option = ob.value;
@@ -263,25 +306,18 @@
 
                 var url = '/API/Log/GetSeletedLogsDelete';
                 $.get(url, { id: logid }, function(data) {
-                   
+                    console.log("successfully deleted");
 
                 });
               
             } else {
-                console.log(logid);
+                //console.log(logid);
             }
 
         }
         else if(option==0) {
              
-             description = $(ob).closest("tr").find(".description").text();       // Finds the closest row <tr> // Gets a descendent with class="nr"    // Retrieves the text within <td>
-             projectname = $(ob).closest("tr").find(".projectname").text();  
-             duration =    $(ob).closest("tr").find(".duration").text();
-             workstime =   $(ob).closest("tr").find(".workstime").text(); 
-             worketime =   $(ob).closest("tr").find(".description").text(); 
-             date=         $(ob).closest("tr").find(".date").text(); 
-                                
-            editlog(logid, description, projectname, duration, workstime, worketime, date, developerid);
+             
           
         }
       
@@ -290,12 +326,14 @@
 
     
     var count = 0;
-    // for highlighting specific checked column
+    // for checking all the log columns checked 
     function check(obj) {
         $(".logtable tr").click(function() {
-            $(this).find('td').toggleClass("highlight");
+            //$(this).find('td').toggleClass("highlight");
+
             logid = $(obj).closest("tr").find(".logid").val();
             selectedlogid.push(logid);
+            console.log(logid);
         });
 
         count++;
@@ -470,16 +508,39 @@
 
     function bulkcheck(ob) {
       
-           $('.bulkeditoption').show();   
+        $('.bulkeditoption').show();
+       
+        if ($(".projectlogedit .logrowcheckbox").is(':checked')) {
+            $(".logtable input[type=checkbox]").each(function () {
+                $(this).prop("checked", true);
+                
+                logid = $(this).closest("tr").find(".logid").val();
+                selectedlogid.push(logid);
+              
+            });
+            selectedlogid.join(",");
+            console.log("selectedlogid",selectedlogid.toString());
+       
+
+        } else {
+            $(".logtable input[type=checkbox]").each(function () {
+                $(this).prop("checked", false);
+                //selectedlogid.pop(logid);
+                //console.log(logid);
+
+            });
+
+        }
+
        // console.log("alert");
     }
-
+   
     function bulkeditor(ob) {
        // var response = confirm("Are you sure you want to bulk edit or delete it?");
       //  editlog(logid, description, projectname, duration, workstime, worketime, date, developerid);
       
             var option = ob.value;
-            console.log(option);
+          //  console.log(option);
 
         
 
@@ -495,31 +556,16 @@
             if (option == 1) {
                 var response1 = confirm("Are you sure you want to bulk delete it?");
                 if (response1 == true) {
-                    alert("please check the no of items you want to delete it from log  records.");
-                    alert(count);
-
-                    var logids = [];
-                    for (var i = 0; i < count; i++) {
-                        logids[i]=selectedlogid.pop(logid);
-                    }
-
-                    //for (var id = 0; id < count; id++) {
-                    //    console.log(ids[id]);
-                    //}
+                  
+                  
                     var url = '/API/Log/GetBulkLogDelete';
                     var developerid=@HttpContext.Current.User.Identity.GetUserId();
-                    var csvContent = "data:text/csv;charset=utf-8,";
-                    logids.forEach(function(infoArray, index){
-
-                        dataString = infoArray.join(",");
-                        csvContent += index < logids.length ? dataString+ "\n" : dataString;
-
-                    });
-                    
-                    $.get(url,{logids:csvContent,developerid:developerid},function(data) {
+                              
+                  //  console.log("selectedlogid 1111:",selectedlogid);
+                    $.get(url,{logids:selectedlogid.toString(),developerid:developerid},function(data) {
 
                         alert(data);
-                        console.log(success);
+                       console.log("success");
                         
                     });
                 }

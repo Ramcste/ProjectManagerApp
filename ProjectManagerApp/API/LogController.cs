@@ -94,7 +94,7 @@ namespace ProjectManagerApp.API
 
         [HttpGet]
         [Route("API/Log/GetBulkLogDelete")]
-        public void GetBulkLogDelete(string logids,int developerid)
+        public void GetBulkLogDelete(string logids, int developerid)
         {
             dal.GetBulkLogsDelete(logids, developerid);
         }
