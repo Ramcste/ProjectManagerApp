@@ -43,6 +43,10 @@ namespace ProjectManagerApp.Models.DAL
         public StoredProc<Logedit> LogsUpdate { get; set; }
 
 
+        [StoredProcAttributes.Name("[Logs.BulkDelete]")]
+
+        public StoredProc<LogBulkDelete> LogsBulkDelete { get; set; }
+
 
         public StoredProContext()
         {

@@ -224,6 +224,7 @@
     <Compile Include="Models\C__MigrationHistory.cs">
       <DependentUpon>ProjectManagerAppEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\DAL\Input\LogBulkDelete.cs" />
     <Compile Include="Models\DAL\Input\Logedit.cs" />
     <Compile Include="Models\DAL\Input\RemoveLogInput.cs" />
     <Compile Include="Models\DAL\Input\Report.cs" />
@@ -241,6 +242,7 @@
     <Compile Include="Models\Project.cs">
       <DependentUpon>ProjectManagerAppEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ProjectManagerAppContext.cs" />
     <Compile Include="Models\ProjectManagerAppDBContext.cs" />
     <Compile Include="Models\ProjectManagerAppEntities.Context.cs">
       <AutoGen>True</AutoGen>

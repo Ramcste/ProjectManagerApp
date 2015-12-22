@@ -34,7 +34,7 @@ namespace ProjectManagerApp.Models.DAL
             return projects;
         }
 
-        public List<Report> GetLogsHistory(int? id,int? projectid,string fromdate,string todate)
+        public List<Report> GetLogsHistory(int? id,int? projectid,DateTime fromdate,DateTime todate)
         {
 
             id = (id == null) ? 1 : id;
@@ -44,8 +44,8 @@ namespace ProjectManagerApp.Models.DAL
             {
                 DeveloperId = (int) id,
                 ProjectId=(int) projectid,
-                FromDate =  fromdate,
-                ToDate = todate
+                FromDate =  fromdate.Date,
+                ToDate = todate.Date
 
             };
             
@@ -89,6 +89,19 @@ namespace ProjectManagerApp.Models.DAL
             return report;
         }
 
+
+        public List<Report> GetBulkLogsDelete(string logids,int developerid)
+        {
+            LogBulkDelete inputparamas = new LogBulkDelete()
+            {
+                LogIds = logids,
+                DeveloperId = developerid
+            };
+
+            var report = db.LogsBulkDelete.CallStoredProc(inputparamas).ToList<Report>();
+
+            return report;
+        } 
 
     }
 }

@@ -35,12 +35,12 @@
     <div class="col-md-2">
         <div class="form-group">
             <div class="input-group date" id='datetimepicker1'>
-                <input type='text' class="form-control" id='todate' />
+                <input type='text' class="form-control" id='todate'/>
                 <span class="input-group-addon">
                     <span class="glyphicon glyphicon-calendar"></span>
                 </span>
             </div>
-        </div>  
+        </div>
     </div>
     <div class="col-md-2">
         <div class="form-group">
@@ -48,31 +48,65 @@
         </div>
     </div>
 </div>
+
+
+<h2>Log History</h2>
+<div class="projectlogedit row">
+    <div class="col-md-10"></div>
+    <div class="col-md-2">
+        <div id="bulkeditoroption" style="color: darkgrey">
+
+            <input type="checkbox" class="logrowchechbox"  onclick="bulkcheck(this);" />
+            <select class="bulkeditoption" onchange="bulkeditor(this);">
+                
+                <option>Select Option</option>
+                
+                @*<option value="0" id="bulkedit">Bulk Edit</option>*@
+                
+                <option value="1" id="bulkdelete"> Bulk Delete</option>
+                
+            </select>
+
+
+        </div>
+    </div>
+ 
+</div>
+
+<br/>
 <div id="logshistory">
-    <h2>Log History</h2>
-    <table class="logtable">
-
-    </table>
-
+       <table class="logtable"></table>
+ 
 </div>
 <br/>
 
 <script>
 
+    // hide bulkeditor
+    $('.bulkeditoption').hide();
 
+
+    //$('.logrowchechbox').hover(function() {
+    //    $('.bulkeditoption').show();
+    //},function(){
+    //     $('.bulkeditoption').hide();  
+    //});
+    // mouseover functionality
+  
+   
     // hide edit div 
     $('#edit').hide();
     $(document).ready(function() {
         $('#datetimepicker').datetimepicker({
-            format: 'M/D'
+            format: 'YYYY-M-D'
         });
 
         $('#datetimepicker1').datetimepicker({
-            format: 'YYYY/M/D'
+            format: 'YYYY-M-D'
         });
 
         $('#datetimepicker2').datetimepicker({
-            format: 'M/D'
+            format: 'YYYY-M-D'
         });
 
         @*var did = @HttpContext.Current.User.Identity.GetUserId();
@@ -89,12 +123,12 @@
     $(document).ready(function() {
 
         var did = @HttpContext.Current.User.Identity.GetUserId();
-        var pid = ($('#dropdown').val() == "") ? '1' : $('#dropdown').val();
-        var fromdate = ($('#fromdate').val() == "") ? '12/1' : $('#fromdate').val();
-        var todate = ($('#todate').val() == "") ? moment().format('YYYY/M/D') : $('#todate').val();
-        if (pid == "" || did == "" || fromdate == "" || todate == "") {
-            alert("fill out all the blanks and select project.");
-        } else {
+        //var pid = ($('#dropdown').val() == "") ? '1' : $('#dropdown').val();
+        //var fromdate = ($('#fromdate').val() == "") ? '12/1' : $('#fromdate').val();
+        //var todate = ($('#todate').val() == "") ? moment().format('M/D') : $('#todate').val();
+        //if (pid == "" || did == "" || fromdate == "" || todate == "") {
+        //    alert("fill out all the blanks and select project.");
+        //} else {
             //alert(fromdate);
             //alert(pid);
             //alert(todate);
@@ -118,7 +152,7 @@
                         '<td>' + '<input type="checkbox" class="rowcheckbox" onclick="check(this);"/>' +
                         '<select class="editoption" onchange="editor(this);">' +
                          '<option>Select Option</option>' +
-                        '<option value="0" id="bulkedit">Bulk edit</option>' +
+                        '<option value="0" id="bulkedit">Edit</option>' +
                         '<option value="1" id="delete">Delete</option>' +
                         '</select>' + '</td>' +
                         '</tr>';
@@ -135,7 +169,7 @@
 
 
             });
-        }
+       // }
     });
 
 
@@ -145,11 +179,11 @@
         $('#searchbutton').click(function() {
 
             var did = @HttpContext.Current.User.Identity.GetUserId();
-            var pid = ($('#dropdown').val() == "") ? '1' : $('#dropdown').val();
-            var fromdate = ($('#fromdate').val() == "") ? '12/1' : $('#fromdate').val();
-            var todate = ($('#todate').val() == "") ? moment().format('YYYY/M/D') : $('#todate').val();
+            var pid = $('#dropdown').val();
+            var fromdate = ($('#fromdate').val() == "") ? '2015-12-1' : $('#fromdate').val();
+            var todate = ($('#todate').val() == "") ? moment().format('YYYY-M-D') : $('#todate').val();
 
-            if (pid== "" || formdate== "" || todate== "") {
+            if (pid== "" || fromdate== "" || todate== "") {
                 alert("fill out all the blanks and then proceed");
             }
                 //alert(fromdate);
@@ -166,6 +200,7 @@
                     var len = data.length;
                     for (var i = 0; i < len; i++) {
                         report += '<tr>' +
+                            
                             '<td>' + '<input type="hidden" class="logid" value="' + data[i].Id + '"/>' + '</td>' +
                             '<td class="description">' + data[i].Description + '</td>' +
                            '<td class="projectname">' + data[i].Name + '</td>' +
@@ -189,6 +224,7 @@
 
                     } else {
                         console.log("no data to show");
+                        alert("there is no records for this search!!");
                     }
 
 
@@ -201,75 +237,76 @@
     });
 
 
+    // count the number of records we want to bulk edit or delete
+
+
+    var selectedlogid = [];
+
+
+
+    var description,projectname, duration, workstime, worketime, date,logid,projectid;
+    
+    var developerid=@HttpContext.Current.User.Identity.GetUserId();
+    
+   
     // for deleting specific columns selected
     function editor(ob) {
         var option = ob.value;
         console.log(option);
 
         if (option == 1) {
-            //alert("Are you sure want to delete it from database?");
             var con = confirm("Are you sure want to delete it?");
-            var logid = $('.logtable .logid').val();
-           // alert(logid);
+            logid = $(ob).closest("tr").find(".logid").val(); 
+          //console.log(logid);
+           
             if (con == true) {
 
                 var url = '/API/Log/GetSeletedLogsDelete';
                 $.get(url, { id: logid }, function(data) {
-                    //    console.log(data);
-                    //    alert("success");
+                   
 
                 });
-                //   $(ob).parent().parent().remove();
+              
+            } else {
+                console.log(logid);
             }
-
-            else {
-                //do nothing
-              //  alert("you pressed false");
-            }
-
-
 
         }
         else if(option==0) {
-           // alert("okay");
-
-           // var logid = $('.logtable .logid').val();
-
-            var description, projectid, duration, workstime, worketime, date;
-            var logid = $('.logtable .logid').val();
-            //alert(logid);
-            var developerid=@HttpContext.Current.User.Identity.GetUserId();
-            $('input:checked').each(function () {
-                $this = $(this);
-                 description = $this.parent().siblings('td').eq(1).text();
-                 projectname = $this.parent().siblings('td').eq(2).text();
-                 duration =$this.parent().siblings('td').eq(3).text();
-                 workstime =$this.parent().siblings('td').eq(4).text();
-                 worketime =$this.parent().siblings('td').eq(5).text();
-                 date =$this.parent().siblings('td').eq(6).text();       
-            });
-         
-          //  alert(date);
+             
+             description = $(ob).closest("tr").find(".description").text();       // Finds the closest row <tr> // Gets a descendent with class="nr"    // Retrieves the text within <td>
+             projectname = $(ob).closest("tr").find(".projectname").text();  
+             duration =    $(ob).closest("tr").find(".duration").text();
+             workstime =   $(ob).closest("tr").find(".workstime").text(); 
+             worketime =   $(ob).closest("tr").find(".description").text(); 
+             date=         $(ob).closest("tr").find(".date").text(); 
+                                
             editlog(logid, description, projectname, duration, workstime, worketime, date, developerid);
-          //  alert(description);
-           // alert(description + ' ' + projectid + ' ' + duration+' '+ workstime+' '+worketime+' '+date);
-
+          
         }
       
     }
 
 
-
+    
+    var count = 0;
     // for highlighting specific checked column
     function check(obj) {
         $(".logtable tr").click(function() {
             $(this).find('td').toggleClass("highlight");
+            logid = $(obj).closest("tr").find(".logid").val();
+            selectedlogid.push(logid);
         });
-    }
+
+        count++;
+        console.log(count);
+    
+   }
 
     // for confirmation to delete recors or not
 
-
+ 
+   
     // for editing logs
 
     function editlog(logid, description, projectname, duration, workstime, worketime, date, developerid) {
@@ -330,7 +367,7 @@
                 },
                 onshown: function(dialogRef){
                     $('#datetimepicker3').datetimepicker({
-                        format: 'M/D'
+                        format: 'YYYY-M-D'
                     });
                     getprojectname();
                   
@@ -415,8 +452,8 @@
                        data[i].Id, '">',
                        data[i].Name, '</option>');
                     
-                     if ($(this).text() == projectname)
-                         $(this).attr("selected","selected");
+                     //if ($(this).text() == projectname)
+                     //    $(this).attr("selected","selected");
                  }
                  $("#projectname").html(options.join(''));
                 //$('#projectname')
@@ -426,6 +463,74 @@
                 
               
     }
+
+
+
+    // functionality for bulkedit and bulkdelete
+
+    function bulkcheck(ob) {
+      
+           $('.bulkeditoption').show();   
+       // console.log("alert");
+    }
+
+    function bulkeditor(ob) {
+       // var response = confirm("Are you sure you want to bulk edit or delete it?");
+      //  editlog(logid, description, projectname, duration, workstime, worketime, date, developerid);
+      
+            var option = ob.value;
+            console.log(option);
+
+        
+
+            if (option == 0) {
+                var response = confirm("Are you sure you want to bulk edit it?");
+                if (response == true) {
+                    alert("please check the no of items you want to edit it from log records.");
+                    alert(count);
+                   
+                }
+            }
+
+            if (option == 1) {
+                var response1 = confirm("Are you sure you want to bulk delete it?");
+                if (response1 == true) {
+                    alert("please check the no of items you want to delete it from log  records.");
+                    alert(count);
+
+                    var logids = [];
+                    for (var i = 0; i < count; i++) {
+                        logids[i]=selectedlogid.pop(logid);
+                    }
+
+                    //for (var id = 0; id < count; id++) {
+                    //    console.log(ids[id]);
+                    //}
+                    var url = '/API/Log/GetBulkLogDelete';
+                    var developerid=@HttpContext.Current.User.Identity.GetUserId();
+                    var csvContent = "data:text/csv;charset=utf-8,";
+                    logids.forEach(function(infoArray, index){
+
+                        dataString = infoArray.join(",");
+                        csvContent += index < logids.length ? dataString+ "\n" : dataString;
+
+                    });
+                    
+                    $.get(url,{logids:csvContent,developerid:developerid},function(data) {
+
+                        alert(data);
+                        console.log(success);
+                        
+                    });
+                }
+            }
+         
+  
+
+    }
+
+
+ 
 
 </script>
 <style>

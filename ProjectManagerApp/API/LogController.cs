@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Web.Http;
 using System.Web.Http.Results;
 using Newtonsoft.Json.Linq;
@@ -45,7 +46,7 @@ namespace ProjectManagerApp.API
 
         [HttpGet]
         [Route("API/Log/GetLogsHistory")]
-        public JsonResult<List<Report>> GetLogsHistory(int id,int projectid,string fromdate,string todate)
+        public JsonResult<List<Report>> GetLogsHistory(int id,int projectid,DateTime fromdate,DateTime todate)
         {
             //int DeveloperId = 1;//(developerid.HasValue) ? developerid.Value : User.Identity.GetUserId<int>();
            
@@ -88,6 +89,14 @@ namespace ProjectManagerApp.API
 
             return null;
 
+        }
+
+
+        [HttpGet]
+        [Route("API/Log/GetBulkLogDelete")]
+        public void GetBulkLogDelete(string logids,int developerid)
+        {
+            dal.GetBulkLogsDelete(logids, developerid);
         }
     }
 }
