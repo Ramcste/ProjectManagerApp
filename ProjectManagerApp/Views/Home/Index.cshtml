@@ -15,7 +15,7 @@
     <div class="container body-content">
         <div class="content">
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-5">
                     <div class="row">
                         <div class="col-md-7">
                             <div class="form-group">
@@ -34,7 +34,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-7">
                     <div class="row">
                         <div class="col-md-3">
                             <div class="form-group">
@@ -89,9 +89,9 @@
 
 
 
-
-
-
+<br/>
+<br/>
+<h2>Logs Temptable</h2>
 <div id="temptable">
 
 </div>
@@ -113,7 +113,7 @@
     @*var id=@HttpContext.Current.User.identity.GetUserid();
     alert(id);*@
 
-
+    $('h2').hide();
     $('#savebutton').hide();
     $(document).ready(function () {
         $('#datetimepicker1').datetimepicker({
@@ -187,21 +187,31 @@
             var hdiff = ehours - shours;
             var mdiff = eminute - sminute;
 
+
+
+
             if (endtime > starttime) {
               //  alert(" endtime is greater");
                 
-                 //alert(hdiff);
-                //alert(mdiff);
-                if (hdiff < 0 || mdiff<0) {
+                $('#duration').val(hdiff + ":" + mdiff);
+              
+                if (mdiff<0) {
                     mdiff = mdiff + 60;
                     hdiff = hdiff - 1;
                     $('#duration').val(hdiff + ":" + mdiff);
-                } else {
+                }
+               else {
                     $('#duration').val(hdiff + ":" + mdiff);
                 }
             
                 //alert(endtime);
             }
+
+            //else if (mdiff<0 &&hdiff>0) {
+            //    mdiff = mdiff + 60;
+            //    hdiff = hdiff - 1;
+            //    $('#duration').val(hdiff + ":" + mdiff);
+            //}
 
             else if (endtime == starttime && mdiff>=0) {
                var hdiff1 = 0;
@@ -245,11 +255,11 @@
                 //    '</div>' +
                     html.push('<div class="col-md-3 description">' + description + '</div>' +
                     '<div class="col-md-2 projectName">' + name + '<input type="hidden" class="projectid" value="' + projectid + '"/>' + '</div>' +
-                    '<div class="col-md-2 duration">' + duration + '</div>' +
+                    '<div class="col-md-1 duration">' + duration + '</div>' +
                     '<div class="col-md-1 workstime">' + workstime + '</div>' +
                     '<div class="col-md-1">' + "-" + '</div>' +
                     '<div class="col-md-1 worketime">' + worketime + '</div>' +
-                    '<div class="col-md-1 date">' + date + '</div>' +
+                    '<div class="col-md-2 date">' + date + '</div>' +
                     '<input type="hidden" class="developerid" value="' + @HttpContext.Current.User.Identity.GetUserId() + '"/>'+
                     '<button class="col-md-1 delete" onclick="operation(this);">'  + '<i class="fa fa-close" style="font-size:24px;color:red">' + '</i>' + '</button>'
                 );
@@ -257,8 +267,8 @@
                 html.push('</div>');
                 $('#temptable').append(html.join(''));
                 count++;
-                
 
+                $('h2').show();
                 $('#savebutton').show();
 
                 reset();

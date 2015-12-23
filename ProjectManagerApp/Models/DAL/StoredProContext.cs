@@ -48,6 +48,12 @@ namespace ProjectManagerApp.Models.DAL
         public StoredProc<LogBulkDelete> LogsBulkDelete { get; set; }
 
 
+        [StoredProcAttributes.Name("[Logs.ResultSheetAscDate]")]
+
+        [StoredProcAttributes.ReturnTypes(typeof(Report))]
+
+        public StoredProc<LogHistoryByDeveloperId> LogsResultAscDateSheetProc { get; set; }
+
         public StoredProContext()
         {
             this.InitializeStoredProcs();

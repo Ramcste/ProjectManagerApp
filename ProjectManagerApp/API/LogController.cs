@@ -98,5 +98,15 @@ namespace ProjectManagerApp.API
         {
             dal.GetBulkLogsDelete(logids, developerid);
         }
+
+        [HttpGet]
+        [Route("API/Log/GetLogsResultByDate")]
+
+        public JsonResult<List<Report>> GetLogsResultByDate(int developerid)
+        {
+            var report=dal.GetProjectResultSheetByDate(developerid);
+
+            return Json(report);
+        }
     }
 }

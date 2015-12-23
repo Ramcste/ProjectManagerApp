@@ -101,6 +101,19 @@ namespace ProjectManagerApp.Models.DAL
             var report = db.LogsBulkDelete.CallStoredProc(inputparamas).ToList<Report>();
 
             return report;
+        }
+
+
+        public List<Report> GetProjectResultSheetByDate(int developerid)
+        {
+            LogHistoryByDeveloperId inputparams = new LogHistoryByDeveloperId()
+            {
+                DeveloperId = developerid
+            };
+
+            var report = db.LogsResultAscDateSheetProc.CallStoredProc(inputparams).ToList<Report>();
+
+            return report;
         } 
 
     }
