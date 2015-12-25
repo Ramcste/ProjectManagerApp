@@ -26,10 +26,10 @@ namespace ProjectManagerApp.Models.DAL
                 // ignored
             }
         }
-        public List<Project> GetProjectsResultSheet()
+        public List<Projects> GetProjectsResultSheet()
         {
            
-            var projects = db.ProjectResultSheetProc.CallStoredProc().ToList<Project>();
+            var projects = db.ProjectResultSheetProc.CallStoredProc().ToList<Projects>();
 
             return projects;
         }

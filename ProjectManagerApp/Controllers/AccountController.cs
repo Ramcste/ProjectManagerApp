@@ -5,6 +5,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
@@ -69,6 +70,7 @@ namespace ProjectManagerApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
+
             ViewBag.ReturnUrl = returnUrl;
             if (!ModelState.IsValid)
             {
@@ -92,11 +94,44 @@ namespace ProjectManagerApp.Controllers
                 }
             }
 
+            //if (ModelState.IsValid)
+            //{
+            //    var user = await UserManager.FindAsync(model.UserName, model.Password);
+            //    if (user != null)
+            //    {
+            //        await SignInAsync(user, model.RememberMe);
+
+            //        // role user go to user page
+            //        if (UserManager.IsInRole(user.Id, "Admin"))
+            //        {
+            //            return RedirectToAction("Index", "Logs");
+            //        }
+            //        else
+            //        {
+            //            // for normal user role 
+
+            //            return RedirectToAction("Index", "Home");
+            //        }
+            //    }
+
+            //    else
+            //    {
+            //        ModelState.AddModelError("","Invalid username or passowrd");
+            //    }
+            //}
+
+            //  return View(model);
+
+           
+
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
 
             string UserName = (user == null) ? "" : user.UserName;
 
+           // string[] roles = Roles.GetAllRoles();
+
+       //     string[] role = Roles.GetRolesForUser(UserName);
             //Require the user to have a confirmed email before they can log in.
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
@@ -104,7 +139,32 @@ namespace ProjectManagerApp.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
+                    if(UserManager.IsInRole(user.Id,"Admin"))
+                  //  if (role.Contains("Admin"))
+                    {
+                        return RedirectToAction("Index","Logs");
+                    }
+
+                  else
+                   {
+                        return RedirectToLocal(returnUrl);
+                    }
+                    
+
+                   
+
+                //else if (roles.Contains("Developer"))
+                //{
+                //    return RedirectToAction("Index", "Home");
+                //   // Response.Redirect("~/Home/index.cshtml");
+
+                //}
+
+                //else
+                //{
+
+
+                //  }
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
@@ -495,10 +555,14 @@ namespace ProjectManagerApp.Controllers
 
         private ActionResult RedirectToLocal(string returnUrl)
         {
+
             if (Url.IsLocalUrl(returnUrl))
             {
                 return Redirect(returnUrl);
             }
+
+         
+
             return RedirectToAction("Index", "Home");
         }
 

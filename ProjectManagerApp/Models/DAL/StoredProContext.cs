@@ -4,7 +4,7 @@ using ProjectManagerApp.Models.DAL.Output;
 
 namespace ProjectManagerApp.Models.DAL
 {
-    public class StoredProContext : ProjectManagerAppDBContext
+    public class StoredProContext : ProjectManagerAppContext
     {
         [StoredProcAttributes.Name("[ReportSave.Complete]")]
 
@@ -13,7 +13,7 @@ namespace ProjectManagerApp.Models.DAL
 
         [StoredProcAttributes.Name("[Project.ResultSheet]")]
 
-        [StoredProcAttributes.ReturnTypes(typeof (Project))]
+        [StoredProcAttributes.ReturnTypes(typeof (Projects))]
 
         public StoredProc ProjectResultSheetProc { get; set; }
 

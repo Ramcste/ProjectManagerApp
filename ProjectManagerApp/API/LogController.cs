@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Web.Http;
 using System.Web.Http.Results;
 using Newtonsoft.Json.Linq;
+using ProjectManagerApp.Areas.Admin.Models;
 using ProjectManagerApp.Models;
 using ProjectManagerApp.Models.DAL;
 using ProjectManagerApp.Models.DAL.Input;
+using Projects = ProjectManagerApp.Models.DAL.Output.Projects;
 
 
 namespace ProjectManagerApp.API
@@ -69,7 +71,7 @@ namespace ProjectManagerApp.API
 
         [HttpGet]
         [Route("API/Log/GetAllProjectName")]
-        public JsonResult<List<Project>> GetAllProjectName()
+        public JsonResult<List<Projects>> GetAllProjectName()
         {
             var projects = dal.GetProjectsResultSheet();
         

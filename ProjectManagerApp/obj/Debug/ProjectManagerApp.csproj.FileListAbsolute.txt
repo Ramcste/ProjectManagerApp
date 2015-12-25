@@ -1,3 +1,5 @@
+E:\Workspace\ProjectManagerApp\ProjectManagerApp\bin\EntityFramework.SqlServer.dll
+E:\Workspace\ProjectManagerApp\ProjectManagerApp\bin\EntityFramework.SqlServer.xml
 E:\Workspace\ProjectManagerApp\ProjectManagerApp\bin\roslyn\csc.exe
 E:\Workspace\ProjectManagerApp\ProjectManagerApp\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
 E:\Workspace\ProjectManagerApp\ProjectManagerApp\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
@@ -16,7 +18,6 @@ E:\Workspace\ProjectManagerApp\ProjectManagerApp\bin\ProjectManagerApp.pdb
 E:\Workspace\ProjectManagerApp\ProjectManagerApp\bin\Antlr3.Runtime.dll
 E:\Workspace\ProjectManagerApp\ProjectManagerApp\bin\CodeFirstStoredProcs.dll
 E:\Workspace\ProjectManagerApp\ProjectManagerApp\bin\EntityFramework.dll
-E:\Workspace\ProjectManagerApp\ProjectManagerApp\bin\EntityFramework.SqlServer.dll
 E:\Workspace\ProjectManagerApp\ProjectManagerApp\bin\Microsoft.AspNet.Identity.Core.dll
 E:\Workspace\ProjectManagerApp\ProjectManagerApp\bin\Microsoft.AspNet.Identity.EntityFramework.dll
 E:\Workspace\ProjectManagerApp\ProjectManagerApp\bin\Microsoft.AspNet.Identity.Owin.dll
@@ -58,7 +59,6 @@ E:\Workspace\ProjectManagerApp\ProjectManagerApp\bin\System.Web.WebPages.Deploym
 E:\Workspace\ProjectManagerApp\ProjectManagerApp\bin\System.Web.WebPages.Razor.xml
 E:\Workspace\ProjectManagerApp\ProjectManagerApp\bin\Antlr3.Runtime.pdb
 E:\Workspace\ProjectManagerApp\ProjectManagerApp\bin\EntityFramework.xml
-E:\Workspace\ProjectManagerApp\ProjectManagerApp\bin\EntityFramework.SqlServer.xml
 E:\Workspace\ProjectManagerApp\ProjectManagerApp\bin\Microsoft.AspNet.Identity.Core.xml
 E:\Workspace\ProjectManagerApp\ProjectManagerApp\bin\Microsoft.AspNet.Identity.Owin.xml
 E:\Workspace\ProjectManagerApp\ProjectManagerApp\bin\Microsoft.AspNet.Identity.EntityFramework.xml
@@ -77,4 +77,3 @@ E:\Workspace\ProjectManagerApp\ProjectManagerApp\obj\Debug\ProjectManagerApp.Mig
 E:\Workspace\ProjectManagerApp\ProjectManagerApp\obj\Debug\ProjectManagerApp.csproj.GenerateResource.Cache
 E:\Workspace\ProjectManagerApp\ProjectManagerApp\obj\Debug\ProjectManagerApp.dll
 E:\Workspace\ProjectManagerApp\ProjectManagerApp\obj\Debug\ProjectManagerApp.pdb
-E:\Workspace\ProjectManagerApp\ProjectManagerApp\obj\Debug\ProjectManagerApp.csprojResolveAssemblyReference.cache

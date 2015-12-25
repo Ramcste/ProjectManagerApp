@@ -15,10 +15,16 @@ namespace ProjectManagerApp.Models
         // For more information refer to the documentation:
         // http://msdn.microsoft.com/en-us/data/jj591621.aspx
     
-        public ProjectManagerAppContext() : base("name=ProjectManagerAppContext")
+        public ProjectManagerAppContext() : base("name=ProjectManagerAppEntities")
         {
         }
 
         public System.Data.Entity.DbSet<ProjectManagerApp.Models.DAL.Input.Report> Reports { get; set; }
+
+        public System.Data.Entity.DbSet<ProjectManagerApp.Areas.Admin.Models.Log> Logs { get; set; }
+
+        //public System.Data.Entity.DbSet<ProjectManagerApp.Models.DAL.Input.Report> Reports { get; set; }
+
+        //public System.Data.Entity.DbSet<ProjectManagerApp.Models.DAL.Output.Project> Projects { get; set; }
     }
 }

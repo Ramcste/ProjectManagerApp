@@ -1,5 +1,5 @@
 ﻿@using Microsoft.AspNet.Identity
-@model ProjectManagerApp.Models.Project
+@model ProjectManagerApp.Models.DAL.Output.Projects
 @{
     ViewBag.Title = "Logshistory";
 }
@@ -60,7 +60,7 @@
 <h2>Log History</h2>
 <div class="projectlogedit row">
     <div class="col-md-2">
-        <div id="bulkeditoroption" style="color: darkgrey">
+        <div id="bulkeditoroption">
 
             <input type="checkbox" class="logrowcheckbox" onclick="bulkcheck(this);" />
             <select class="bulkeditoption" onchange="bulkeditor(this);">
@@ -90,27 +90,12 @@
 </div>
 <br/>
 <br/>
-<div class="row">
-    <div class="col-md-4"></div>
-    <div class="col-md-4">
-        <input type="button" id="pdfbutton" onclick="generateReport(this);" value="Generate Report" />
-    </div>
-    <div class="col-md-4"></div>
-</div>
+
 <script>
 
     // hide bulkeditor
     $('.bulkeditoption').hide();
-    $('#pdfbutton').hide();
-
-    //$('.logrowchechbox').hover(function() {
-    //    $('.bulkeditoption').show();
-    //},function(){
-    //     $('.bulkeditoption').hide();  
-    //});
-    // mouseover functionality
-
-
+    //$('.logrowcheckbox').hide();
     // hide edit div 
     $('#edit').hide();
     $(document).ready(function() {
@@ -170,7 +155,8 @@
             if (report != "") {
                 $('#logshistory .logtable').append(report);
                 console.log("success");
-                
+              //  $('.logrowcheckbox').show();
+
             } else {
                 console.log("no logs to show");
                 $('.logrowcheckbox').hide();
@@ -240,7 +226,7 @@
                     if (report != "") {
                         $('#logshistory .logtable').append(report);
                         console.log("success");
-                        $('#pdfbutton').show();
+                      //  $('.logrowcheckbox').show();
 
                     } else {
                         console.log("no data to show");
@@ -530,7 +516,9 @@
             $('.bulkeditoption').show();
             check();
         } else {
-            alert("There is nothing to delete");
+         //   if((ob).is(!checked)){
+            alert("you haven't  selected any row so there is nothing to delete");
+           // }
         }
        
     }
@@ -612,7 +600,7 @@
             if (report != "") {
                 $('#logshistory .logtable').append(report);
                 console.log("success");
-                
+               // $('.logrowcheckbox').show();
             } else {
                 console.log("no logs to show");
                 $('.logrowcheckbox').hide();
