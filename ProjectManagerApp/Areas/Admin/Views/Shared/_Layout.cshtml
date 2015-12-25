@@ -21,8 +21,9 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    @Html.ActionLink("Project Sheet", "Create", "Projects", new { area = "Admin" }, new { @class = "navbar-brand" })
-                    @Html.ActionLink("Logs Report", "Create", "Logs", new { area = "Admin" }, new { @class = "navbar-brand" })
+                    @Html.ActionLink("Project Sheet", "Index", "Projects", new { area = "Admin" }, new { @class = "navbar-brand" })
+                    @Html.ActionLink("Logs Report", "Index", "Logs", new { area = "Admin" }, new { @class = "navbar-brand" })
+                    @Html.ActionLink("Developer List", "Index", "AspNetUsers", new { area = "Admin" }, new { @class = "navbar-brand" })
                     
     @*<li><a href="@Url.Action("Index", "Projects")"></a></li>
                     <li><a href="@Url.Action("Index","Logs")" style="color:white ;"></a></li>*@

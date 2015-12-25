@@ -142,7 +142,8 @@ namespace ProjectManagerApp.Controllers
                     if(UserManager.IsInRole(user.Id,"Admin"))
                   //  if (role.Contains("Admin"))
                     {
-                        return RedirectToAction("Index","Logs");
+                        return RedirectToAction("Index","Projects" , new {Area="Admin"});
+                       
                     }
 
                   else

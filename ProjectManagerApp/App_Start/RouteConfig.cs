@@ -26,8 +26,8 @@ namespace ProjectManagerApp
             //added for admin panel
             routes.MapRoute(
                name: "Default_Admin",
-               url: "{Area:exists}/{controller}/{action}/{id}",
-               defaults: new { controller = "Logs", action = "Index", id = UrlParameter.Optional },
+               url: "{controller}/{action}/{id}",
+               defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional },
                namespaces:new string[]{ "ProjectManagerApp.Areas.Admin.Controllers" }
                
                );

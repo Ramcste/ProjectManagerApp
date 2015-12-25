@@ -17,9 +17,8 @@ namespace ProjectManagerApp.Areas.Admin
             context.MapRoute(
                 "Admin_default",
                 "Admin/{controller}/{action}/{id}",
-                new { action = "Index", id = UrlParameter.Optional },
-                null,
-                new string[] { "ProjectManagerApp.Areas.Admin.Controllers" }
+                new { action = "Index", id = UrlParameter.Optional }
+             // namespaces:  new [] { "ProjectManagerApp.Areas.Admin.Controllers" }
 
             );
         }
