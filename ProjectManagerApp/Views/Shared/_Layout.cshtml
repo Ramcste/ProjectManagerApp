@@ -9,6 +9,8 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+ 
+
 
 </head>
 <body>
@@ -45,11 +47,9 @@
     </div>
 
     @RenderSection("scripts", required: false)
-
-
- 
-
-
-
+    @Scripts.Render("~/bundles/jqueryval")
+   
 </body>
+
+
 </html>

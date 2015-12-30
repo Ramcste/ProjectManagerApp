@@ -5,44 +5,49 @@
 }
 
 <h2>Index</h2>
+<div class="row">
+    <div class="col-md-6">
+        <p>@Html.ActionLink("Create New", "Create") </p>
+    </div>
+    <div class="col-md-1">
+     
+    </div>
+    <div class="col-md-2">
+    </div>
+    <div class="col-md-1">
+        <p>Filter By</p>
+    </div>
+    <div class="col-md-2">
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
+        @using (Ajax.BeginForm("GetLogResultSheetByProject", "Logs", new AjaxOptions
+        {
+            HttpMethod = "GET",
+            InsertionMode = InsertionMode.Replace,
+            UpdateTargetId = "tblLogsList",
+            LoadingElementId = "divLoader"
+        }))
 
-    <tr></tr>
+        {
+            <div class="form-group">
+                @Html.DropDownList("filterBy", new SelectList(ViewBag.Projects, "id", "Name"), "Select Project", new { @class = "form-control", onchange = "$(this.form).submit();" })
+
+            </div>
+
+        }
+    </div>
 
 
-    @foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ProjectId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.WorkStartTime)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.WorkEndTime)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Duration)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Date)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DeveloperId)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
+    @*<div id="divLoader" style="display:none; position:absolute;">
+        Loading.....<img src="~/Images/ajax-loader.gif" />
+    </div>*@
+</div>
 
-</table>
+<div id="tblLogsList">
+
+    @Html.Partial("_LogList")
+   
+</div>
+
+<script src="~/Scripts/jquery-1.10.2.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+

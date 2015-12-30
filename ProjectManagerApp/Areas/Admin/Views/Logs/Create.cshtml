@@ -1,4 +1,7 @@
 ﻿@model ProjectManagerApp.Areas.Admin.Models.Log
+@Scripts.Render("~/bundles/datetimepicker")
+
+
 
 @{
     ViewBag.Title = "Create";
@@ -7,7 +10,11 @@
 <h2>Create</h2>
 
 
-@using (Html.BeginForm()) 
+<div class="partialview">
+    @Html.Partial("_UpdateLog")
+</div>
+
+@*@using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
     
@@ -24,10 +31,10 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.ProjectId, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Project.Name, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.ProjectId, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ProjectId, "", new { @class = "text-danger" })
+                @Html.DropDownList("ProjectId", new SelectList(ViewBag.Projects, "Id", "Name"), new { @class = "form-control",id="dropdown" })
+                 @Html.ValidationMessageFor(model => model.Project.Name, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -42,7 +49,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.WorkEndTime, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.WorkEndTime, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.WorkEndTime, new { htmlAttributes = new {@class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.WorkEndTime, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -50,7 +57,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Duration, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Duration, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.Duration, new { htmlAttributes = new {  @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Duration, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -58,31 +65,41 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Date, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Date, new { htmlAttributes = new { @class = "form-control" } })
+
+                @Html.EditorFor(model => model.Date, new { htmlAttributes = new {  @class = "form-control datetimepicker" } })
+               
                 @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.DeveloperId, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.AspNetUser.UserName, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.DeveloperId, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.DeveloperId, "", new { @class = "text-danger" })
+              
+                @Html.DropDownList("DeveloperId", new SelectList(ViewBag.Users, "Id", "UserName"), new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.AspNetUser.UserName, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Create" id="logcreatebutton" class="btn btn-default" />
             </div>
         </div>
     </div>
-}
+}*@
+
+
 
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
 
+
+
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+
 }
+
+

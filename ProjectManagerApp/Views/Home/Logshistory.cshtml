@@ -100,15 +100,18 @@
     $('#edit').hide();
     $(document).ready(function() {
         $('#datetimepicker').datetimepicker({
-            format: 'YYYY-M-D'
+            // format: 'YYYY-M-D'
+            format:'M/D/YYYY'
         });
 
         $('#datetimepicker1').datetimepicker({
-            format: 'YYYY-M-D'
+           // format: 'YYYY-M-D'
+            format:'M/D/YYYY'
         });
 
         $('#datetimepicker2').datetimepicker({
-            format: 'YYYY-M-D'
+            //  format: 'YYYY-M-D'
+            format:'M/D/YYYY'
         });
 
         @*var did = @HttpContext.Current.User.Identity.GetUserId();
@@ -408,7 +411,8 @@
             },
             onshown: function(dialogRef) {
                 $('#datetimepicker3').datetimepicker({
-                    format: 'YYYY-M-D'
+                    //format: 'YYYY-M-D'
+                    format:'M/D/YYYY'
                 });
                 getprojectname();
 

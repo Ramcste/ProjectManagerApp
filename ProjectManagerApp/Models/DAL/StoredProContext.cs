@@ -1,11 +1,13 @@
 ﻿using CodeFirstStoredProcs;
 using ProjectManagerApp.Models.DAL.Input;
 using ProjectManagerApp.Models.DAL.Output;
-
 namespace ProjectManagerApp.Models.DAL
 {
     public class StoredProContext : ProjectManagerAppContext
     {
+
+        //For Developer
+
         [StoredProcAttributes.Name("[ReportSave.Complete]")]
 
         public StoredProc<XmlInput> SaveReportCompleteProc { get; set; }
@@ -53,6 +55,18 @@ namespace ProjectManagerApp.Models.DAL
         [StoredProcAttributes.ReturnTypes(typeof(Report))]
 
         public StoredProc<LogHistoryByDeveloperId> LogsResultAscDateSheetProc { get; set; }
+
+
+        // for admin
+
+        [StoredProcAttributes.Name("[AspNetUsers.ResultSheet]")]
+
+        [StoredProcAttributes.ReturnTypes(typeof(AspNetUsers))]
+
+        public StoredProc AspNetUsersResultSheetProc { get; set; }
+
+
+
 
         public StoredProContext()
         {

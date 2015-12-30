@@ -7,7 +7,11 @@
 <h2>Edit</h2>
 
 
-@using (Html.BeginForm())
+<div class="partialview">
+    @Html.Partial("_UpdateProject")
+</div>
+
+@*@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
     
@@ -31,7 +35,7 @@
             </div>
         </div>
     </div>
-}
+}*@
 
 <div>
     @Html.ActionLink("Back to List", "Index")

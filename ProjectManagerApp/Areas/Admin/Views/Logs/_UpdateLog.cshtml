@@ -1,0 +1,275 @@
+﻿@model ProjectManagerApp.Areas.Admin.Models.Log
+
+
+@using (Html.BeginForm(null,null,FormMethod.Post,new { id="frmlog"}))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Log</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Project.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+              
+                @Html.DropDownList("ProjectId", new SelectList(ViewBag.Projects, "Id", "Name"), new { @class = "form-control", id = "dropdown" })
+                @Html.ValidationMessageFor(model => model.Project.Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.WorkStartTime, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.WorkStartTime, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.WorkStartTime, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.WorkEndTime, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.WorkEndTime, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.WorkEndTime, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Duration, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Duration, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Duration, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Date, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+
+                @Html.EditorFor(model => model.Date, new { htmlAttributes = new { @class = "form-control datetimepicker" } })
+
+                @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.AspNetUser.UserName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+          
+                @Html.DropDownList("DeveloperId", new SelectList(ViewBag.Users, "Id", "UserName"), new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.AspNetUser.UserName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save"  class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+
+<script>
+
+    // for making editor to take date and time
+    $(document).ready(function () {
+
+    $('#Date').datetimepicker({
+            format:'M/D/YYYY'
+    });
+
+     $('#WorkStartTime').datetimepicker({
+         format:'h:mm a'
+     });
+
+     $('#WorkEndTime').datetimepicker({
+         format: 'h:mm a'
+     });
+     });
+
+    // workstarting time
+
+    function ConvertTimeFormat(format, str) {
+
+        var time = $('#WorkStartTime').val();
+        var hours = Number(time.match(/^(\d+)/)[1]);
+        var minutes = Number(time.match(/:(\d+)/)[1]);
+        var AMPM = time.match(/\s(.*)$/)[1];
+        if (AMPM == "pm" && hours < 12) hours = hours + 12;
+        if (AMPM == "am" && hours == 12) hours = hours - 12;
+        // var sHours = hours;
+        var sHours = hours;
+        var sMinutes = minutes;
+        // var sMinutes = minutes;
+        if (hours < 10) sHours = "0" + sHours;
+        if (minutes < 10) sMinutes = "0" + sMinutes;
+        return (sHours + "." + sMinutes);
+    }
+
+    //workending time
+    function ConvertTimeFormat1(format, str) {
+
+        var time1 = $('#WorkEndTime').val();
+        var hours1 = Number(time1.match(/^(\d+)/)[1]);
+        var minutes1 = Number(time1.match(/:(\d+)/)[1]);
+        var AMPM1 = time1.match(/\s(.*)$/)[1];
+        if (AMPM1 == "pm" && hours1 < 12) hours1 = hours1 + 12;
+        if (AMPM1 == "am" && hours1 == 12) hours1 = hours1 - 12;
+        var sHours1 = hours1;
+        var sMinutes1 = minutes1;
+        if (hours1 < 10) sHours1 = "0" + sHours1;
+        if (minutes1 < 10) sMinutes1 = "0" + sMinutes1;
+
+        return (sHours1 + "." + sMinutes1);
+    }
+
+    // function to check if workstartime is greater than workendtime
+
+    $(document).ready(function () {
+        $('#WorkEndTime').mousedown(function () {
+            var starttime = parseFloat(ConvertTimeFormat("24", $('#WorkStartTime').val()));
+            var endtime = parseFloat(ConvertTimeFormat1("24", $('#WorkEndTime').val()));
+
+            var workstime = starttime.toString().split('.');
+            var worketime = endtime.toString().split('.');
+            var shours = parseInt(workstime[0]);
+            var sminute = parseInt(workstime[1]);
+            var ehours = parseInt(worketime[0]);
+            var eminute = parseInt(worketime[1]);
+            var hdiff = ehours - shours;
+            var mdiff = eminute - sminute;
+
+
+
+
+            if (endtime > starttime) {
+                //  alert(" endtime is greater");
+
+                $('#Duration').val(hdiff + ":" + mdiff);
+
+                if (mdiff < 0) {
+                    mdiff = mdiff + 60;
+                    hdiff = hdiff - 1;
+                    $('#Duration').val(hdiff + ":" + mdiff);
+                }
+                else {
+                    $('#Duration').val(hdiff + ":" + mdiff);
+                }
+
+                //alert(endtime);
+            }
+
+
+            else if (endtime == starttime && mdiff >= 0) {
+                var hdiff1 = 0;
+                mdiff = eminute - sminute;
+                $('#Duration').val(hdiff1 + ":" + mdiff);
+            }
+            else {
+                alert("work finished time must be greater than work start time");
+                $('#Duration').val("00" + ":" + "00");
+            }
+
+        });
+    });
+
+
+    // for validation
+    $(function () {
+   
+    var frmlogs = $('#frmlog').validate({
+        //Rules for validation
+        rules: {
+            Description: {
+                required:true
+            },
+
+            ProjectId: {
+                required:true
+            },
+
+            WorkStartTime:{
+                required:true
+            },
+
+            WorkEndTime: {
+                required: true
+            },
+
+            Duration: {
+                required: true
+            },
+            Date: {
+                required:true
+            }
+
+
+
+        },
+
+        //messsages for validation
+        messages: {
+            Description: {
+                required:'Please enter description'
+            },
+            ProjectId: {
+                required: 'Please select one of projects'
+            },
+
+            WorkStartTime: {
+                required: 'Please enter work start  time'
+            },
+
+            WorkEndTime: {
+                required: 'Please enter work end time'
+            },
+
+            Duration: {
+                required: 'Please enter time needed to complete the task'
+            },
+            Date: {
+                required: 'Please enter date'
+            }
+
+
+        },
+
+        // Do not change code below
+        errorPlacement: function (error, element) {
+            error.insertAfter(element.parent());
+        },
+        invalidHandler: function (event, validator) {
+            warnUserForFormPostError();
+        }
+
+
+
+    });
+
+    });
+    warnUserForFormPostError = function () {
+
+        alert("fill out all the blanks");
+        //$.SmartMessageBox({
+        //    title: "Error",
+        //    content: "<b>There are some error(s) in form with red back ground. Please correct them before saving<b>",
+        //    buttons: '[Ok]'
+
+        //}, function (ButtonPressed) {
+        //    if (ButtonPressed == "Ok") {
+
+        //    }
+        //});
+    };
+
+
+</script>

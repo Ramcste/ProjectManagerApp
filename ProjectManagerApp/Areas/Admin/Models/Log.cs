@@ -21,6 +21,9 @@ namespace ProjectManagerApp.Areas.Admin.Models
         public string WorkEndTime { get; set; }
         public string Duration { get; set; }
         public System.DateTime Date { get; set; }
-        public Nullable<int> DeveloperId { get; set; }
+        public int DeveloperId { get; set; }
+    
+        public virtual AspNetUser AspNetUser { get; set; }
+        public virtual Project Project { get; set; }
     }
 }

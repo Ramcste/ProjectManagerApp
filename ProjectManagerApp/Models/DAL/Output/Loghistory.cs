@@ -22,12 +22,12 @@ namespace ProjectManagerApp.Models.DAL.Output
 
         [StoredProcAttributes.Name("FromDate")]
         [StoredProcAttributes.Direction(System.Data.ParameterDirection.Input)]
-        [StoredProcAttributes.ParameterType(System.Data.SqlDbType.VarChar)]
+        [StoredProcAttributes.ParameterType(System.Data.SqlDbType.Date)]
         public DateTime FromDate { get; set; }
 
         [StoredProcAttributes.Name("ToDate")]
         [StoredProcAttributes.Direction(System.Data.ParameterDirection.Input)]
-        [StoredProcAttributes.ParameterType(System.Data.SqlDbType.VarChar)]
+        [StoredProcAttributes.ParameterType(System.Data.SqlDbType.Date)]
         public DateTime ToDate { get; set; }
 
 

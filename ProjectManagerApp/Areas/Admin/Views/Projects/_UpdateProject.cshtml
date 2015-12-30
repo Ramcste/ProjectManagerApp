@@ -1,0 +1,74 @@
+﻿@model ProjectManagerApp.Areas.Admin.Models.Project
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "frmProjects" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Project</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+        <div class="form-group">
+            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Name)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+
+<script>
+    $(function () {
+    var frmProjects = $('#frmProjects').validate({
+
+        //Rules for validation
+        rules: {
+            Name: {
+                required:true
+            }
+        },
+
+
+        //Message for from validation
+
+        messages: {
+            Name: {
+                required:'Please enter project name'
+            }
+        },
+
+        // Do not change code below
+        errorPlacement: function (error, element) {
+            error.insertAfter(element.parent());
+        },
+        invalidHandler: function (event, validator) {
+            warnUserForFormPostError();
+        }
+
+    });
+    });
+
+    warnUserForFormPostError = function () {
+
+        alert("fill out all the blanks");
+        //$.SmartMessageBox({
+        //    title: "Error",
+        //    content: "<b>There are some error(s) in form with red back ground. Please correct them before saving<b>",
+        //    buttons: '[Ok]'
+
+        //}, function (ButtonPressed) {
+        //    if (ButtonPressed == "Ok") {
+
+        //    }
+        //});
+    };
+
+</script>

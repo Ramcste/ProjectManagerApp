@@ -14,14 +14,14 @@ namespace ProjectManagerApp.API
 {
     public class LogController : ApiController
     {
-        ProjectDal dal=new ProjectDal();
+        ProjectDal dal = new ProjectDal();
         //[HttpGet]
         //public string Get()
         //{
         //    return "asasa";
         //}
 
-            private ProjectManagerAppEntities db =new ProjectManagerAppEntities();
+        private ProjectManagerAppEntities db = new ProjectManagerAppEntities();
 
 
         [HttpPost]
@@ -48,11 +48,11 @@ namespace ProjectManagerApp.API
 
         [HttpGet]
         [Route("API/Log/GetLogsHistory")]
-        public JsonResult<List<Report>> GetLogsHistory(int id,int projectid,DateTime fromdate,DateTime todate)
+        public JsonResult<List<Report>> GetLogsHistory(int id, int projectid, DateTime fromdate, DateTime todate)
         {
             //int DeveloperId = 1;//(developerid.HasValue) ? developerid.Value : User.Identity.GetUserId<int>();
-           
-            var reports = dal.GetLogsHistory(id,projectid,fromdate,todate);
+
+            var reports = dal.GetLogsHistory(id, projectid, fromdate, todate);
             return Json(reports);
 
         }
@@ -74,7 +74,7 @@ namespace ProjectManagerApp.API
         public JsonResult<List<Projects>> GetAllProjectName()
         {
             var projects = dal.GetProjectsResultSheet();
-        
+
             return Json(projects);
         }
 
@@ -84,7 +84,7 @@ namespace ProjectManagerApp.API
         public object GetLogUpdate(JObject jObject)
         {
             JToken cObjToken = jObject;
-          //  string desc = jObject.GetValue("des").ToString();
+            //  string desc = jObject.GetValue("des").ToString();
             string logxml = cObjToken.SelectToken("editlogXML").ToString();
 
             new ProjectDal().GetEditLogsUpdate(logxml);
@@ -106,9 +106,16 @@ namespace ProjectManagerApp.API
 
         public JsonResult<List<Report>> GetLogsResultByDate(int developerid)
         {
-            var report=dal.GetProjectResultSheetByDate(developerid);
+            var report = dal.GetProjectResultSheetByDate(developerid);
 
             return Json(report);
         }
     }
+
+
+        // for admin area
+
+        //  for filtering
+
+       
 }

@@ -9,6 +9,8 @@ namespace ProjectManagerApp.Models.DAL
     {
         private  StoredProContext db=new StoredProContext();
 
+
+        // for developer
         public void SaveReport(string xml)
         {
            XmlInput inputParams = new XmlInput()
@@ -115,6 +117,14 @@ namespace ProjectManagerApp.Models.DAL
 
             return report;
         } 
+
+        // for admin 
+        
+      public List<AspNetUsers> GetAspNetUsersResultSheet()
+        {
+            var users = db.AspNetUsersResultSheetProc.CallStoredProc().ToList<AspNetUsers>();
+            return users;
+        }
 
     }
 }

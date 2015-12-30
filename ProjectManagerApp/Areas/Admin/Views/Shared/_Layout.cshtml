@@ -6,6 +6,11 @@
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/datetimepicker") 
+
+
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -24,10 +29,7 @@
                     @Html.ActionLink("Project Sheet", "Index", "Projects", new { area = "Admin" }, new { @class = "navbar-brand" })
                     @Html.ActionLink("Logs Report", "Index", "Logs", new { area = "Admin" }, new { @class = "navbar-brand" })
                     @Html.ActionLink("Developer List", "Index", "AspNetUsers", new { area = "Admin" }, new { @class = "navbar-brand" })
-                    
-    @*<li><a href="@Url.Action("Index", "Projects")"></a></li>
-                    <li><a href="@Url.Action("Index","Logs")" style="color:white ;"></a></li>*@
-
+    
                 </ul>
             </div>
         </div>
@@ -40,9 +42,7 @@
             <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
         </footer>
     </div>
-
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+    @Scripts.Render("~/bundles/jqueryval")
 </body>
 </html>

@@ -12,6 +12,8 @@ namespace ProjectManagerApp.Areas.Admin.Models
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class ProjectManagerAppEntities : DbContext
     {
@@ -29,8 +31,112 @@ namespace ProjectManagerApp.Areas.Admin.Models
         public virtual DbSet<AspNetRole> AspNetRoles { get; set; }
         public virtual DbSet<AspNetUserClaim> AspNetUserClaims { get; set; }
         public virtual DbSet<AspNetUserLogin> AspNetUserLogins { get; set; }
+        public virtual DbSet<AspNetUserRole> AspNetUserRoles { get; set; }
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
         public virtual DbSet<Log> Logs { get; set; }
         public virtual DbSet<Project> Projects { get; set; }
+    
+        [DbFunction("ProjectManagerAppEntities", "Split")]
+        public virtual IQueryable<Split_Result> Split(string delimitedString, string delimiter)
+        {
+            var delimitedStringParameter = delimitedString != null ?
+                new ObjectParameter("DelimitedString", delimitedString) :
+                new ObjectParameter("DelimitedString", typeof(string));
+    
+            var delimiterParameter = delimiter != null ?
+                new ObjectParameter("Delimiter", delimiter) :
+                new ObjectParameter("Delimiter", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<Split_Result>("[ProjectManagerAppEntities].[Split](@DelimitedString, @Delimiter)", delimitedStringParameter, delimiterParameter);
+        }
+    
+        public virtual ObjectResult<AspNetUsers_ResultSheet_Result> AspNetUsers_ResultSheet()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<AspNetUsers_ResultSheet_Result>("AspNetUsers_ResultSheet");
+        }
+    
+        public virtual int Logs_BulkDelete(string logIds, Nullable<int> developerId)
+        {
+            var logIdsParameter = logIds != null ?
+                new ObjectParameter("LogIds", logIds) :
+                new ObjectParameter("LogIds", typeof(string));
+    
+            var developerIdParameter = developerId.HasValue ?
+                new ObjectParameter("DeveloperId", developerId) :
+                new ObjectParameter("DeveloperId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Logs_BulkDelete", logIdsParameter, developerIdParameter);
+        }
+    
+        public virtual int Logs_DeleteSelected(Nullable<int> logId)
+        {
+            var logIdParameter = logId.HasValue ?
+                new ObjectParameter("LogId", logId) :
+                new ObjectParameter("LogId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Logs_DeleteSelected", logIdParameter);
+        }
+    
+        public virtual ObjectResult<Logs_ResultSheet_Result> Logs_ResultSheet(Nullable<int> developerId, Nullable<int> projectId, Nullable<System.DateTime> fromDate, Nullable<System.DateTime> toDate)
+        {
+            var developerIdParameter = developerId.HasValue ?
+                new ObjectParameter("DeveloperId", developerId) :
+                new ObjectParameter("DeveloperId", typeof(int));
+    
+            var projectIdParameter = projectId.HasValue ?
+                new ObjectParameter("ProjectId", projectId) :
+                new ObjectParameter("ProjectId", typeof(int));
+    
+            var fromDateParameter = fromDate.HasValue ?
+                new ObjectParameter("FromDate", fromDate) :
+                new ObjectParameter("FromDate", typeof(System.DateTime));
+    
+            var toDateParameter = toDate.HasValue ?
+                new ObjectParameter("ToDate", toDate) :
+                new ObjectParameter("ToDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Logs_ResultSheet_Result>("Logs_ResultSheet", developerIdParameter, projectIdParameter, fromDateParameter, toDateParameter);
+        }
+    
+        public virtual int Logs_ResultSheet_Update(string editLogXML)
+        {
+            var editLogXMLParameter = editLogXML != null ?
+                new ObjectParameter("EditLogXML", editLogXML) :
+                new ObjectParameter("EditLogXML", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Logs_ResultSheet_Update", editLogXMLParameter);
+        }
+    
+        public virtual ObjectResult<Logs_ResultSheetAscDate_Result> Logs_ResultSheetAscDate(Nullable<int> developerId)
+        {
+            var developerIdParameter = developerId.HasValue ?
+                new ObjectParameter("DeveloperId", developerId) :
+                new ObjectParameter("DeveloperId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Logs_ResultSheetAscDate_Result>("Logs_ResultSheetAscDate", developerIdParameter);
+        }
+    
+        public virtual ObjectResult<Logs_ResultSheetAscProjectId_Result> Logs_ResultSheetAscProjectId(Nullable<int> developerId)
+        {
+            var developerIdParameter = developerId.HasValue ?
+                new ObjectParameter("DeveloperId", developerId) :
+                new ObjectParameter("DeveloperId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Logs_ResultSheetAscProjectId_Result>("Logs_ResultSheetAscProjectId", developerIdParameter);
+        }
+    
+        public virtual ObjectResult<Project_ResultSheet_Result> Project_ResultSheet()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Project_ResultSheet_Result>("Project_ResultSheet");
+        }
+    
+        public virtual int ReportSave_Complete(string logXML)
+        {
+            var logXMLParameter = logXML != null ?
+                new ObjectParameter("LogXML", logXML) :
+                new ObjectParameter("LogXML", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ReportSave_Complete", logXMLParameter);
+        }
     }
 }

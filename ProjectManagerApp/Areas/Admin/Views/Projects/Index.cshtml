@@ -9,7 +9,12 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table">
+
+<div class="partialview">
+    @Html.Partial("_ProjectList")
+</div>
+
+@*<table class="table">
     <tr>
        
     </tr>
@@ -27,4 +32,4 @@
     </tr>
 }
 
-</table>
+</table>*@

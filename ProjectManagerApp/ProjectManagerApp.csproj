@@ -204,10 +204,25 @@
     <Compile Include="Areas\Admin\Models\AspNetUserLogin.cs">
       <DependentUpon>ProjectManagerAdminModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Areas\Admin\Models\AspNetUserRole.cs">
+      <DependentUpon>ProjectManagerAdminModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Admin\Models\AspNetUsers_ResultSheet_Result.cs">
+      <DependentUpon>ProjectManagerAdminModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Areas\Admin\Models\C__MigrationHistory.cs">
       <DependentUpon>ProjectManagerAdminModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Admin\Models\Log.cs">
+      <DependentUpon>ProjectManagerAdminModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Admin\Models\Logs_ResultSheetAscDate_Result.cs">
+      <DependentUpon>ProjectManagerAdminModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Admin\Models\Logs_ResultSheetAscProjectId_Result.cs">
+      <DependentUpon>ProjectManagerAdminModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Admin\Models\Logs_ResultSheet_Result.cs">
       <DependentUpon>ProjectManagerAdminModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Admin\Models\Project.cs">
@@ -227,6 +242,12 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ProjectManagerAdminModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Admin\Models\Project_ResultSheet_Result.cs">
+      <DependentUpon>ProjectManagerAdminModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Admin\Models\Split_Result.cs">
+      <DependentUpon>ProjectManagerAdminModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -254,6 +275,7 @@
     <Compile Include="Models\DAL\Input\RemoveLogInput.cs" />
     <Compile Include="Models\DAL\Input\Report.cs" />
     <Compile Include="Models\DAL\Input\XmlInput.cs" />
+    <Compile Include="Models\DAL\Output\AspNetUsers.cs" />
     <Compile Include="Models\DAL\Output\Loghistory.cs" />
     <Compile Include="Models\DAL\Output\LogHistoryByDeveloperId.cs" />
     <Compile Include="Models\DAL\Output\Projects.cs" />
@@ -321,6 +343,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\ajax-loader.gif" />
     <Content Include="Scripts\bootstrap-datetimepicker.js" />
     <Content Include="Scripts\bootstrap-datetimepicker.min.js" />
     <Content Include="Scripts\bootstrap-dialog.js" />
@@ -418,13 +441,6 @@
     <Content Include="Areas\Admin\Views\Projects\Details.cshtml" />
     <Content Include="Areas\Admin\Views\Projects\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Projects\Index.cshtml" />
-    <EntityDeploy Include="Areas\Admin\Models\ProjectManagerAdminModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>ProjectManagerAdminModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Areas\Admin\Models\ProjectManagerAdminModel.edmx.diagram">
-      <DependentUpon>ProjectManagerAdminModel.edmx</DependentUpon>
-    </Content>
     <Content Include="Areas\Admin\Views\Logs\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Logs\Delete.cshtml" />
     <Content Include="Areas\Admin\Views\Logs\Details.cshtml" />
@@ -435,12 +451,27 @@
     <Content Include="Areas\Admin\Views\AspNetUsers\Details.cshtml" />
     <Content Include="Areas\Admin\Views\AspNetUsers\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\AspNetUsers\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Logs\_LogList.cshtml" />
+    <EntityDeploy Include="Areas\Admin\Models\ProjectManagerAdminModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ProjectManagerAdminModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Areas\Admin\Models\ProjectManagerAdminModel.edmx.diagram">
+      <DependentUpon>ProjectManagerAdminModel.edmx</DependentUpon>
+    </Content>
+    <Content Include="Areas\Admin\Views\Logs\_UpdateLog.cshtml" />
+    <Content Include="Areas\Admin\Views\Projects\_UpdateProject.cshtml" />
+    <Content Include="Areas\Admin\Views\Projects\_ProjectList.cshtml" />
+    <Content Include="Areas\Admin\Views\AspNetUsers\_AspNetUsersList.cshtml" />
+    <Content Include="Areas\Admin\Views\AspNetUsers\_UpdateAspNetUsers.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery-ui-1.11.4.js" />
     <Content Include="Scripts\jquery-ui-1.11.4.min.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />

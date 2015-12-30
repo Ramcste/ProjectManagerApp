@@ -50,7 +50,7 @@ namespace ProjectManagerApp.Models.DAL.Input
 
         [StoredProcAttributes.Name("Date")]
         [StoredProcAttributes.Direction(System.Data.ParameterDirection.Input)]
-        [StoredProcAttributes.ParameterType(System.Data.SqlDbType.VarChar)]
+        [StoredProcAttributes.ParameterType(System.Data.SqlDbType.Date)]
         public DateTime Date { get; set; }
 
         [StoredProcAttributes.Name("DeveloperId")]

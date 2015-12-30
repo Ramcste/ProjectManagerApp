@@ -94,35 +94,6 @@ namespace ProjectManagerApp.Controllers
                 }
             }
 
-            //if (ModelState.IsValid)
-            //{
-            //    var user = await UserManager.FindAsync(model.UserName, model.Password);
-            //    if (user != null)
-            //    {
-            //        await SignInAsync(user, model.RememberMe);
-
-            //        // role user go to user page
-            //        if (UserManager.IsInRole(user.Id, "Admin"))
-            //        {
-            //            return RedirectToAction("Index", "Logs");
-            //        }
-            //        else
-            //        {
-            //            // for normal user role 
-
-            //            return RedirectToAction("Index", "Home");
-            //        }
-            //    }
-
-            //    else
-            //    {
-            //        ModelState.AddModelError("","Invalid username or passowrd");
-            //    }
-            //}
-
-            //  return View(model);
-
-           
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
