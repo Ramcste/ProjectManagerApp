@@ -100,18 +100,18 @@
     $('#edit').hide();
     $(document).ready(function() {
         $('#datetimepicker').datetimepicker({
-            // format: 'YYYY-M-D'
-            format:'M/D/YYYY'
+           format: 'YYYY-M-D'
+           
         });
 
         $('#datetimepicker1').datetimepicker({
-           // format: 'YYYY-M-D'
-            format:'M/D/YYYY'
+           format: 'YYYY-M-D'
+            
         });
 
         $('#datetimepicker2').datetimepicker({
-            //  format: 'YYYY-M-D'
-            format:'M/D/YYYY'
+             format: 'YYYY-M-D'
+         
         });
 
         @*var did = @HttpContext.Current.User.Identity.GetUserId();
@@ -158,7 +158,6 @@
             if (report != "") {
                 $('#logshistory .logtable').append(report);
                 console.log("success");
-              //  $('.logrowcheckbox').show();
 
             } else {
                 console.log("no logs to show");
@@ -189,8 +188,8 @@
 
             var did = @HttpContext.Current.User.Identity.GetUserId();
             var pid = $('#dropdown').val();
-            var fromdate = ($('#fromdate').val() == "") ? '2015-12-1' : $('#fromdate').val();
-            var todate = ($('#todate').val() == "") ? moment().format('YYYY-M-D') : $('#todate').val();
+            var fromdate = ($('#fromdate').val() == "") ? '12/1/2015' : $('#fromdate').val();
+            var todate = ($('#todate').val() == "") ? moment().format('M/D/YYYY') : $('#todate').val();
 
             if (pid == "" || fromdate == "" || todate == "") {
                 alert("fill out all the blanks and then proceed");
@@ -229,7 +228,7 @@
                     if (report != "") {
                         $('#logshistory .logtable').append(report);
                         console.log("success");
-                      //  $('.logrowcheckbox').show();
+                   
 
                     } else {
                         console.log("no data to show");
@@ -268,7 +267,7 @@
 
             var url = '/API/Log/GetSeletedLogsDelete';
             $.get(url, { id: logid }, function(data) {
-
+                location.reload();
 
             });
 
@@ -316,7 +315,7 @@
                 var url = '/API/Log/GetSeletedLogsDelete';
                 $.get(url, { id: logid }, function(data) {
                     console.log("successfully deleted");
-
+                    location.reload();
                 });
 
             } else {
@@ -366,7 +365,7 @@
 
     function editlog(logid, description, projectname, duration, workstime, worketime, date, developerid) {
         //  alert(description);
-        //  alert(date);
+          alert(date);
         // alert(projectid);
 
         dialogAddItem = new BootstrapDialog({
@@ -403,7 +402,6 @@
                     '</div>' +
                     '</div>' +
                     '<div class="col-md-3">' +
-                    //'<input type="submit" id="applyButton" value="Apply" onclick="editSave();" class="btn btn-success"/>'+
                     '</div>' +
                     '</div>',
             onshow: function(dialogRef) {
@@ -411,8 +409,8 @@
             },
             onshown: function(dialogRef) {
                 $('#datetimepicker3').datetimepicker({
-                    //format: 'YYYY-M-D'
-                    format:'M/D/YYYY'
+                  
+                   format:'YYYY-M-D'
                 });
                 getprojectname();
 
@@ -461,7 +459,7 @@
                             contentType: 'application/json; charset=utf-8',
                             success: function(data) {
                                 alert("Data Updated Successfully");
-
+                                location.reload();
                             },
                             error: function() {
                                 alert("something went wrong while  saving. try again!!");
@@ -532,14 +530,14 @@
         var option = ob.value;
        
 
-        if (option == 0) {
-            var response = confirm("Are you sure you want to bulk edit it?");
-            if (response == true) {
-                alert("please check the no of items you want to edit it from log records.");
+        //if (option == 0) {
+        //    var response = confirm("Are you sure you want to bulk edit it?");
+        //    if (response == true) {
+        //        alert("please check the no of items you want to edit it from log records.");
                
 
-            }
-        }
+        //    }
+        //}
 
         if (option == 1) {
             var response1 = confirm("Are you sure you want to bulk delete it?");
@@ -553,9 +551,9 @@
                // console.log("selectedlogid 1111:", selectedlogid);
                 $.get(url, { logids: selectedlogid.toString(), developerid: developerid }, function(data) {
 
-                    alert(data);
+                    //alert(data);
                     console.log("success");
-
+                    location.reload();
                 });
             } else {
                // console.log("selected logid length:", selectedlogid.toString());

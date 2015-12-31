@@ -46,9 +46,24 @@ namespace ProjectManagerApp.Areas.Admin.Controllers
 
         }
 
+        // search by  keywords
+
+        public ActionResult GetLogResultSheetByKeywords(string keywords)
+        {
+            var logs = from log in (db.Logs).OrderBy(log => log.Date) select log;
+
+            if (!String.IsNullOrEmpty(keywords))
+            {
+                //int id = int.Parse(filterBy);
+                logs = logs.Where(p => p.Description.Contains(keywords));
+            }
+
+            return PartialView("_LogList", logs);
+
+        }
 
 
-    
+
         // GET: Admin/Logs/Details/5
         public ActionResult Details(int? id)
         {

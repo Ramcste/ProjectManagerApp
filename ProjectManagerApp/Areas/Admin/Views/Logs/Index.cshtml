@@ -6,14 +6,31 @@
 
 <h2>Index</h2>
 <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-4">
         <p>@Html.ActionLink("Create New", "Create") </p>
     </div>
-    <div class="col-md-1">
-     
-    </div>
     <div class="col-md-2">
+     <p>Search by Keywords</p>
     </div>
+    <div class="col-md-3">
+
+
+@using (Ajax.BeginForm("GetLogResultSheetByKeywords", "Logs", new AjaxOptions
+{
+    HttpMethod = "GET",
+    InsertionMode = InsertionMode.Replace,
+    UpdateTargetId = "tblLogsList",
+    LoadingElementId = "divLoader"
+}))
+{
+    <div class="form-group">
+        @Html.Editor("keywords", new { htmlAttributes = new { @class = "form-control" } })
+    </div>
+}
+
+     
+    
+        </div>
     <div class="col-md-1">
         <p>Filter By</p>
     </div>
@@ -21,7 +38,7 @@
 
         @using (Ajax.BeginForm("GetLogResultSheetByProject", "Logs", new AjaxOptions
         {
-            HttpMethod = "GET",
+            HttpMethod = "GET", 
             InsertionMode = InsertionMode.Replace,
             UpdateTargetId = "tblLogsList",
             LoadingElementId = "divLoader"

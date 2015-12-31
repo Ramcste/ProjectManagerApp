@@ -1,0 +1,16 @@
+﻿@model IEnumerable<ProjectManagerApp.Areas.Admin.Models.AspNetRole>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+<div class="partialview">
+    @Html.Partial("_AspNetRolesList")
+</div>
+
