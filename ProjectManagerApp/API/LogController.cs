@@ -15,12 +15,7 @@ namespace ProjectManagerApp.API
     public class LogController : ApiController
     {
         ProjectDal dal = new ProjectDal();
-        //[HttpGet]
-        //public string Get()
-        //{
-        //    return "asasa";
-        //}
-
+       
         private ProjectManagerAppEntities db = new ProjectManagerAppEntities();
 
 
@@ -39,9 +34,9 @@ namespace ProjectManagerApp.API
 
         [HttpGet]
         [Route("API/Log/GetLogHistoryAscProjectId")]
-        public JsonResult<List<Report>> GetLogHistoryAscProjectId(int developerid)
+        public JsonResult<List<Report>> GetLogHistoryAscProjectId(int developerid,int projectid)
         {
-            var reports = dal.GetLogsHistoryByProjectId(developerid);
+            var reports = dal.GetLogsHistoryByProjectId(developerid,projectid);
             return Json(reports);
         }
 
@@ -71,9 +66,9 @@ namespace ProjectManagerApp.API
 
         [HttpGet]
         [Route("API/Log/GetAllProjectName")]
-        public JsonResult<List<Projects>> GetAllProjectName()
+        public JsonResult<List<Projects>> GetAllProjectName(int developerid)
         {
-            var projects = dal.GetProjectsResultSheet();
+            var projects = dal.GetProjectsDeveloperResultSheet(developerid);
 
             return Json(projects);
         }

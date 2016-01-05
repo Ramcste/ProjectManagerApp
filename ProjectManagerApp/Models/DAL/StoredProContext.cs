@@ -1,4 +1,5 @@
 ﻿using CodeFirstStoredProcs;
+using ProjectManagerApp.Areas.Admin.Models;
 using ProjectManagerApp.Models.DAL.Input;
 using ProjectManagerApp.Models.DAL.Output;
 namespace ProjectManagerApp.Models.DAL
@@ -57,6 +58,15 @@ namespace ProjectManagerApp.Models.DAL
         public StoredProc<LogHistoryByDeveloperId> LogsResultAscDateSheetProc { get; set; }
 
 
+        // for specific developer specific projects
+
+        [StoredProcAttributes.Name("[ProjectsDeveloper.ResultSheet]")]
+
+        [StoredProcAttributes.ReturnTypes(typeof(Projects))]
+
+        public StoredProc<Output.ProjectsDeveloper> ProjectsDeveloperResultSheetProc { get; set; }
+
+
         // for admin
 
         [StoredProcAttributes.Name("[AspNetUsers.ResultSheet]")]
@@ -66,7 +76,21 @@ namespace ProjectManagerApp.Models.DAL
         public StoredProc AspNetUsersResultSheetProc { get; set; }
 
 
+        // for getting log according different option
 
+        [StoredProcAttributes.Name("[Logs.ResultSheetByOption]")]
+
+        [StoredProcAttributes.ReturnTypes(typeof(Log))]
+
+        public StoredProc<LogResultSheetByOption> LogsResultSheetByOptionProc { get; set; }
+
+        // for filtering by all options available
+
+        [StoredProcAttributes.Name("[Logs.Filter]")]
+
+        [StoredProcAttributes.ReturnTypes(typeof(LogFiltered))]
+
+        public StoredProc<Filter> LogsResultSheetByFilter { get; set; }
 
         public StoredProContext()
         {

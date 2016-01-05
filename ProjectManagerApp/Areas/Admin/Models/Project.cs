@@ -18,12 +18,18 @@ namespace ProjectManagerApp.Areas.Admin.Models
         public Project()
         {
             this.Logs = new HashSet<Log>();
+            this.ProjectsDevelopers = new HashSet<ProjectsDeveloper>();
         }
     
         public int Id { get; set; }
         public string Name { get; set; }
+        public string ClientName { get; set; }
+        public bool Status { get; set; }
+        public string Description { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Log> Logs { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ProjectsDeveloper> ProjectsDevelopers { get; set; }
     }
 }

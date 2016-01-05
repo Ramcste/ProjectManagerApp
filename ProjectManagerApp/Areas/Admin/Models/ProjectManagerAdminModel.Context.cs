@@ -35,6 +35,7 @@ namespace ProjectManagerApp.Areas.Admin.Models
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
         public virtual DbSet<Log> Logs { get; set; }
         public virtual DbSet<Project> Projects { get; set; }
+        public virtual DbSet<ProjectsDeveloper> ProjectsDevelopers { get; set; }
     
         [DbFunction("ProjectManagerAppEntities", "Split")]
         public virtual IQueryable<Split_Result> Split(string delimitedString, string delimiter)
@@ -116,18 +117,44 @@ namespace ProjectManagerApp.Areas.Admin.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Logs_ResultSheetAscDate_Result>("Logs_ResultSheetAscDate", developerIdParameter);
         }
     
-        public virtual ObjectResult<Logs_ResultSheetAscProjectId_Result> Logs_ResultSheetAscProjectId(Nullable<int> developerId)
+        public virtual ObjectResult<Logs_ResultSheetAscProjectId_Result> Logs_ResultSheetAscProjectId(Nullable<int> developerId, Nullable<int> projectId)
         {
             var developerIdParameter = developerId.HasValue ?
                 new ObjectParameter("DeveloperId", developerId) :
                 new ObjectParameter("DeveloperId", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Logs_ResultSheetAscProjectId_Result>("Logs_ResultSheetAscProjectId", developerIdParameter);
+            var projectIdParameter = projectId.HasValue ?
+                new ObjectParameter("ProjectId", projectId) :
+                new ObjectParameter("ProjectId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Logs_ResultSheetAscProjectId_Result>("Logs_ResultSheetAscProjectId", developerIdParameter, projectIdParameter);
         }
     
         public virtual ObjectResult<Project_ResultSheet_Result> Project_ResultSheet()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Project_ResultSheet_Result>("Project_ResultSheet");
+        }
+    
+        public virtual ObjectResult<ProjectsDeveloper_ResultSheet_Result> ProjectsDeveloper_ResultSheet(Nullable<int> developerId)
+        {
+            var developerIdParameter = developerId.HasValue ?
+                new ObjectParameter("DeveloperId", developerId) :
+                new ObjectParameter("DeveloperId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ProjectsDeveloper_ResultSheet_Result>("ProjectsDeveloper_ResultSheet", developerIdParameter);
+        }
+    
+        public virtual ObjectResult<Report_ResultSheetByOption_Result> Report_ResultSheetByOption(Nullable<System.DateTime> from, Nullable<System.DateTime> till)
+        {
+            var fromParameter = from.HasValue ?
+                new ObjectParameter("from", from) :
+                new ObjectParameter("from", typeof(System.DateTime));
+    
+            var tillParameter = till.HasValue ?
+                new ObjectParameter("till", till) :
+                new ObjectParameter("till", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Report_ResultSheetByOption_Result>("Report_ResultSheetByOption", fromParameter, tillParameter);
         }
     
         public virtual int ReportSave_Complete(string logXML)

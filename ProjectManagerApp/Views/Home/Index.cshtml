@@ -26,7 +26,7 @@
                         <div class="col-md-5">
 
                             <div class="form-group">
-                                @Html.DropDownListFor(model => model.Id, new SelectList(ViewBag.Projects, "id", "Name"), "Select Project", new { @class = "form-control", id = "dropdown" })
+                                @Html.DropDownListFor(model => model.Id, new SelectList(ViewBag.Projects, "id", "Name") , new { @class = "form-control", id = "dropdown" })
 
                             </div>
 
@@ -232,28 +232,20 @@
     $(document).ready(function () {
         $('#addbutton').click(function () {
             var description = $('#description').val();
-            var projectid = $('#dropdown').val();
-            var id = document.getElementById("dropdown");
-            var name = id.options[id.selectedIndex].text;
+            var name = $('#dropdown option:selected').text();
+            var projectid = $("#dropdown option:selected").val();
             var duration = $('#duration').val();
             var workstime = $('#workstartingtime').val();
             var worketime = $('#workendingtime').val();
             var date = $('#date').val();
+
+          //  alert(id);
 
             if (description !== "" && name !== "" && duration !== "" && workstime !== "" && worketime !== "" && date !== "") {
 
                 var html = new Array();
 
                 html.push('<div class="logrow row">');
-                //html.push('<div class="col-md-2 roweditor" >' +
-                //    '<span>' +
-                //    '<input type="checkbox" class="rowcheckbox" onclick="check(this);"/>' +
-                //    '<select class="editoption" onchange="editor(this);">' +
-                //    '<option value="0" id="bulkedit">Bulk edit</option>' +
-                //    '<option value="1" id="delete">Delete</option>' +
-                //    '</select>' +
-                //    '</span>' +
-                //    '</div>' +
                     html.push('<div class="col-md-3 description">' + description + '</div>' +
                     '<div class="col-md-2 projectName">' + name + '<input type="hidden" class="projectid" value="' + projectid + '"/>' + '</div>' +
                     '<div class="col-md-1 duration">' + duration + '</div>' +
@@ -286,7 +278,7 @@
         document.getElementById("description").value = "";
         document.getElementById("duration").value = "";
         document.getElementById("date").value = "";
-        document.getElementById("dropdown").value = "";
+     // document.getElementById("dropdown").value = "";
         document.getElementById("workstartingtime").value = "";
         document.getElementById("workendingtime").value = "";
     }

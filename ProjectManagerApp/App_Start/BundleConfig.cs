@@ -28,14 +28,14 @@ namespace ProjectManagerApp
                         "~/Scripts/bootstrap-dialog.min.js",
                       "~/Scripts/respond.js"));
 
-            // jqueryajax
+            // jqueryajaxform
 
             //bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
             //    "~/Scripts/jquery.unobtrusive-ajax.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/jqueryajax").Include(
-                        "~/Scripts/jquery.unobtrusive-ajax.js"
-                        // "~/Scripts/jquery.unobtrusive-ajax.min.js"
+            bundles.Add(new ScriptBundle("~/bundles/jqueryajaxform").Include(
+                        "~/Scripts/jquery.unobtrusive-ajax.js",
+                         "~/Scripts/jquery-1.10.2.js"
                          ));
           
 

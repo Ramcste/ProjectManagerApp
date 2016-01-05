@@ -20,8 +20,11 @@ namespace ProjectManagerApp.Controllers
         [Authorize]
         public ActionResult Index()
         {
-            ViewBag.Projects = new ProjectDal().GetProjectsResultSheet();
-           
+            // ViewBag.Projects = new ProjectDal().GetProjectsResultSheet();
+
+            int developerid = User.Identity.GetUserId<int>();
+
+            ViewBag.Projects = new ProjectDal().GetProjectsDeveloperResultSheet(developerid); 
             var  model=  new Projects();
 
             return View(model);
@@ -30,7 +33,11 @@ namespace ProjectManagerApp.Controllers
         [Authorize]
         public ActionResult Logshistory()
         {
-            ViewBag.Projects = new ProjectDal().GetProjectsResultSheet();
+            // ViewBag.Projects = new ProjectDal().GetProjectsResultSheet();
+
+            int developerid = User.Identity.GetUserId<int>();
+
+            ViewBag.Projects = new ProjectDal().GetProjectsDeveloperResultSheet(developerid);
 
             var model = new Projects();
 

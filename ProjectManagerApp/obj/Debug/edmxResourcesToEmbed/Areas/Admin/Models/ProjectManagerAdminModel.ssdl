@@ -82,6 +82,17 @@
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ClientName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Status" Type="bit" Nullable="false" />
+    <Property Name="Description" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="ProjectsDeveloper">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DeveloperId" Type="int" Nullable="false" />
+    <Property Name="ProjectsId" Type="int" Nullable="false" />
   </EntityType>
   <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
     <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
@@ -139,6 +150,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_DeveloperId_ProjectsDeveloper">
+    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+    <End Role="ProjectsDeveloper" Type="Self.ProjectsDeveloper" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ProjectsDeveloper">
+        <PropertyRef Name="DeveloperId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Logs_Developer">
     <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
     <End Role="Logs" Type="Self.Logs" Multiplicity="*" />
@@ -160,6 +183,18 @@
       </Principal>
       <Dependent Role="Logs">
         <PropertyRef Name="ProjectId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Projects_ProjectsDeveloper">
+    <End Role="Projects" Type="Self.Projects" Multiplicity="1" />
+    <End Role="ProjectsDeveloper" Type="Self.ProjectsDeveloper" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Projects">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ProjectsDeveloper">
+        <PropertyRef Name="ProjectsId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -185,8 +220,16 @@
   </Function>
   <Function Name="Logs_ResultSheetAscProjectId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="Logs.ResultSheetAscProjectId">
     <Parameter Name="DeveloperId" Type="int" Mode="In" />
+    <Parameter Name="ProjectId" Type="int" Mode="In" />
   </Function>
   <Function Name="Project_ResultSheet" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="Project.ResultSheet" />
+  <Function Name="ProjectsDeveloper_ResultSheet" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="ProjectsDeveloper.ResultSheet">
+    <Parameter Name="DeveloperId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Report_ResultSheetByOption" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="Report.ResultSheetByOption">
+    <Parameter Name="from" Type="datetime" Mode="In" />
+    <Parameter Name="till" Type="datetime" Mode="In" />
+  </Function>
   <Function Name="ReportSave_Complete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="ReportSave.Complete">
     <Parameter Name="LogXML" Type="varchar(max)" Mode="In" />
   </Function>
@@ -211,6 +254,7 @@
     <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Logs" EntityType="Self.Logs" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Projects" EntityType="Self.Projects" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProjectsDeveloper" EntityType="Self.ProjectsDeveloper" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
       <End Role="AspNetUsers" EntitySet="AspNetUsers" />
       <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
@@ -227,6 +271,10 @@
       <End Role="AspNetUsers" EntitySet="AspNetUsers" />
       <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
     </AssociationSet>
+    <AssociationSet Name="FK_DeveloperId_ProjectsDeveloper" Association="Self.FK_DeveloperId_ProjectsDeveloper">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="ProjectsDeveloper" EntitySet="ProjectsDeveloper" />
+    </AssociationSet>
     <AssociationSet Name="FK_Logs_Developer" Association="Self.FK_Logs_Developer">
       <End Role="AspNetUsers" EntitySet="AspNetUsers" />
       <End Role="Logs" EntitySet="Logs" />
@@ -234,6 +282,10 @@
     <AssociationSet Name="FK_Logs_Projects" Association="Self.FK_Logs_Projects">
       <End Role="Projects" EntitySet="Projects" />
       <End Role="Logs" EntitySet="Logs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Projects_ProjectsDeveloper" Association="Self.FK_Projects_ProjectsDeveloper">
+      <End Role="Projects" EntitySet="Projects" />
+      <End Role="ProjectsDeveloper" EntitySet="ProjectsDeveloper" />
     </AssociationSet>
   </EntityContainer>
 </Schema>

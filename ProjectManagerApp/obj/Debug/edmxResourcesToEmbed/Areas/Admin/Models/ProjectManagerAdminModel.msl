@@ -86,6 +86,18 @@
         <MappingFragment StoreEntitySet="Projects">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ClientName" ColumnName="ClientName" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProjectsDevelopers">
+      <EntityTypeMapping TypeName="ProjectManagerAppModel.ProjectsDeveloper">
+        <MappingFragment StoreEntitySet="ProjectsDeveloper">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="DeveloperId" ColumnName="DeveloperId" />
+          <ScalarProperty Name="ProjectsId" ColumnName="ProjectsId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -155,6 +167,31 @@
         <ComplexTypeMapping TypeName="ProjectManagerAppModel.Project_ResultSheet_Result">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ClientName" ColumnName="ClientName" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="ProjectsDeveloper_ResultSheet" FunctionName="ProjectManagerAppModel.Store.ProjectsDeveloper_ResultSheet">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="ProjectManagerAppModel.ProjectsDeveloper_ResultSheet_Result">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="Report_ResultSheetByOption" FunctionName="ProjectManagerAppModel.Store.Report_ResultSheetByOption">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="ProjectManagerAppModel.Report_ResultSheetByOption_Result">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="WorkStartTime" ColumnName="WorkStartTime" />
+          <ScalarProperty Name="WorkEndTime" ColumnName="WorkEndTime" />
+          <ScalarProperty Name="Duration" ColumnName="Duration" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="DeveloperId" ColumnName="DeveloperId" />
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>

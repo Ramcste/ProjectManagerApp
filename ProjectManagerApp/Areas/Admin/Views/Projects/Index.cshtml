@@ -1,4 +1,4 @@
-﻿@model List<ProjectManagerApp.Areas.Admin.Models.Project>
+﻿@model IEnumerable<ProjectManagerApp.Areas.Admin.Models.Project>
 
 @{
     ViewBag.Title = "Index";
@@ -11,25 +11,5 @@
 </p>
 
 <div class="partialview">
-    @Html.Partial("_ProjectList")
+    @Html.Partial("_ProjectsList")
 </div>
-
-@*<table class="table">
-    <tr>
-       
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
-
-</table>*@

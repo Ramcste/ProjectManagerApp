@@ -245,7 +245,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ProjectManagerAdminModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Areas\Admin\Models\ProjectsDeveloper.cs">
+      <DependentUpon>ProjectManagerAdminModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Admin\Models\ProjectsDeveloper_ResultSheet_Result.cs">
+      <DependentUpon>ProjectManagerAdminModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Areas\Admin\Models\Project_ResultSheet_Result.cs">
+      <DependentUpon>ProjectManagerAdminModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Admin\Models\Report_ResultSheetByOption_Result.cs">
       <DependentUpon>ProjectManagerAdminModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Admin\Models\Split_Result.cs">
@@ -278,9 +287,13 @@
     <Compile Include="Models\DAL\Input\Report.cs" />
     <Compile Include="Models\DAL\Input\XmlInput.cs" />
     <Compile Include="Models\DAL\Output\AspNetUsers.cs" />
+    <Compile Include="Models\DAL\Output\Filter.cs" />
+    <Compile Include="Models\DAL\Output\LogFiltered.cs" />
     <Compile Include="Models\DAL\Output\Loghistory.cs" />
     <Compile Include="Models\DAL\Output\LogHistoryByDeveloperId.cs" />
+    <Compile Include="Models\DAL\Output\LogResultSheetByOption.cs" />
     <Compile Include="Models\DAL\Output\Projects.cs" />
+    <Compile Include="Models\DAL\Output\ProjectsDeveloper.cs" />
     <Compile Include="Models\DAL\ProjectDal.cs" />
     <Compile Include="Models\DAL\StoredProContext.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -438,11 +451,6 @@
     <Content Include="Areas\Admin\Views\web.config" />
     <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
-    <Content Include="Areas\Admin\Views\Projects\Create.cshtml" />
-    <Content Include="Areas\Admin\Views\Projects\Delete.cshtml" />
-    <Content Include="Areas\Admin\Views\Projects\Details.cshtml" />
-    <Content Include="Areas\Admin\Views\Projects\Edit.cshtml" />
-    <Content Include="Areas\Admin\Views\Projects\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Logs\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Logs\Delete.cshtml" />
     <Content Include="Areas\Admin\Views\Logs\Details.cshtml" />
@@ -454,16 +462,7 @@
     <Content Include="Areas\Admin\Views\AspNetUsers\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\AspNetUsers\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Logs\_LogList.cshtml" />
-    <EntityDeploy Include="Areas\Admin\Models\ProjectManagerAdminModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>ProjectManagerAdminModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Areas\Admin\Models\ProjectManagerAdminModel.edmx.diagram">
-      <DependentUpon>ProjectManagerAdminModel.edmx</DependentUpon>
-    </Content>
     <Content Include="Areas\Admin\Views\Logs\_UpdateLog.cshtml" />
-    <Content Include="Areas\Admin\Views\Projects\_UpdateProject.cshtml" />
-    <Content Include="Areas\Admin\Views\Projects\_ProjectList.cshtml" />
     <Content Include="Areas\Admin\Views\AspNetUsers\_AspNetUsersList.cshtml" />
     <Content Include="Areas\Admin\Views\AspNetUsers\_UpdateAspNetUsers.cshtml" />
     <Content Include="Areas\Admin\Views\AspNetUserRoles\Create.cshtml" />
@@ -480,6 +479,20 @@
     <Content Include="Areas\Admin\Views\AspNetRoles\_UpdateAspNetRoles.cshtml" />
     <Content Include="Areas\Admin\Views\AspNetUserRoles\_AspNetUserRolesList.cshtml" />
     <Content Include="Areas\Admin\Views\AspNetUserRoles\_UpdateAspNetUserRoles.cshtml" />
+    <Content Include="Areas\Admin\Views\Projects\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Projects\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Projects\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Projects\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Projects\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Projects\_UpdateProjects.cshtml" />
+    <Content Include="Areas\Admin\Views\Projects\_ProjectsList.cshtml" />
+    <EntityDeploy Include="Areas\Admin\Models\ProjectManagerAdminModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ProjectManagerAdminModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Areas\Admin\Models\ProjectManagerAdminModel.edmx.diagram">
+      <DependentUpon>ProjectManagerAdminModel.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -502,7 +515,9 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>

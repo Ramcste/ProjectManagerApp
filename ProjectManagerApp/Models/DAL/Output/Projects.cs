@@ -18,5 +18,20 @@ namespace ProjectManagerApp.Models.DAL.Output
         [StoredProcAttributes.Direction(System.Data.ParameterDirection.Input)]
         [StoredProcAttributes.ParameterType(System.Data.SqlDbType.VarChar)]
         public string Name { get; set; }
+
+        [StoredProcAttributes.Name("ClientName")]
+        [StoredProcAttributes.Direction(System.Data.ParameterDirection.Input)]
+        [StoredProcAttributes.ParameterType(System.Data.SqlDbType.VarChar)]
+        public string ClientName { get; set; }
+
+        [StoredProcAttributes.Name("Description")]
+        [StoredProcAttributes.Direction(System.Data.ParameterDirection.Input)]
+        [StoredProcAttributes.ParameterType(System.Data.SqlDbType.VarChar)]
+        public string Description { get; set; }
+
+        [StoredProcAttributes.Name("Status")]
+        [StoredProcAttributes.Direction(System.Data.ParameterDirection.Input)]
+        [StoredProcAttributes.ParameterType(System.Data.SqlDbType.Bit)]
+        public bool Status { get; set; }
     }
 }

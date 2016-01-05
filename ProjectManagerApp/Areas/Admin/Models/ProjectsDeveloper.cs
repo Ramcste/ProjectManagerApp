@@ -10,13 +10,15 @@
 namespace ProjectManagerApp.Areas.Admin.Models
 {
     using System;
+    using System.Collections.Generic;
     
-    public partial class Project_ResultSheet_Result
+    public partial class ProjectsDeveloper
     {
         public int Id { get; set; }
-        public string Name { get; set; }
-        public string ClientName { get; set; }
-        public bool Status { get; set; }
-        public string Description { get; set; }
+        public int DeveloperId { get; set; }
+        public int ProjectsId { get; set; }
+    
+        public virtual AspNetUser AspNetUser { get; set; }
+        public virtual Project Project { get; set; }
     }
 }

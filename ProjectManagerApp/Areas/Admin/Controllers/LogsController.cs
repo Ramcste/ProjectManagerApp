@@ -11,6 +11,8 @@ using ProjectManagerApp.Models;
 using ProjectManagerApp.Models.DAL;
 using System.Web.Http.Results;
 using ProjectManagerApp.Models.DAL.Input;
+using ProjectManagerApp.Helpers;
+using ProjectManagerApp.Models.DAL.Output;
 
 namespace ProjectManagerApp.Areas.Admin.Controllers
 {
@@ -25,46 +27,109 @@ namespace ProjectManagerApp.Areas.Admin.Controllers
         public ActionResult Index()
         {
             ViewBag.Projects = dal.GetProjectsResultSheet();
+            ViewBag.Users = dal.GetAspNetUsersResultSheet();
 
-            var logs = (db.Logs).OrderBy(log=>log.Date).ToList();
+            var logs = dal.GetLogResultSheetByFilter(0,0,"",null,null).ToList<LogFiltered>();
+          //  var logs = (db.Logs).OrderBy(log=>log.Date).ToList();
             return View(logs);
         }
 
         // filter by projectname  sort by date and projectid
         //[HttpGet]
-        public ActionResult GetLogResultSheetByProject(string filterBy)
-        {
-            var logs = from log in (db.Logs).OrderBy(log=>log.Date) select log;
+        //public ActionResult GetLogResultSheetByProject(string filterBy)
+        //{
+        //    var logs = from log in (db.Logs).OrderBy(log=>log.Date) select log;
 
-            if (!String.IsNullOrEmpty(filterBy))
-            {
-                int id = int.Parse(filterBy);
-                logs = logs.Where(p => p.ProjectId.Equals(id));
-            }
+        //    if (!String.IsNullOrEmpty(filterBy))
+        //    {
+        //        int id = int.Parse(filterBy);
+        //        logs = logs.Where(p => p.ProjectId.Equals(id));
+        //    }
 
-            return PartialView("_LogList", logs);
+        //    return PartialView("_LogList", logs);
 
-        }
+        //}
 
         // search by  keywords
 
-        public ActionResult GetLogResultSheetByKeywords(string keywords)
-        {
-            var logs = from log in (db.Logs).OrderBy(log => log.Date) select log;
+        //public ActionResult GetLogResultSheetByKeywords(string keywords)
+        //{
+        //    var logs = from log in (db.Logs).OrderBy(log => log.Date) select log;
 
-            if (!String.IsNullOrEmpty(keywords))
+        //    if (!String.IsNullOrEmpty(keywords))
+        //    {
+        //        //int id = int.Parse(filterBy);
+        //        logs = logs.Where(p => p.Description.Contains(keywords));
+        //    }
+
+        //    return PartialView("_LogList", logs);
+
+        //}
+
+        // filter by developername
+
+        //GetLogResultSheetByDeveloper
+        //public ActionResult GetLogResultSheetByDeveloper(string developerid)
+        //{
+        //    var logs = from log in (db.Logs).OrderBy(log => log.Date) select log;
+
+        //    if (!String.IsNullOrEmpty(developerid))
+        //    {
+        //        int id = int.Parse(developerid);
+        //        logs = logs.Where(p => p.DeveloperId.Equals(id));
+        //    }
+
+        //    return PartialView("_LogList", logs);
+
+        //}
+
+        // get loghistory by this/previous week or month
+        //public ActionResult GetLogResultSheetByDate(string option)
+        //{
+        //    string dateOn = option;
+        //    DateTime? from, till;
+        //    Utilities.getDateRange(dateOn,out from,out till,null,null);
+
+
+        //    // var logs = db.Report_ResultSheetByOption(from,till);
+
+        //   // var logs = dal.GetLogResultSheetByOption(from,till);
+
+
+        // //  return PartialView("_LogList", logs);
+
+        //}
+    
+        public ActionResult GetLogResultSheetByFilter(int? developerid, int? projectid,string keywords,string option,DateTime? fromdate,DateTime? todate)
+
+        {
+            string datedOn = option;
+            DateTime? from, till;
+            Utilities.getDateRange(datedOn, out from, out till, null, null);
+
+            List<LogFiltered> logs;
+
+            if (option == "Between")
             {
-                //int id = int.Parse(filterBy);
-                logs = logs.Where(p => p.Description.Contains(keywords));
+                 logs = dal.GetLogResultSheetByFilter(developerid, projectid, keywords, fromdate, todate);
             }
+            else
+            {
+                fromdate = from;
+                todate = till;
+                 logs = dal.GetLogResultSheetByFilter(developerid, projectid, keywords, fromdate, todate);
+            }
+           
 
             return PartialView("_LogList", logs);
 
         }
 
 
-
         // GET: Admin/Logs/Details/5
+
+
+
         public ActionResult Details(int? id)
         {
             ViewBag.Projects = dal.GetProjectsResultSheet();

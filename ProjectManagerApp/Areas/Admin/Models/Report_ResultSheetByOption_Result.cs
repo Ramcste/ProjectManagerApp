@@ -11,12 +11,15 @@ namespace ProjectManagerApp.Areas.Admin.Models
 {
     using System;
     
-    public partial class Project_ResultSheet_Result
+    public partial class Report_ResultSheetByOption_Result
     {
         public int Id { get; set; }
-        public string Name { get; set; }
-        public string ClientName { get; set; }
-        public bool Status { get; set; }
         public string Description { get; set; }
+        public string Name { get; set; }
+        public string WorkStartTime { get; set; }
+        public string WorkEndTime { get; set; }
+        public string Duration { get; set; }
+        public System.DateTime Date { get; set; }
+        public int DeveloperId { get; set; }
     }
 }

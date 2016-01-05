@@ -4,21 +4,24 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="8779707196a84a57b7a3606d74d8cf0a" Name="Diagram1">
+      <Diagram DiagramId="e90707621b0d4e5d9e6febb09cc5e6e6" Name="Diagram1">
         <EntityTypeShape EntityType="ProjectManagerAppModel.C__MigrationHistory" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ProjectManagerAppModel.AspNetRole" Width="1.5" PointX="3.75" PointY="10" IsExpanded="true" />
-        <EntityTypeShape EntityType="ProjectManagerAppModel.AspNetUserClaim" Width="1.5" PointX="3" PointY="4.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="ProjectManagerAppModel.AspNetUserLogin" Width="1.5" PointX="3" PointY="7.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="ProjectManagerAppModel.AspNetUserRole" Width="1.5" PointX="6" PointY="5.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ProjectManagerAppModel.AspNetUser" Width="1.5" PointX="0.75" PointY="4.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="ProjectManagerAppModel.Log" Width="1.5" PointX="6" PointY="1.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="ProjectManagerAppModel.Project" Width="1.5" PointX="3.75" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectManagerAppModel.AspNetRole" Width="1.5" PointX="3.75" PointY="11.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectManagerAppModel.AspNetUserClaim" Width="1.5" PointX="3" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectManagerAppModel.AspNetUserLogin" Width="1.5" PointX="3" PointY="8.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectManagerAppModel.AspNetUserRole" Width="1.5" PointX="6" PointY="7.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectManagerAppModel.AspNetUser" Width="1.5" PointX="0.75" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectManagerAppModel.Log" Width="1.5" PointX="6" PointY="2.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectManagerAppModel.Project" Width="1.5" PointX="3.75" PointY="2.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectManagerAppModel.ProjectsDeveloper" Width="1.5" PointX="6" PointY="10.375" IsExpanded="true" />
         <AssociationConnector Association="ProjectManagerAppModel.FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId" ManuallyRouted="false" />
         <AssociationConnector Association="ProjectManagerAppModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
         <AssociationConnector Association="ProjectManagerAppModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
         <AssociationConnector Association="ProjectManagerAppModel.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjectManagerAppModel.FK_DeveloperId_ProjectsDeveloper" ManuallyRouted="false" />
         <AssociationConnector Association="ProjectManagerAppModel.FK_Logs_Developer" ManuallyRouted="false" />
         <AssociationConnector Association="ProjectManagerAppModel.FK_Logs_Projects" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjectManagerAppModel.FK_Projects_ProjectsDeveloper" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

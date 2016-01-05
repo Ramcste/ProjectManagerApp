@@ -1,23 +1,25 @@
-﻿using System.Data.Entity;
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Web;
 using System.Web.Mvc;
 using ProjectManagerApp.Areas.Admin.Models;
-
-
+using ProjectManagerApp.Models.DAL;
 namespace ProjectManagerApp.Areas.Admin.Controllers
 {
-   // [Authorize(Roles = "Admin")]
     public class ProjectsController : Controller
     {
         private ProjectManagerAppEntities db = new ProjectManagerAppEntities();
 
+        private ProjectDal dal = new ProjectDal();
         // GET: Admin/Projects
         public ActionResult Index()
         {
-            var projects = db.Projects.ToList();
-
-            return View(projects);
+            ViewBag.Projects = dal.GetProjectsResultSheet();
+            return View(db.Projects.ToList());
         }
 
         // GET: Admin/Projects/Details/5
@@ -38,6 +40,7 @@ namespace ProjectManagerApp.Areas.Admin.Controllers
         // GET: Admin/Projects/Create
         public ActionResult Create()
         {
+            ViewBag.Projects = dal.GetProjectsResultSheet();
             return View();
         }
 
@@ -46,8 +49,9 @@ namespace ProjectManagerApp.Areas.Admin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name")] Project project)
+        public ActionResult Create([Bind(Include = "Id,Name,ClientName,Status,Description")] Project project)
         {
+            ViewBag.Projects = dal.GetProjectsResultSheet();
             if (ModelState.IsValid)
             {
                 db.Projects.Add(project);
@@ -61,6 +65,7 @@ namespace ProjectManagerApp.Areas.Admin.Controllers
         // GET: Admin/Projects/Edit/5
         public ActionResult Edit(int? id)
         {
+            ViewBag.Projects = dal.GetProjectsResultSheet();
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -78,8 +83,9 @@ namespace ProjectManagerApp.Areas.Admin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name")] Project project)
+        public ActionResult Edit([Bind(Include = "Id,Name,ClientName,Status,Description")] Project project)
         {
+            ViewBag.Projects = dal.GetProjectsResultSheet();
             if (ModelState.IsValid)
             {
                 db.Entry(project).State = EntityState.Modified;

@@ -1,7 +1,6 @@
-﻿@model IEnumerable<ProjectManagerApp.Areas.Admin.Models.Log>
-
-
-<table class="table">
+﻿@model List<ProjectManagerApp.Models.DAL.Output.LogFiltered>
+@*@using ProjectManagerApp.Models.DAL.Output.LogFiltered*@
+<table class="table table-striped">
 
     <tr></tr>
 
@@ -13,7 +12,7 @@
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Project.Name)
+                @Html.DisplayFor(modelItem => item.ProjectName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.WorkStartTime)
@@ -28,7 +27,7 @@
                 @Html.DisplayFor(modelItem => item.Date)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.AspNetUser.UserName)
+                @Html.DisplayFor(modelItem => item.UserName)
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |

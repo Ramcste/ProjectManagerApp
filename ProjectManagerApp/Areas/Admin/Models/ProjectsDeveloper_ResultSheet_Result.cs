@@ -11,12 +11,9 @@ namespace ProjectManagerApp.Areas.Admin.Models
 {
     using System;
     
-    public partial class Project_ResultSheet_Result
+    public partial class ProjectsDeveloper_ResultSheet_Result
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public string ClientName { get; set; }
-        public bool Status { get; set; }
-        public string Description { get; set; }
     }
 }
