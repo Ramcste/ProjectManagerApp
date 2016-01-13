@@ -38,6 +38,8 @@ namespace ProjectManagerApp.Areas.Admin.Models
         public string UserName { get; set; }
         public string Address { get; set; }
         public string PhoneNumber2 { get; set; }
+        public bool IsActive { get; set; }
+        public bool IsDeleted { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AspNetUserClaim> AspNetUserClaims { get; set; }

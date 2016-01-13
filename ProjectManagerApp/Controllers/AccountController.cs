@@ -100,43 +100,40 @@ namespace ProjectManagerApp.Controllers
 
             string UserName = (user == null) ? "" : user.UserName;
 
-           // string[] roles = Roles.GetAllRoles();
-
-       //     string[] role = Roles.GetRolesForUser(UserName);
+         
             //Require the user to have a confirmed email before they can log in.
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
             var result = await SignInManager.PasswordSignInAsync(UserName, model.Password, model.RememberMe, shouldLockout: false);
+
             switch (result)
             {
                 case SignInStatus.Success:
-                    if(UserManager.IsInRole(user.Id,"Admin"))
-                  //  if (role.Contains("Admin"))
+                    if (UserManager.IsInRole(user.Id, "Admin"))
+
                     {
-                        return RedirectToAction("Index","Projects" , new {Area="Admin"});
-                       
+                        return RedirectToAction("Index", "Projects", new { Area = "Admin" });
+
                     }
 
-                  else
-                   {
+                    //else if (UserManager.IsInRole(user.Id, "Developer"))
+                    //{
+                    //    return RedirectToAction("Index", "Home");
+                    //}
+
+                    else if (UserManager.IsInRole(user.Id, "SuperAdmin"))
+                    {
+                        return RedirectToAction("Index", "Projects", new { Area = "Admin" });
+                    }
+
+                    else
+                    {
                         return RedirectToLocal(returnUrl);
                     }
-                    
-
                    
-
-                //else if (roles.Contains("Developer"))
-                //{
-                //    return RedirectToAction("Index", "Home");
-                //   // Response.Redirect("~/Home/index.cshtml");
-
-                //}
-
-                //else
-                //{
+                    //return RedirectToLocal(returnUrl);
 
 
-                //  }
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:

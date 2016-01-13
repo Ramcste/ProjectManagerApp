@@ -6,10 +6,77 @@
 
 <h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+<div class="filter">
+@using (Ajax.BeginForm("GetProjectsResultSheetByFilter", "Projects", new AjaxOptions
+{
+    HttpMethod = "GET",
+    InsertionMode = InsertionMode.Replace,
+    UpdateTargetId = "tblProjectList",
+    LoadingElementId = "divLoader"
+}))
+{
+    <div class="row">
+        <div class="col-md-1">
+            <p>Status</p>
+        </div>
 
-<div class="partialview">
+        <div class="col-md-2">
+            @Html.DropDownList("status", new SelectList(new List<Object> {
+                                                  new { value = "True", text = "Active" },
+                                                  new { value = "False",text = "Inactive"}
+                                                  }, "value", "text"), "All", new { @class = "form-control" })
+        </div>
+
+        <div class="col-md-2">
+            <p>FIlter by IsDeleted</p>
+        </div>
+
+        <div class="col-md-2">
+            @Html.DropDownList("isDeleted", new SelectList(new List<Object> {
+                                                  new { value = "True" ,text = "True" },
+                                                  new { value = "False",text = "False"}
+                                                  }, "value", "text"), "All", new { @class = "form-control" })
+        </div>
+
+        <div class="col-md-2">
+            <p>FIlter by ProjectName</p>
+        </div>
+
+        <div class="col-md-2">
+            @Html.DropDownList("projectid", new SelectList(ViewBag.Projects, "Id", "Name"), "Select Name", new { @class = "form-control" })
+        </div>
+
+        <div class="col-md-1">
+            <input type="submit"  value="Search" id="searchbutton" class="btn btn-default" onclick="$(this.form).submit();"/>
+        </div>
+
+
+    </div>
+}
+</div>
+
+
+
+<br />
+
+<div class="row">
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+</div>
+
+
+<br />
+
+
+<div id="tblProjectList">
     @Html.Partial("_ProjectsList")
 </div>
+
+@*<script src="~/Scripts/jquery-1.10.2.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>*@
+
+
+
+@Scripts.Render("~/bundles/jqueryajaxform")
+

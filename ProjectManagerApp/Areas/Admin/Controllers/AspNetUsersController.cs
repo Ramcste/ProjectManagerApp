@@ -7,6 +7,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using ProjectManagerApp.Areas.Admin.Models;
+using ProjectManagerApp.Areas.Admin.DAL;
+using ProjectManagerApp.Models.DAL;
 
 namespace ProjectManagerApp.Areas.Admin.Controllers
 {
@@ -14,16 +16,21 @@ namespace ProjectManagerApp.Areas.Admin.Controllers
     {
         private ProjectManagerAppEntities db = new ProjectManagerAppEntities();
 
+        private DALUser daluser = new DALUser();
+
+        private ProjectDal dal = new ProjectDal();
         // GET: Admin/AspNetUsers
-        public ActionResult Index([Bind(Include = "Id,Email,PhoneNumber,UserName,Address,PhoneNumber2")] List<AspNetUser> aspNetUser)
+        public ActionResult Index()
         {
-            aspNetUser = db.AspNetUsers.ToList();
-            return View(aspNetUser);
+            ViewBag.Users = dal.GetAspNetUsersResultSheet();
+            return View(db.AspNetUsers.ToList());
         }
 
         // GET: Admin/AspNetUsers/Details/5
         public ActionResult Details(int? id)
         {
+            ViewBag.UserRoles = daluser.GetRoles(id);
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -39,6 +46,7 @@ namespace ProjectManagerApp.Areas.Admin.Controllers
         // GET: Admin/AspNetUsers/Create
         public ActionResult Create()
         {
+            ViewBag.UserRoles = daluser.GetRoles(0);
             return View();
         }
 
@@ -47,12 +55,14 @@ namespace ProjectManagerApp.Areas.Admin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Email,PhoneNumber,UserName,Address,PhoneNumber2")] AspNetUser aspNetUser)
+        public ActionResult Create([Bind(Include = "Id,Email,PhoneNumber,UserName,Address,PhoneNumber2,IsActive,IsDeleted")] AspNetUser aspNetUser)
         {
+            string userRoleCSV = Request.Form["chkUserRole"];
             if (ModelState.IsValid)
             {
                 db.AspNetUsers.Add(aspNetUser);
                 db.SaveChanges();
+                dal.GetAllAspNetUserRolesUpdate(aspNetUser.Id, userRoleCSV);
                 return RedirectToAction("Index");
             }
 
@@ -62,6 +72,7 @@ namespace ProjectManagerApp.Areas.Admin.Controllers
         // GET: Admin/AspNetUsers/Edit/5
         public ActionResult Edit(int? id)
         {
+            ViewBag.UserRoles = daluser.GetRoles(id);
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -79,12 +90,14 @@ namespace ProjectManagerApp.Areas.Admin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Email,PhoneNumber,UserName,Address,PhoneNumber2")] AspNetUser aspNetUser)
+        public ActionResult Edit([Bind(Include = "Id,Email,PhoneNumber,UserName,Address,PhoneNumber2,IsActive,IsDeleted")] AspNetUser aspNetUser)
         {
+            string userRoleCSV = Request.Form["chkUserRole"];
             if (ModelState.IsValid)
             {
                 db.Entry(aspNetUser).State = EntityState.Modified;
                 db.SaveChanges();
+                dal.GetAllAspNetUserRolesUpdate(aspNetUser.Id, userRoleCSV);
                 return RedirectToAction("Index");
             }
             return View(aspNetUser);
@@ -93,6 +106,7 @@ namespace ProjectManagerApp.Areas.Admin.Controllers
         // GET: Admin/AspNetUsers/Delete/5
         public ActionResult Delete(int? id)
         {
+            ViewBag.UserRoles = daluser.GetRoles(id);
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -116,6 +130,33 @@ namespace ProjectManagerApp.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
 
+
+
+
+        // for filtering aspnet user
+        public ActionResult GetAspNetUsersResultSheetByFilter(int? developerid, string email, string isActive,string isDeleted)
+
+        {
+
+            var users = dal.GetAspNetUsersResultSheetByFilter(developerid,email,isActive,isDeleted);
+            return PartialView("_AspNetUsersList",users);
+
+        }
+
+        // for autosuggestion email
+
+    
+            [HttpPost]
+            [Route("AspNetUsers/GetAllEmailForAutoSuggestion")]
+        public JsonResult GetAllEmailForAutoSuggestion(string keywords)
+        {          
+            
+            var suggestions = from e in db.AspNetUsers select e.Email;
+
+            var email = suggestions.Where(e => e.ToLower().StartsWith(keywords.ToLower()));
+
+            return Json(email,JsonRequestBehavior.AllowGet);
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)

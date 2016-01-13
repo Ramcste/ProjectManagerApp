@@ -1,5 +1,5 @@
 ﻿@model ProjectManagerApp.Areas.Admin.Models.AspNetUser
-
+@using ProjectManagerApp.Areas.Admin.DAL
 @{
     ViewBag.Title = "Details";
 }
@@ -50,8 +50,69 @@
             @Html.DisplayFor(model => model.PhoneNumber2)
         </dd>
 
+        <dt>
+            @Html.DisplayNameFor(model => model.IsActive)
+        </dt>
+
+        <dd>
+            @if (Model.IsActive == true)
+            {
+                @("True")
+            }
+            else
+            {
+                @("False")
+            }
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsDeleted)
+        </dt>
+
+        <dd>
+            @if (Model.IsDeleted == true)
+            {
+                @("True")
+            }
+            else
+            {
+                @("False")
+            }
+        </dd>
+
+     <dt>
+         @Html.DisplayName("Roles")
+     </dt>  
+        <dd>
+         
+
+@foreach (var item in ViewBag.UserRoles as List<NameValuePair>)
+{
+    if (item.IsSelected == true)
+    {
+    
+        <div class="col-md-4">
+          <span>@item.Name</span>
+        </div>
+    }
+
+    else
+    {
+        @*<div  class="col-md-4">
+            <span>@("No role given")</span>
+        </div>*@
+
+    }
+
+}
+           
+
+
+
+        </dd>
     </dl>
 </div>
+<br />
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
     @Html.ActionLink("Back to List", "Index")

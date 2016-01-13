@@ -3,13 +3,160 @@
 @{
     ViewBag.Title = "Index";
 }
-
+@Scripts.Render("~/bundles/jquery")
 <h2>Index</h2>
 
+<div class="filter">
+
+@using (Ajax.BeginForm("GetAspNetUsersResultSheetByFilter", "AspNetUsers", new AjaxOptions
+{
+    HttpMethod = "GET",
+    InsertionMode = InsertionMode.Replace,
+    UpdateTargetId = "tblAspNetUsers",
+    LoadingElementId = "divLoader"
+}))
+{
+    <div class="row">
+
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-2">
+                    <p>Developer:</p>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.DropDownList("developerid", new SelectList(ViewBag.Users, "Id", "UserName"), "Select Name", new { @class = "form-control" })
+                    </div>
+                </div>
+
+                <div class="col-md-1">
+                    <p>Email</p>
+                </div>
+                <div class="col-md-5">
+
+                    <div class="form-group">
+                        @Html.Editor("email", new { htmlAttributes = new { @class = "form-control", id = "email" } })
+                    </div>
+
+
+
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class="col-md-5">
+
+            <div class="row">
+                <div class="col-md-3">
+                    <p>Is Active:</p>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        @Html.DropDownList("isActive", new SelectList(new List<Object> {
+                                                                      new { value = "True", text = "True" },
+                                                                      new { value = "False", text = "False" } }, "text", "value" ), "All", new { @class = "form-control" })
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <p>Is Deleted:</p>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        @Html.DropDownList("isDeleted", new SelectList(new List<Object> { new { value = "True", text = "True" }, new { value = "False", text = "False" } }, "text", "value" ), "All", new { @class = "form-control" })
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="col-md-1">
+            <input type="submit" value="Search" id="searchbutton" class="btn btn-default" onclick="$(this.form).submit();" />
+        </div>
+
+    </div>
+}
+
+
+    </div>
+<br />
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
 
-<div class="partialview">
+<br />
+
+<div id="tblAspNetUsers">
     @Html.Partial("_AspNetUsersList")
 </div>
+
+@Scripts.Render("~/bundles/jqueryajaxform")
+
+
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js">
+    </script>
+
+<script>
+   
+    $(function () {
+
+        $('#email').autocomplete(
+            {
+                source: function (request, response) {
+                    var param = { keywords: $('#email').val() };
+                    $.ajax({
+                        url: "/AspNetUsers/GetAllEmailForAutoSuggestion",
+                        data: JSON.stringify(param),
+                        dataType: "json",
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8",
+                        success: function (data) {
+                           // console.log(data);
+                            response($.map(data, function (item) {
+                                //original code
+                                //return { label: item.FullName, value: item.FullName, id: item.TagId }; 
+                                //updated code
+                                //console.log("data", item);
+                                //return { email: item };
+                                return { label: item, value: item };
+                            }));
+                       },
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            alert(textStatus);
+                        },
+                        
+                        select: function (event, ui) {
+                            console.log("ui",ui.label);
+                            $('#email').val(ui.label);
+                          
+                        }
+                       
+                    });
+                }
+
+
+            });
+    });
+
+</script>
+
+
+<style>
+      #email menuitem{
+          background-color:blue;
+
+      }
+
+      .ui-menu-item{
+          padding: 10px;
+          border: 1px solid #ebebeb;
+          width: 25%;
+          list-style: none;
+          background-color:blue;
+      }
+
+</style>

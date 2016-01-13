@@ -62,6 +62,8 @@
     <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
     <Property Name="Address" Type="nvarchar(max)" />
     <Property Name="PhoneNumber2" Type="nvarchar(max)" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="IsDeleted" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="Logs">
     <Key>
@@ -85,6 +87,7 @@
     <Property Name="ClientName" Type="nvarchar(max)" Nullable="false" />
     <Property Name="Status" Type="bit" Nullable="false" />
     <Property Name="Description" Type="nvarchar(max)" />
+    <Property Name="IsDeleted" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="ProjectsDeveloper">
     <Key>
@@ -198,53 +201,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Function Name="AspNetUsers_ResultSheet" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="AspNetUsers.ResultSheet" />
-  <Function Name="Logs_BulkDelete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="Logs.BulkDelete">
-    <Parameter Name="LogIds" Type="varchar(max)" Mode="In" />
-    <Parameter Name="DeveloperId" Type="int" Mode="In" />
-  </Function>
-  <Function Name="Logs_DeleteSelected" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="Logs.DeleteSelected">
-    <Parameter Name="LogId" Type="int" Mode="In" />
-  </Function>
-  <Function Name="Logs_ResultSheet" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="Logs.ResultSheet">
-    <Parameter Name="DeveloperId" Type="int" Mode="In" />
-    <Parameter Name="ProjectId" Type="int" Mode="In" />
-    <Parameter Name="FromDate" Type="date" Mode="In" />
-    <Parameter Name="ToDate" Type="date" Mode="In" />
-  </Function>
-  <Function Name="Logs_ResultSheet_Update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="Logs.ResultSheet.Update">
-    <Parameter Name="EditLogXML" Type="varchar(max)" Mode="In" />
-  </Function>
-  <Function Name="Logs_ResultSheetAscDate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="Logs.ResultSheetAscDate">
-    <Parameter Name="DeveloperId" Type="int" Mode="In" />
-  </Function>
-  <Function Name="Logs_ResultSheetAscProjectId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="Logs.ResultSheetAscProjectId">
-    <Parameter Name="DeveloperId" Type="int" Mode="In" />
-    <Parameter Name="ProjectId" Type="int" Mode="In" />
-  </Function>
-  <Function Name="Project_ResultSheet" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="Project.ResultSheet" />
-  <Function Name="ProjectsDeveloper_ResultSheet" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="ProjectsDeveloper.ResultSheet">
-    <Parameter Name="DeveloperId" Type="int" Mode="In" />
-  </Function>
-  <Function Name="Report_ResultSheetByOption" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="Report.ResultSheetByOption">
-    <Parameter Name="from" Type="datetime" Mode="In" />
-    <Parameter Name="till" Type="datetime" Mode="In" />
-  </Function>
-  <Function Name="ReportSave_Complete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="ReportSave.Complete">
-    <Parameter Name="LogXML" Type="varchar(max)" Mode="In" />
-  </Function>
-  <Function Name="Split" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="DelimitedString" Type="varchar" Mode="In" />
-    <Parameter Name="Delimiter" Type="varchar" Mode="In" />
-    <ReturnType>
-      <CollectionType>
-        <RowType>
-          <Property Name="ElementID" Type="smallint" Nullable="false" />
-          <Property Name="Element" Type="varchar" MaxLength="1000" />
-        </RowType>
-      </CollectionType>
-    </ReturnType>
-  </Function>
   <EntityContainer Name="ProjectManagerAppModelStoreContainer">
     <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />

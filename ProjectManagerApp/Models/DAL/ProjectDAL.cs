@@ -38,18 +38,18 @@ namespace ProjectManagerApp.Models.DAL
             return projects;
         }
 
-        public List<Report> GetLogsHistory(int? id,int? projectid,DateTime fromdate,DateTime todate)
+        public List<Report> GetLogsHistory(int developerid,int? projectid,DateTime? fromdate,DateTime? todate)
         {
 
-            id = (id == null) ? 1 : id;
-            projectid = (projectid == null) ? 1 : projectid;
+            int projectId = projectid.HasValue ? projectid.Value : 0;
+       
 
             Loghistory inputparams = new Loghistory()
             {
-                DeveloperId = (int) id,
-                ProjectId=(int) projectid,
-                FromDate =  fromdate.Date,
-                ToDate = todate.Date
+                DeveloperId = developerid,
+                ProjectId=projectId,
+                FromDate =  fromdate,
+                ToDate = todate
 
             };
             
@@ -59,12 +59,13 @@ namespace ProjectManagerApp.Models.DAL
            return report;
         }
 
-        public List<Report> GetLogsHistoryByProjectId(int developerid,int projectid)
+        public List<Report> GetLogsHistoryByProjectId(int developerid,int? projectid)
         {
+            int projectId = projectid.HasValue ? projectid.Value : 0;
             LogHistoryByDeveloperId inputparams = new LogHistoryByDeveloperId()
             {
                 DeveloperId = developerid,
-                ProjectId=projectid
+                ProjectId=projectId
             };
 
             var report = db.LogsResultAscProjectIdSheetProc.CallStoredProc(inputparams).ToList<Report>();
@@ -127,7 +128,7 @@ namespace ProjectManagerApp.Models.DAL
 
         public List<Projects> GetProjectsDeveloperResultSheet(int developerid)
         {
-            Output.ProjectsDeveloper inputparams = new Output.ProjectsDeveloper()
+            Output.ProjectsDevelopers inputparams = new Output.ProjectsDevelopers()
             {
                 DeveloperId = developerid
             };
@@ -192,6 +193,102 @@ namespace ProjectManagerApp.Models.DAL
             return logs;
         }
        
+        // projects sheet by filter
+        public List<Project> GetProjectsResultSheetByFilter(int? projectid,string status,string isdeleted)
+        {
+            int projectId = projectid.HasValue ? projectid.Value : 0;
 
+            ProjectsFilter inputparams = new ProjectsFilter {
+                ProjectId=projectId,
+                Status=status,
+                IsDeleted=isdeleted
+            };
+
+            var projects=db.ProjetcsResultSheetByFilter.CallStoredProc(inputparams).ToList<Project>();
+
+            return projects;
+        }
+
+        // aspnet users sheet by filter
+
+        public List<AspNetUser> GetAspNetUsersResultSheetByFilter(int? id,string email,string isdeleted,string isactive)
+        {
+            int Id = id.HasValue ? id.Value : 0;
+
+            AspNetUsersFilter inputparams = new AspNetUsersFilter
+            {
+                Id = Id,
+                Email = email,
+                IsDeleted=isdeleted,
+                IsActive=isactive
+            };
+
+            var users = db.AspNetUsersResultSheetByFilter.CallStoredProc(inputparams).ToList<AspNetUser>();
+
+            return users;
+        }
+
+        // get all roles from aspnet  roles
+
+        public List<AspNetRole> GetAllAspNetRole()
+        {
+            var roles = db.AspNetRoleResultSheet.CallStoredProc().ToList<AspNetRole>();
+
+            return roles;
+        }
+
+      
+        
+        // getting user roles update
+        public List<AspNetUserRole> GetAllAspNetUserRolesUpdate(int userid,string rolescsv)
+        {
+            RolesUpdate inputparams = new RolesUpdate
+            {
+                UserId = userid,
+                RolesCSV = rolescsv
+            };
+
+
+            var rolesupdate = db.AspNetUserRoleUpdateResultSheet.CallStoredProc(inputparams).ToList<AspNetUserRole>();
+
+            return (rolesupdate);
+        }
+
+        // geeting projects developer update
+
+        public List<ProjectsDeveloperList> GetProjectsDeveloperUpdate(int developerid, string projectscsv)
+        {
+            ProjectsDeveloperUpdate inputparams = new ProjectsDeveloperUpdate
+            {
+                DeveloperId = developerid,
+                ProjectsCSV = projectscsv
+            };
+
+
+            var rolesupdate = db.ProjectsDeveloperUpdateResultSheet.CallStoredProc(inputparams).ToList<ProjectsDeveloperList>();
+
+            return (rolesupdate);
+        }
+
+
+
+       // for filtering projectsdeveloper by developerid and projectsid
+
+        public List<ProjectsDeveloperFilterResult> GetProjectsDevelopersResultSheetFilter(int? developerid, int? projectsid)
+        {
+            int developerId = developerid.HasValue ? developerid.Value : 0;
+            int projectsId = projectsid.HasValue ? projectsid.Value : 0;
+
+            ProjectsDeveloperList inputparams = new ProjectsDeveloperList
+            {
+                DeveloperId = developerId,
+                ProjectsId = projectsId
+            };
+
+            var projectsdevelopers = db.ProjectsDeveloperFilterResultSheet.CallStoredProc(inputparams).ToList<ProjectsDeveloperFilterResult>();
+
+            return projectsdevelopers;
+        }
+        
     }
 }

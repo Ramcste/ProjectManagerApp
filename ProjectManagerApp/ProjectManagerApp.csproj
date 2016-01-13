@@ -194,6 +194,9 @@
     <Compile Include="Areas\Admin\Controllers\AspNetUsersController.cs" />
     <Compile Include="Areas\Admin\Controllers\LogsController.cs" />
     <Compile Include="Areas\Admin\Controllers\ProjectsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ProjectsDevelopersController.cs" />
+    <Compile Include="Areas\Admin\DAL\DALUser.cs" />
+    <Compile Include="Areas\Admin\DAL\NameValuePair.cs" />
     <Compile Include="Areas\Admin\Models\AspNetRole.cs">
       <DependentUpon>ProjectManagerAdminModel.tt</DependentUpon>
     </Compile>
@@ -209,22 +212,10 @@
     <Compile Include="Areas\Admin\Models\AspNetUserRole.cs">
       <DependentUpon>ProjectManagerAdminModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Areas\Admin\Models\AspNetUsers_ResultSheet_Result.cs">
-      <DependentUpon>ProjectManagerAdminModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Areas\Admin\Models\C__MigrationHistory.cs">
       <DependentUpon>ProjectManagerAdminModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Admin\Models\Log.cs">
-      <DependentUpon>ProjectManagerAdminModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Areas\Admin\Models\Logs_ResultSheetAscDate_Result.cs">
-      <DependentUpon>ProjectManagerAdminModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Areas\Admin\Models\Logs_ResultSheetAscProjectId_Result.cs">
-      <DependentUpon>ProjectManagerAdminModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Areas\Admin\Models\Logs_ResultSheet_Result.cs">
       <DependentUpon>ProjectManagerAdminModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Admin\Models\Project.cs">
@@ -248,18 +239,6 @@
     <Compile Include="Areas\Admin\Models\ProjectsDeveloper.cs">
       <DependentUpon>ProjectManagerAdminModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Areas\Admin\Models\ProjectsDeveloper_ResultSheet_Result.cs">
-      <DependentUpon>ProjectManagerAdminModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Areas\Admin\Models\Project_ResultSheet_Result.cs">
-      <DependentUpon>ProjectManagerAdminModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Areas\Admin\Models\Report_ResultSheetByOption_Result.cs">
-      <DependentUpon>ProjectManagerAdminModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Areas\Admin\Models\Split_Result.cs">
-      <DependentUpon>ProjectManagerAdminModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -279,14 +258,25 @@
     <Compile Include="Migrations\201511270519075_PhoneNumber2.Designer.cs">
       <DependentUpon>201511270519075_PhoneNumber2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201601070627498_IsActive.cs" />
+    <Compile Include="Migrations\201601070627498_IsActive.Designer.cs">
+      <DependentUpon>201601070627498_IsActive.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201601070949049_IsDeleted.cs" />
+    <Compile Include="Migrations\201601070949049_IsDeleted.Designer.cs">
+      <DependentUpon>201601070949049_IsDeleted.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\DAL\Input\LogBulkDelete.cs" />
     <Compile Include="Models\DAL\Input\Logedit.cs" />
+    <Compile Include="Models\DAL\Input\ProjectsDeveloperUpdate.cs" />
     <Compile Include="Models\DAL\Input\RemoveLogInput.cs" />
     <Compile Include="Models\DAL\Input\Report.cs" />
+    <Compile Include="Models\DAL\Input\RolesUpdate.cs" />
     <Compile Include="Models\DAL\Input\XmlInput.cs" />
     <Compile Include="Models\DAL\Output\AspNetUsers.cs" />
+    <Compile Include="Models\DAL\Output\AspNetUsersFilter.cs" />
     <Compile Include="Models\DAL\Output\Filter.cs" />
     <Compile Include="Models\DAL\Output\LogFiltered.cs" />
     <Compile Include="Models\DAL\Output\Loghistory.cs" />
@@ -294,6 +284,9 @@
     <Compile Include="Models\DAL\Output\LogResultSheetByOption.cs" />
     <Compile Include="Models\DAL\Output\Projects.cs" />
     <Compile Include="Models\DAL\Output\ProjectsDeveloper.cs" />
+    <Compile Include="Models\DAL\Output\ProjectsDeveloperFilterResult.cs" />
+    <Compile Include="Models\DAL\Output\ProjectsDeveloperList.cs" />
+    <Compile Include="Models\DAL\Output\ProjectsFilter.cs" />
     <Compile Include="Models\DAL\ProjectDal.cs" />
     <Compile Include="Models\DAL\StoredProContext.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -479,13 +472,18 @@
     <Content Include="Areas\Admin\Views\AspNetRoles\_UpdateAspNetRoles.cshtml" />
     <Content Include="Areas\Admin\Views\AspNetUserRoles\_AspNetUserRolesList.cshtml" />
     <Content Include="Areas\Admin\Views\AspNetUserRoles\_UpdateAspNetUserRoles.cshtml" />
+    <Content Include="Areas\Admin\Views\ProjectsDevelopers\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\ProjectsDevelopers\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\ProjectsDevelopers\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\ProjectsDevelopers\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\ProjectsDevelopers\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Projects\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Projects\Delete.cshtml" />
     <Content Include="Areas\Admin\Views\Projects\Details.cshtml" />
     <Content Include="Areas\Admin\Views\Projects\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Projects\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\Projects\_UpdateProjects.cshtml" />
     <Content Include="Areas\Admin\Views\Projects\_ProjectsList.cshtml" />
+    <Content Include="Areas\Admin\Views\Projects\_UpdateProjects.cshtml" />
     <EntityDeploy Include="Areas\Admin\Models\ProjectManagerAdminModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>ProjectManagerAdminModel.Designer.cs</LastGenOutput>
@@ -493,6 +491,8 @@
     <Content Include="Areas\Admin\Models\ProjectManagerAdminModel.edmx.diagram">
       <DependentUpon>ProjectManagerAdminModel.edmx</DependentUpon>
     </Content>
+    <Content Include="Areas\Admin\Views\ProjectsDevelopers\_UpdateProjectsDevelopers.cshtml" />
+    <Content Include="Areas\Admin\Views\ProjectsDevelopers\_ProjectsDeveloperList.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -572,6 +572,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201511270519075_PhoneNumber2.resx">
       <DependentUpon>201511270519075_PhoneNumber2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201601070627498_IsActive.resx">
+      <DependentUpon>201601070627498_IsActive.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201601070949049_IsDeleted.resx">
+      <DependentUpon>201601070949049_IsDeleted.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

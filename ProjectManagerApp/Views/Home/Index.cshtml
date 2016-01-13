@@ -9,7 +9,6 @@
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/datetimepicker")
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
 
 <h1>Logs Entry</h1>
     <div class="container body-content">
@@ -91,19 +90,38 @@
 
 <br/>
 <br/>
-<h2>Logs Temptable</h2>
+<h2>Logs</h2>
 <div id="temptable">
-
+    <table id="logtable">
+        <thead>
+            <tr>
+                <td>Description</td>
+                <td>Project Name</td>
+                <td>Duration</td>
+                <td>WorkStartTime</td>
+                <td>WorkEndTime</td>
+                <td>Date</td>
+                <td></td>
+                <td>Operation</td>
+            </tr>
+        </thead>
+        <tbody>
+          
+        </tbody>
+    </table>
 </div>
+
 <br/>
 <br/>
 <div class="row">
-    <div class="col-md-10"></div>
-    <div class="col-md-1"></div>
-    <div class="col-md-1">
+    <div class="col-md-5"></div>
+    <div class="col-md-4">
         <div class="form-group">
-            <input  type="button" id="savebutton" value="Save" class="btn btn-default"/>
+            <input type="button" id="savebutton" value="Save" class="btn btn-default" />
         </div>
+    </div>
+    <div class="col-md-3">
+        
     </div>
 </div>
 
@@ -112,34 +130,33 @@
 
     @*var id=@HttpContext.Current.User.identity.GetUserid();
     alert(id);*@
-
     $('h2').hide();
     $('#savebutton').hide();
+
     $(document).ready(function () {
         $('#datetimepicker1').datetimepicker({
             format: 'h:mm a'
 
         });
-    });
 
+    });
     $(document).ready(function () {
         $('#datetimepicker2').datetimepicker({
             format: 'h:mm a'
 
         });
     });
-
-    $(document).ready(function () {
+    $(document).ready(function(){
         $('#datetimepicker3').datetimepicker({
             format: 'YYYY-M-D'
-           
+
         });
     });
-
+    $('#logtable').hide();
     // workstarting time
 
     function ConvertTimeFormat(format, str) {
-        
+
         var time = $('#workstartingtime').val();
         var hours = Number(time.match(/^(\d+)/)[1]);
         var minutes = Number(time.match(/:(\d+)/)[1]);
@@ -157,7 +174,7 @@
 
         //workending time
     function ConvertTimeFormat1(format,str) {
-        
+
         var time1 = $('#workendingtime').val();
         var hours1 = Number(time1.match(/^(\d+)/)[1]);
         var minutes1 = Number(time1.match(/:(\d+)/)[1]);
@@ -168,7 +185,7 @@
         var sMinutes1 = minutes1;
         if (hours1 < 10) sHours1 = "0" + sHours1;
         if (minutes1 < 10) sMinutes1 = "0" + sMinutes1;
-    
+
         return (sHours1+"."+sMinutes1);
     }
 
@@ -188,14 +205,11 @@
             var hdiff = ehours - shours;
             var mdiff = eminute - sminute;
 
-
-
-
             if (endtime > starttime) {
-              //  alert(" endtime is greater");
-                
+          
+
                 $('#duration').val(hdiff + ":" + mdiff);
-              
+
                 if (mdiff<0) {
                     mdiff = mdiff + 60;
                     hdiff = hdiff - 1;
@@ -204,15 +218,10 @@
                else {
                     $('#duration').val(hdiff + ":" + mdiff);
                 }
-            
-                //alert(endtime);
+
+
             }
 
-            //else if (mdiff<0 &&hdiff>0) {
-            //    mdiff = mdiff + 60;
-            //    hdiff = hdiff - 1;
-            //    $('#duration').val(hdiff + ":" + mdiff);
-            //}
 
             else if (endtime == starttime && mdiff>=0) {
                var hdiff1 = 0;
@@ -241,33 +250,36 @@
 
           //  alert(id);
 
+            var report = "";
+
             if (description !== "" && name !== "" && duration !== "" && workstime !== "" && worketime !== "" && date !== "") {
 
-                var html = new Array();
 
-                html.push('<div class="logrow row">');
-                    html.push('<div class="col-md-3 description">' + description + '</div>' +
-                    '<div class="col-md-2 projectName">' + name + '<input type="hidden" class="projectid" value="' + projectid + '"/>' + '</div>' +
-                    '<div class="col-md-1 duration">' + duration + '</div>' +
-                    '<div class="col-md-1 workstime">' + workstime + '</div>' +
-                    '<div class="col-md-1">' + "-" + '</div>' +
-                    '<div class="col-md-1 worketime">' + worketime + '</div>' +
-                    '<div class="col-md-2 date">' + date + '</div>' +
-                    '<input type="hidden" class="developerid" value="' + @HttpContext.Current.User.Identity.GetUserId() + '"/>'+
-                    '<button class="col-md-1 delete" onclick="operation(this);">'  + '<i class="fa fa-close" style="font-size:24px;color:red">' + '</i>' + '</button>'
-                );
+                report += '<tr class="logrow">' +
+                    '<td class="description">' + description + '</td>' +
+                    '<td class="projectname">' + name + '<input type="hidden" class="projectid" value="' + projectid + '"/>' + '</td>' +
+                    '<td class="duration">' + duration + '</td>' +
+                    '<td class="workstime">' + workstime + '</td>' +
+                    '<td class="worketime">' + worketime + '</td>' +
+                    '<td class="date">' + date + '</td>' +
+                    '<td class="developerid">'+'<input type="hidden" class="developerid" value="' + @HttpContext.Current.User.Identity.GetUserId() + '"/>'+'</td>'+
+                    '<td>' +
+                    '<input type="button" id="deletebutton" value="Delete"  onclick="operation(this);"/>' +
+                    '</td>' +
+                    '</tr>';
+                    console.log(report);
+                    $('#logtable').show();
+                    $('#logtable').append(report)
 
-                html.push('</div>');
-                $('#temptable').append(html.join(''));
                 count++;
 
                 $('h2').show();
                 $('#savebutton').show();
-
                 reset();
             } else {
                 alert("input field value is missing");
             }
+         
         });
 
 
@@ -278,7 +290,6 @@
         document.getElementById("description").value = "";
         document.getElementById("duration").value = "";
         document.getElementById("date").value = "";
-     // document.getElementById("dropdown").value = "";
         document.getElementById("workstartingtime").value = "";
         document.getElementById("workendingtime").value = "";
     }
@@ -297,14 +308,14 @@
             //fetching data from div by iteration and converting them to xml and json
             var html = new Array();
             html.push('<logs>');
-            $.each($('#temptable .logrow'), function (index, rec) {
-                var description = $($(rec).children('.description')).html();
-                var projectid = $($(rec).children('.projectName').find('input[type=hidden].projectid')).val();
-                var duration = $($(rec).children('.duration')).html();
-                var workstime = $($(rec).children('.workstime')).html();
-                var worketime = $($(rec).children('.worketime')).html();
-                var date = $($(rec).children('.date')).html();
-                var developerid = $($(rec).children('.developerid')).val();
+            $.each($('#logtable tr.logrow'), function (index, rec) {
+                var description = $($(rec).children('td.description')).html();
+                var projectid = $($(rec).children('td.projectname').find('input[type=hidden].projectid')).val();
+                var duration = $($(rec).children('td.duration')).html();
+                var workstime = $($(rec).children('td.workstime')).html();
+                var worketime = $($(rec).children('td.worketime')).html();
+                var date = $($(rec).children('td.date')).html();
+                var developerid = $($(rec).children('td.developerid').find('input[type=hidden].developerid')).val();
                 html.push('<LineItem ');
                 html.push('Description="' + description + '"');
                 html.push('ProjectId="' + projectid + '"');
@@ -337,6 +348,7 @@
 
                     // to empty temptable after saving records in database
                     $('#temptable').empty();
+                    $('#savebutton').hide();
 
                 },
                 error:function() {
@@ -351,7 +363,7 @@
 
     //function for button to delete
     function operation(ob) {
-        $(ob).parent().remove();
+        $(ob).parent().parent().remove();
     }
 
     // for deleting specific columns selected
@@ -375,8 +387,25 @@
 
 </script>
 
+
 <style>
- .highlight {
-    background-color:red ;
-}   
+    .logtable {
+        border: 1px solid #666;
+        width: 100%;
+    }
+
+    td {
+        background: #f8f8f8;
+        font-weight: bold;
+        padding: 2px;
+    }
+
+    th{
+        height:50px;
+    }
+
+    .highlight {
+        background-color: red;
+    }
 </style>
+

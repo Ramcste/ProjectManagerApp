@@ -16,7 +16,7 @@
 <div class="menu row">
     <div class="col-md-3">
         <div class="form-group">
-            @Html.DropDownListFor(model => model.Id, new SelectList(ViewBag.Projects, "id", "Name"), new {@class = "form-control", id = "dropdown"})
+            @Html.DropDownListFor(model => model.Id, new SelectList(ViewBag.Projects, "id", "Name"),"All", new {@class = "form-control", id = "dropdown"})
 
         </div>
     </div>
@@ -79,7 +79,25 @@
 <br/>
 
 <div id="logshistory">
-       <table class="logtable"></table>
+       <table class="logtable" style="width:100%">
+           <thead>
+               <tr>
+
+                   <td> Option</td>
+                   <td></td>
+                   <td> Description</td>
+                   <td> Project Name</td>
+                   <td> Duration</td>
+                   <td> WorkStartTime</td>
+                   <td> WorkEndTime</td>
+                   <td> Date</td>
+                   <td> Operation</td>
+               </tr>
+           </thead>
+           <tbody>
+
+           </tbody>
+       </table>
  
 </div>
 <br/>
@@ -107,12 +125,6 @@
 
         });
 
-        @*var did = @HttpContext.Current.User.Identity.GetUserId();
-        var pid = ($('#dropdown').val()=="")? '1':$('#dropdown').val();
-        var date = ($('#logdate').val()=="")? '2015/3/15':$('#logdate').val();
-        alert(date);
-        alert(pid);
-        alert(did)*@;
     });
 
 
@@ -122,12 +134,16 @@
     function LoadHistoryDefault()
     {
         var did = @HttpContext.Current.User.Identity.GetUserId();
-        var pid=$('#dropdown option:selected').val();
+        var pid=($('#dropdown option:selected').val() == "")? 0 :$('#dropdown option:selected').val();
+        var fromdate = ($('#fromdate').val() == "") ? null : $('#fromdate').val();
+        var todate = ($('#todate').val() == "") ? null : $('#todate').val();
         //  alert(pid);
         //alert(did);
 
-        var url = '/API/Log/GetLogHistoryAscProjectId';
-        $.get(url, { developerid: did,projectid:pid }, function(data) {
+        //  var url = '/API/Log/GetLogHistoryAscProjectId';
+        //$.get(url, { developerid: did,projectid:pid}, function(data) {
+        var url = '/API/Log/GetLogsHistory';
+        $.get(url, { id: did, projectid: pid, fromdate: fromdate, todate: todate }, function(data) {
             console.log(data);
             var report = "";
             var len = data.length;
@@ -154,10 +170,12 @@
             if (report != "") {
                 $('#logshistory .logtable').append(report);
                 console.log("success");
+                $('.logrowcheckbox').show();
 
             } else {
                 console.log("no logs to show");
                 $('.logrowcheckbox').hide();
+                $('#logshistory .logtable').hide();
                 alert("no data to show");
 
             }
@@ -184,18 +202,11 @@
 
             var did = @HttpContext.Current.User.Identity.GetUserId();
             var pid = $('#dropdown option:selected').val();
-            var fromdate = ($('#fromdate').val() == "") ? '12/1/2015' : $('#fromdate').val();
-            var todate = ($('#todate').val() == "") ? moment().format('M/D/YYYY') : $('#todate').val();
+            var fromdate = ($('#fromdate').val() == "") ? null : $('#fromdate').val();
+            var todate = ($('#todate').val() == "") ? null : $('#todate').val();
 
-            // alert(pid);
-
-            if (pid == "" || fromdate == "" || todate == "") {
-                alert("fill out all the blanks and then proceed");
-            }
-                //alert(fromdate);
-                // alert(pid);
-                // alert(todate);
-            else {
+           
+            if(true) {
                 // to remove exisiting records of table
                 $('.logtable tr').remove();
 
@@ -226,11 +237,12 @@
                     if (report != "") {
                         $('#logshistory .logtable').append(report);
                         console.log("success");
-
+                        $('.logrowcheckbox').show();
 
                     } else {
                         console.log("no data to show");
                         $('.logrowcheckbox').hide();
+                        $('#logshistory .logtable').hide();
                         alert("there is no records for this search!!");
 
                     }
@@ -348,7 +360,7 @@
                 selectedlogid.pop(logid);
                 console.log(logid);
                 count--;
-                alert("unchecked");
+               // alert("unchecked");
             }
 
         });
@@ -363,8 +375,8 @@
 
     function editlog(logid, description, projectname, duration, workstime, worketime, date, developerid) {
         //  alert(description);
-        alert(date);
-        // alert(projectid);
+        //  alert(date);
+        //  alert(projectid);
 
         dialogAddItem = new BootstrapDialog({
             title: 'Are you sure you want to edit it?',
@@ -448,7 +460,7 @@
                     var json = '{"editlogXML":' + JSON.stringify(editlogXML) + '}';
                     console.log(json);
 
-                    console.log(json);
+                    //console.log(json);
                     $.ajax({
                         type: 'POST',
                         url: '/API/Log/GetLogsUpdate',
@@ -508,7 +520,7 @@
             check();
         } else {
             //   if((ob).is(!checked)){
-            alert("you haven't  selected any row so there is nothing to delete");
+            alert("you haven't selected any row so there is nothing to delete");
             // }
         }
 

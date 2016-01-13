@@ -6,7 +6,7 @@
 
 <h2>Delete</h2>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>Are you sure you want to delete this? Records</h3>
 <div>
     <h4>Project</h4>
     <hr />
@@ -32,7 +32,7 @@
         </dt>
 
         <dd>
-
+            @*@Html.DisplayFor(model => model.Status)*@
             @{
                 if (Model.Status == true)
                 {
@@ -43,8 +43,6 @@
                     @("Inactive")
                 }
             }
-
-            @*@Html.DisplayFor(model => model.Status)*@
         </dd>
 
         <dt>
@@ -55,14 +53,76 @@
             @Html.DisplayFor(model => model.Description)
         </dd>
 
+        <dt>
+            @Html.DisplayNameFor(model => model.IsDeleted)
+        </dt>
+
+        <dd>
+            @*@Html.DisplayFor(model => model.IsDeleted)*@
+            @{
+                if (Model.IsDeleted == true)
+                {
+                    @("True")
+                }
+                else
+                {
+                    @("False")
+                }
+            }
+        </dd>
+        @*<dt>
+            @Html.DisplayNameFor(model => model.Id)
+        </dt>
+        <dd>
+            @Html.DisplayNameFor(model => model.Id)
+            <input type="hidden" value="'+item.Id+'" id="projectId" />
+        </dd>*@
     </dl>
 
     @using (Html.BeginForm()) {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
+            <input type="submit" value="Delete"  class="btn btn-default" /> |
             @Html.ActionLink("Back to List", "Index")
         </div>
     }
 </div>
+
+<script>
+
+    $(function () {
+        $('#delete').click(OnDeleteClick);
+
+    });
+
+    function OnDeleteClick(e)
+    {
+        var id = e.target.id;
+       
+        console.log(id);
+
+        var flag=confirm("Are you sure you want to delete it? By deleting it will effect all the records related to this project")
+
+        if (flag) {
+            $.ajax({
+                url: '/Areas/Admin/Controllers/Projects/DeleteAjax',
+                type: 'POST',
+                data: { id: id },
+                dataType: 'json',
+                success: function (result) {
+                    alert(result);
+                },
+
+                error: function(){
+                    alert('Error');
+            }
+                
+            });
+        }
+
+        return false;
+    }
+
+</script>
+

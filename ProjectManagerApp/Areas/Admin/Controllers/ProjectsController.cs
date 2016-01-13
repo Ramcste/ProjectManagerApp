@@ -8,13 +8,16 @@ using System.Web;
 using System.Web.Mvc;
 using ProjectManagerApp.Areas.Admin.Models;
 using ProjectManagerApp.Models.DAL;
+using ProjectManagerApp.Areas.Admin.DAL;
+
 namespace ProjectManagerApp.Areas.Admin.Controllers
 {
+    [Authorize]
     public class ProjectsController : Controller
     {
         private ProjectManagerAppEntities db = new ProjectManagerAppEntities();
-
         private ProjectDal dal = new ProjectDal();
+    
         // GET: Admin/Projects
         public ActionResult Index()
         {
@@ -25,6 +28,8 @@ namespace ProjectManagerApp.Areas.Admin.Controllers
         // GET: Admin/Projects/Details/5
         public ActionResult Details(int? id)
         {
+          
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -40,7 +45,7 @@ namespace ProjectManagerApp.Areas.Admin.Controllers
         // GET: Admin/Projects/Create
         public ActionResult Create()
         {
-            ViewBag.Projects = dal.GetProjectsResultSheet();
+           
             return View();
         }
 
@@ -49,9 +54,8 @@ namespace ProjectManagerApp.Areas.Admin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,ClientName,Status,Description")] Project project)
+        public ActionResult Create([Bind(Include = "Id,Name,ClientName,Status,Description,IsDeleted")] Project project)
         {
-            ViewBag.Projects = dal.GetProjectsResultSheet();
             if (ModelState.IsValid)
             {
                 db.Projects.Add(project);
@@ -65,7 +69,6 @@ namespace ProjectManagerApp.Areas.Admin.Controllers
         // GET: Admin/Projects/Edit/5
         public ActionResult Edit(int? id)
         {
-            ViewBag.Projects = dal.GetProjectsResultSheet();
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -83,9 +86,8 @@ namespace ProjectManagerApp.Areas.Admin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,ClientName,Status,Description")] Project project)
+        public ActionResult Edit([Bind(Include = "Id,Name,ClientName,Status,Description,IsDeleted")] Project project)
         {
-            ViewBag.Projects = dal.GetProjectsResultSheet();
             if (ModelState.IsValid)
             {
                 db.Entry(project).State = EntityState.Modified;
@@ -116,9 +118,18 @@ namespace ProjectManagerApp.Areas.Admin.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Project project = db.Projects.Find(id);
-            db.Projects.Remove(project);
+            project.IsDeleted = true;
+            // db.Projects.Remove(project);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        // for filtering
+
+         public ActionResult GetProjectsResultSheetByFilter(int? projectid,string status,string isDeleted)
+        {
+            var projects = dal.GetProjectsResultSheetByFilter(projectid, status, isDeleted);
+            return PartialView("_ProjectsList",projects);
         }
 
         protected override void Dispose(bool disposing)

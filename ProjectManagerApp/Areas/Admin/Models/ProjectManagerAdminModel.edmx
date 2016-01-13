@@ -67,6 +67,8 @@
           <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
           <Property Name="Address" Type="nvarchar(max)" />
           <Property Name="PhoneNumber2" Type="nvarchar(max)" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Logs">
           <Key>
@@ -90,6 +92,7 @@
           <Property Name="ClientName" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Status" Type="bit" Nullable="false" />
           <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="ProjectsDeveloper">
           <Key>
@@ -203,53 +206,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Function Name="AspNetUsers_ResultSheet" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="AspNetUsers.ResultSheet" />
-        <Function Name="Logs_BulkDelete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="Logs.BulkDelete">
-          <Parameter Name="LogIds" Type="varchar(max)" Mode="In" />
-          <Parameter Name="DeveloperId" Type="int" Mode="In" />
-        </Function>
-        <Function Name="Logs_DeleteSelected" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="Logs.DeleteSelected">
-          <Parameter Name="LogId" Type="int" Mode="In" />
-        </Function>
-        <Function Name="Logs_ResultSheet" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="Logs.ResultSheet">
-          <Parameter Name="DeveloperId" Type="int" Mode="In" />
-          <Parameter Name="ProjectId" Type="int" Mode="In" />
-          <Parameter Name="FromDate" Type="date" Mode="In" />
-          <Parameter Name="ToDate" Type="date" Mode="In" />
-        </Function>
-        <Function Name="Logs_ResultSheet_Update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="Logs.ResultSheet.Update">
-          <Parameter Name="EditLogXML" Type="varchar(max)" Mode="In" />
-        </Function>
-        <Function Name="Logs_ResultSheetAscDate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="Logs.ResultSheetAscDate">
-          <Parameter Name="DeveloperId" Type="int" Mode="In" />
-        </Function>
-        <Function Name="Logs_ResultSheetAscProjectId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="Logs.ResultSheetAscProjectId">
-          <Parameter Name="DeveloperId" Type="int" Mode="In" />
-          <Parameter Name="ProjectId" Type="int" Mode="In" />
-        </Function>
-        <Function Name="Project_ResultSheet" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="Project.ResultSheet" />
-        <Function Name="ProjectsDeveloper_ResultSheet" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="ProjectsDeveloper.ResultSheet">
-          <Parameter Name="DeveloperId" Type="int" Mode="In" />
-        </Function>
-        <Function Name="Report_ResultSheetByOption" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="Report.ResultSheetByOption">
-          <Parameter Name="from" Type="datetime" Mode="In" />
-          <Parameter Name="till" Type="datetime" Mode="In" />
-        </Function>
-        <Function Name="ReportSave_Complete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="ReportSave.Complete">
-          <Parameter Name="LogXML" Type="varchar(max)" Mode="In" />
-        </Function>
-        <Function Name="Split" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="DelimitedString" Type="varchar" Mode="In" />
-          <Parameter Name="Delimiter" Type="varchar" Mode="In" />
-          <ReturnType>
-            <CollectionType>
-              <RowType>
-                <Property Name="ElementID" Type="smallint" Nullable="false" />
-                <Property Name="Element" Type="varchar" MaxLength="1000" />
-              </RowType>
-            </CollectionType>
-          </ReturnType>
-        </Function>
         <EntityContainer Name="ProjectManagerAppModelStoreContainer">
           <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
@@ -298,10 +254,6 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ProjectManagerAppModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <ComplexType Name="Split_Result">
-          <Property Name="ElementID" Type="Int16" Nullable="false" />
-          <Property Name="Element" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-        </ComplexType>
         <EntityType Name="C__MigrationHistory">
           <Key>
             <PropertyRef Name="MigrationId" />
@@ -369,6 +321,8 @@
           <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="PhoneNumber2" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="AspNetUserClaims" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
           <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
           <NavigationProperty Name="AspNetUserRoles" Relationship="Self.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserRoles" />
@@ -399,6 +353,7 @@
           <Property Name="ClientName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Status" Type="Boolean" Nullable="false" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Logs" Relationship="Self.FK_Logs_Projects" FromRole="Projects" ToRole="Logs" />
           <NavigationProperty Name="ProjectsDevelopers" Relationship="Self.FK_Projects_ProjectsDeveloper" FromRole="Projects" ToRole="ProjectsDeveloper" />
         </EntityType>
@@ -558,101 +513,7 @@
             <End Role="Projects" EntitySet="Projects" />
             <End Role="ProjectsDeveloper" EntitySet="ProjectsDevelopers" />
           </AssociationSet>
-          <FunctionImport Name="Split" IsComposable="true" ReturnType="Collection(ProjectManagerAppModel.Split_Result)">
-            <Parameter Name="DelimitedString" Mode="In" Type="String" />
-            <Parameter Name="Delimiter" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="AspNetUsers_ResultSheet" ReturnType="Collection(ProjectManagerAppModel.AspNetUsers_ResultSheet_Result)" />
-          <FunctionImport Name="Logs_BulkDelete">
-            <Parameter Name="LogIds" Mode="In" Type="String" />
-            <Parameter Name="DeveloperId" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="Logs_DeleteSelected">
-            <Parameter Name="LogId" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="Logs_ResultSheet" ReturnType="Collection(ProjectManagerAppModel.Logs_ResultSheet_Result)">
-            <Parameter Name="DeveloperId" Mode="In" Type="Int32" />
-            <Parameter Name="ProjectId" Mode="In" Type="Int32" />
-            <Parameter Name="FromDate" Mode="In" Type="DateTime" />
-            <Parameter Name="ToDate" Mode="In" Type="DateTime" />
-          </FunctionImport>
-          <FunctionImport Name="Logs_ResultSheet_Update">
-            <Parameter Name="EditLogXML" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="Logs_ResultSheetAscDate" ReturnType="Collection(ProjectManagerAppModel.Logs_ResultSheetAscDate_Result)">
-            <Parameter Name="DeveloperId" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="Logs_ResultSheetAscProjectId" ReturnType="Collection(ProjectManagerAppModel.Logs_ResultSheetAscProjectId_Result)">
-            <Parameter Name="DeveloperId" Mode="In" Type="Int32" />
-            <Parameter Name="ProjectId" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="Project_ResultSheet" ReturnType="Collection(ProjectManagerAppModel.Project_ResultSheet_Result)" />
-          <FunctionImport Name="ProjectsDeveloper_ResultSheet" ReturnType="Collection(ProjectManagerAppModel.ProjectsDeveloper_ResultSheet_Result)">
-            <Parameter Name="DeveloperId" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="Report_ResultSheetByOption" ReturnType="Collection(ProjectManagerAppModel.Report_ResultSheetByOption_Result)">
-            <Parameter Name="from" Mode="In" Type="DateTime" />
-            <Parameter Name="till" Mode="In" Type="DateTime" />
-          </FunctionImport>
-          <FunctionImport Name="ReportSave_Complete">
-            <Parameter Name="LogXML" Mode="In" Type="String" />
-          </FunctionImport>
         </EntityContainer>
-        <ComplexType Name="AspNetUsers_ResultSheet_Result">
-          <Property Type="Int32" Name="Id" Nullable="false" />
-          <Property Type="String" Name="UserName" Nullable="false" MaxLength="256" />
-        </ComplexType>
-        <ComplexType Name="Logs_ResultSheet_Result">
-          <Property Type="Int32" Name="Id" Nullable="false" />
-          <Property Type="String" Name="Description" Nullable="false" />
-          <Property Type="String" Name="Name" Nullable="false" />
-          <Property Type="String" Name="Duration" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="WorkStartTime" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="WorkEndTime" Nullable="false" MaxLength="50" />
-          <Property Type="DateTime" Name="Date" Nullable="false" />
-          <Property Type="Int32" Name="DeveloperId" Nullable="false" />
-        </ComplexType>
-        <ComplexType Name="Logs_ResultSheetAscDate_Result">
-          <Property Type="Int32" Name="Id" Nullable="false" />
-          <Property Type="String" Name="Description" Nullable="false" />
-          <Property Type="String" Name="Name" Nullable="false" />
-          <Property Type="String" Name="WorkStartTime" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="WorkEndTime" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="Duration" Nullable="false" MaxLength="50" />
-          <Property Type="DateTime" Name="Date" Nullable="false" />
-          <Property Type="Int32" Name="DeveloperId" Nullable="false" />
-        </ComplexType>
-        <ComplexType Name="Logs_ResultSheetAscProjectId_Result">
-          <Property Type="Int32" Name="Id" Nullable="false" />
-          <Property Type="String" Name="Description" Nullable="false" />
-          <Property Type="String" Name="Name" Nullable="false" />
-          <Property Type="String" Name="WorkStartTime" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="WorkEndTime" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="Duration" Nullable="false" MaxLength="50" />
-          <Property Type="DateTime" Name="Date" Nullable="false" />
-          <Property Type="Int32" Name="DeveloperId" Nullable="false" />
-        </ComplexType>
-        <ComplexType Name="Project_ResultSheet_Result">
-          <Property Type="Int32" Name="Id" Nullable="false" />
-          <Property Type="String" Name="Name" Nullable="false" />
-          <Property Type="String" Name="ClientName" Nullable="false" />
-          <Property Type="Boolean" Name="Status" Nullable="false" />
-          <Property Type="String" Name="Description" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="ProjectsDeveloper_ResultSheet_Result">
-          <Property Type="Int32" Name="Id" Nullable="false" />
-          <Property Type="String" Name="Name" Nullable="false" />
-        </ComplexType>
-        <ComplexType Name="Report_ResultSheetByOption_Result">
-          <Property Type="Int32" Name="Id" Nullable="false" />
-          <Property Type="String" Name="Description" Nullable="false" />
-          <Property Type="String" Name="Name" Nullable="false" />
-          <Property Type="String" Name="WorkStartTime" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="WorkEndTime" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="Duration" Nullable="false" MaxLength="50" />
-          <Property Type="DateTime" Name="Date" Nullable="false" />
-          <Property Type="Int32" Name="DeveloperId" Nullable="false" />
-        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -722,6 +583,8 @@
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
                 <ScalarProperty Name="Address" ColumnName="Address" />
                 <ScalarProperty Name="PhoneNumber2" ColumnName="PhoneNumber2" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -747,6 +610,7 @@
                 <ScalarProperty Name="ClientName" ColumnName="ClientName" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -759,101 +623,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionName="ProjectManagerAppModel.Store.Split" FunctionImportName="Split">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ProjectManagerAppModel.Split_Result">
-                <ScalarProperty Name="ElementID" ColumnName="ElementID" />
-                <ScalarProperty Name="Element" ColumnName="Element" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="AspNetUsers_ResultSheet" FunctionName="ProjectManagerAppModel.Store.AspNetUsers_ResultSheet">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ProjectManagerAppModel.AspNetUsers_ResultSheet_Result">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="UserName" ColumnName="UserName" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="Logs_BulkDelete" FunctionName="ProjectManagerAppModel.Store.Logs_BulkDelete" />
-          <FunctionImportMapping FunctionImportName="Logs_DeleteSelected" FunctionName="ProjectManagerAppModel.Store.Logs_DeleteSelected" />
-          <FunctionImportMapping FunctionImportName="Logs_ResultSheet" FunctionName="ProjectManagerAppModel.Store.Logs_ResultSheet">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ProjectManagerAppModel.Logs_ResultSheet_Result">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Duration" ColumnName="Duration" />
-                <ScalarProperty Name="WorkStartTime" ColumnName="WorkStartTime" />
-                <ScalarProperty Name="WorkEndTime" ColumnName="WorkEndTime" />
-                <ScalarProperty Name="Date" ColumnName="Date" />
-                <ScalarProperty Name="DeveloperId" ColumnName="DeveloperId" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="Logs_ResultSheet_Update" FunctionName="ProjectManagerAppModel.Store.Logs_ResultSheet_Update" />
-          <FunctionImportMapping FunctionImportName="Logs_ResultSheetAscDate" FunctionName="ProjectManagerAppModel.Store.Logs_ResultSheetAscDate">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ProjectManagerAppModel.Logs_ResultSheetAscDate_Result">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="WorkStartTime" ColumnName="WorkStartTime" />
-                <ScalarProperty Name="WorkEndTime" ColumnName="WorkEndTime" />
-                <ScalarProperty Name="Duration" ColumnName="Duration" />
-                <ScalarProperty Name="Date" ColumnName="Date" />
-                <ScalarProperty Name="DeveloperId" ColumnName="DeveloperId" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="Logs_ResultSheetAscProjectId" FunctionName="ProjectManagerAppModel.Store.Logs_ResultSheetAscProjectId">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ProjectManagerAppModel.Logs_ResultSheetAscProjectId_Result">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="WorkStartTime" ColumnName="WorkStartTime" />
-                <ScalarProperty Name="WorkEndTime" ColumnName="WorkEndTime" />
-                <ScalarProperty Name="Duration" ColumnName="Duration" />
-                <ScalarProperty Name="Date" ColumnName="Date" />
-                <ScalarProperty Name="DeveloperId" ColumnName="DeveloperId" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="Project_ResultSheet" FunctionName="ProjectManagerAppModel.Store.Project_ResultSheet">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ProjectManagerAppModel.Project_ResultSheet_Result">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="ClientName" ColumnName="ClientName" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="ProjectsDeveloper_ResultSheet" FunctionName="ProjectManagerAppModel.Store.ProjectsDeveloper_ResultSheet">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ProjectManagerAppModel.ProjectsDeveloper_ResultSheet_Result">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="Report_ResultSheetByOption" FunctionName="ProjectManagerAppModel.Store.Report_ResultSheetByOption">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ProjectManagerAppModel.Report_ResultSheetByOption_Result">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="WorkStartTime" ColumnName="WorkStartTime" />
-                <ScalarProperty Name="WorkEndTime" ColumnName="WorkEndTime" />
-                <ScalarProperty Name="Duration" ColumnName="Duration" />
-                <ScalarProperty Name="Date" ColumnName="Date" />
-                <ScalarProperty Name="DeveloperId" ColumnName="DeveloperId" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="ReportSave_Complete" FunctionName="ProjectManagerAppModel.Store.ReportSave_Complete" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

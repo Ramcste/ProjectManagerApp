@@ -29,6 +29,7 @@
                     @Html.ActionLink("Project Sheet", "Index", "Projects", new { area = "Admin" }, new { @class = "navbar-brand" })
                     @Html.ActionLink("Logs Report", "Index", "Logs", new { area = "Admin" }, new { @class = "navbar-brand" })
                     @Html.ActionLink("Developer List", "Index", "AspNetUsers", new { area = "Admin" }, new { @class = "navbar-brand" })
+                    @Html.ActionLink("Project Developer List", "Index", "ProjectsDevelopers", new { area = "Admin" }, new { @class = "navbar-brand" })
                     @Html.ActionLink("Manage Role", "Index", "AspNetRoles", new { area = "Admin" }, new { @class = "navbar-brand" })
                     @Html.ActionLink("Role List", "Index", "AspNetUserRoles", new { area = "Admin" }, new { @class = "navbar-brand" })
     
@@ -38,6 +39,7 @@
     </div>
 
     <div class="container body-content">
+
         @RenderBody()
         <hr />
         <footer>

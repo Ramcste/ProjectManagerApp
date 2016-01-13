@@ -1,5 +1,5 @@
 ﻿@model ProjectManagerApp.Areas.Admin.Models.AspNetUser
-
+@using ProjectManagerApp.Areas.Admin.DAL
 @{
     ViewBag.Title = "Delete";
 }
@@ -19,7 +19,6 @@
             @Html.DisplayFor(model => model.Email)
         </dd>
 
-        
         <dt>
             @Html.DisplayNameFor(model => model.PhoneNumber)
         </dt>
@@ -28,6 +27,7 @@
             @Html.DisplayFor(model => model.PhoneNumber)
         </dd>
 
+  
         <dt>
             @Html.DisplayNameFor(model => model.UserName)
         </dt>
@@ -50,6 +50,59 @@
 
         <dd>
             @Html.DisplayFor(model => model.PhoneNumber2)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsActive)
+        </dt>
+
+        <dd>
+            @if (Model.IsActive == true)
+            {
+                @("True")
+            }
+            else
+            {
+                @("False")
+            }
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsDeleted)
+        </dt>
+
+        <dd>
+            @if (Model.IsDeleted == true)
+            {
+                @("True")
+            }
+            else
+            {
+                @("False")
+            }
+        </dd>
+
+        <dt>
+            <span>Roles</span>
+        </dt>
+        <dd>
+            @if ((ViewBag.UserRoles as List<NameValuePair>).Count > 0)
+            {
+                foreach (var item in ViewBag.UserRoles as List<NameValuePair>)
+                {
+                    <div class="col-md-4">
+                        <label class="checkbox">
+                            <input type="checkbox" name="chkUserRole" class="checkbox style-0" value="@item.Id" checked="@item.IsSelected">
+                            <i></i><span>@item.Name</span>
+                        </label>
+                    </div>
+
+
+                }
+
+
+            }
+
         </dd>
 
     </dl>

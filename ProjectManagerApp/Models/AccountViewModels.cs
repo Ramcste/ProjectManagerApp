@@ -100,6 +100,20 @@ namespace ProjectManagerApp.Models
         [Display(Name = "PhoneNumber 1")]
         public string PhoneNumber1 { get; set; }
 
+
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name ="Is Active")]
+
+        public bool IsActive { get; set; }
+
+
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "Is Deleted")]
+
+        public bool IsDeleted { get; set; }
+
     }
 
     public class ResetPasswordViewModel

@@ -74,6 +74,9 @@ E:\Workspace\ProjectManagerApp\ProjectManagerApp\bin\Microsoft.Owin.Security.Mic
 E:\Workspace\ProjectManagerApp\ProjectManagerApp\obj\Debug\ProjectManagerApp.Migrations.InitialCreate.resources
 E:\Workspace\ProjectManagerApp\ProjectManagerApp\obj\Debug\ProjectManagerApp.Migrations.Address.resources
 E:\Workspace\ProjectManagerApp\ProjectManagerApp\obj\Debug\ProjectManagerApp.Migrations.PhoneNumber2.resources
+E:\Workspace\ProjectManagerApp\ProjectManagerApp\obj\Debug\ProjectManagerApp.Migrations.IsActive.resources
+E:\Workspace\ProjectManagerApp\ProjectManagerApp\obj\Debug\ProjectManagerApp.Migrations.IsDeleted.resources
 E:\Workspace\ProjectManagerApp\ProjectManagerApp\obj\Debug\ProjectManagerApp.csproj.GenerateResource.Cache
 E:\Workspace\ProjectManagerApp\ProjectManagerApp\obj\Debug\ProjectManagerApp.dll
 E:\Workspace\ProjectManagerApp\ProjectManagerApp\obj\Debug\ProjectManagerApp.pdb
+E:\Workspace\ProjectManagerApp\ProjectManagerApp\obj\Debug\ProjectManagerApp.csprojResolveAssemblyReference.cache

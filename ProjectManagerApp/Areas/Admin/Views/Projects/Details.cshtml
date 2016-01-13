@@ -31,7 +31,7 @@
         </dt>
 
         <dd>
-          
+            @*@Html.DisplayFor(model => model.Status)*@
             @{
                 if (Model.Status == true)
                 {
@@ -39,10 +39,9 @@
                 }
                 else
                 {
-                    @("InActive")
+                    @("Inactive")
                 }
             }
-
         </dd>
 
         <dt>
@@ -51,6 +50,25 @@
 
         <dd>
             @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsDeleted)
+        </dt>
+
+        <dd>
+            @*@Html.DisplayFor(model => model.IsDeleted)*@
+            @{
+                if (Model.IsDeleted == true)
+                {
+                    @("True")
+                }
+                else
+                {
+                    @("False")
+                }
+            }
+
         </dd>
 
     </dl>

@@ -1,6 +1,6 @@
 ﻿@model ProjectManagerApp.Areas.Admin.Models.Project
 
-@using (Html.BeginForm(null,null,FormMethod.Post,new { id="frmProjects"}))
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "frmProjects" }))
 {
     @Html.AntiForgeryToken()
 
@@ -47,6 +47,27 @@
             </div>
         </div>
 
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.IsDeleted, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @*@Html.EditorFor(model => model.IsDeleted)*@
+
+                    @Html.DropDownList("IsDeleted", new SelectList(new List<Object> {
+                                                                                  new { value="True",text="True" },
+                                                                                  new { value="False", text="False"}
+                                                                                  }, "value", "text"), new { @class = "form-control" })
+
+
+
+
+                    @Html.ValidationMessageFor(model => model.IsDeleted, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Save" class="btn btn-default" />
@@ -71,8 +92,12 @@
                     {
                      required:true
                     },
-              
+
                 Status: {
+                    required:true
+                },
+
+                IsDeleted: {
                     required:true
                 }
 
@@ -95,7 +120,12 @@
 
             Status: {
                 required:"Select a status"
+            },
+
+            IsDeleted: {
+                required:"select a option"
             }
+
 
         },
 
@@ -128,9 +158,9 @@
     };
 
 
-       
 
-   
+
+
 
 
 </script>

@@ -21,6 +21,9 @@ namespace ProjectManagerApp.Models
 
         public string Address { get; set; }
         public string PhoneNumber2 { get; set; }
+        public bool IsActive { get; set; }
+
+        public bool IsDeleted { get; set; }
     }
     public class CustomUserRole : IdentityUserRole<int> { }
     public class CustomUserClaim : IdentityUserClaim<int> { }
@@ -56,6 +59,7 @@ namespace ProjectManagerApp.Models
         }
 
         public static ApplicationDbContext Create()
+
         {
             return new ApplicationDbContext();
         }

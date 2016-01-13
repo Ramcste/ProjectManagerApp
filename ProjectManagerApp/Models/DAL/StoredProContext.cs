@@ -64,7 +64,7 @@ namespace ProjectManagerApp.Models.DAL
 
         [StoredProcAttributes.ReturnTypes(typeof(Projects))]
 
-        public StoredProc<Output.ProjectsDeveloper> ProjectsDeveloperResultSheetProc { get; set; }
+        public StoredProc<Output.ProjectsDevelopers> ProjectsDeveloperResultSheetProc { get; set; }
 
 
         // for admin
@@ -91,6 +91,64 @@ namespace ProjectManagerApp.Models.DAL
         [StoredProcAttributes.ReturnTypes(typeof(LogFiltered))]
 
         public StoredProc<Filter> LogsResultSheetByFilter { get; set; }
+
+        // for filtering projects by different values
+
+        [StoredProcAttributes.Name("[Projects.Filter]")]
+
+        [StoredProcAttributes.ReturnTypes(typeof(Project))]
+
+        public StoredProc<ProjectsFilter> ProjetcsResultSheetByFilter { get; set; }
+
+
+        // for filtering aspnet users by email,id,isdeleted,isactive
+
+        [StoredProcAttributes.Name("[AspNetUsers.Filter]")]
+
+        [StoredProcAttributes.ReturnTypes(typeof(AspNetUser))]
+
+        public StoredProc<AspNetUsersFilter> AspNetUsersResultSheetByFilter { get; set; }
+
+        // for getting all roles
+
+        [StoredProcAttributes.Name("[AspNetRoles.ResultSheet]")]
+
+        [StoredProcAttributes.ReturnTypes(typeof(AspNetRole))]
+
+        public StoredProc AspNetRoleResultSheet { get; set; }
+
+
+        // for updating user roles
+
+        [StoredProcAttributes.Name("[AspNetUserRoles.Update]")]
+
+        [StoredProcAttributes.ReturnTypes(typeof(AspNetUserRole))]
+
+        public StoredProc<RolesUpdate> AspNetUserRoleUpdateResultSheet { get; set; }
+
+
+
+        // for updating projects developer
+
+
+        [StoredProcAttributes.Name("[ProjectsDeveloper.Update]")]
+
+        [StoredProcAttributes.ReturnTypes(typeof(ProjectsDeveloperList))]
+
+        public StoredProc<ProjectsDeveloperUpdate> ProjectsDeveloperUpdateResultSheet { get; set; }
+
+
+        // for filtering projectsdeveloper by developerid and projectsid
+
+
+        [StoredProcAttributes.Name("[ProjectsDevelopers.Filter]")]
+
+        [StoredProcAttributes.ReturnTypes(typeof(ProjectsDeveloperFilterResult))]
+
+        public StoredProc<ProjectsDeveloperList> ProjectsDeveloperFilterResultSheet { get; set; }
+
+
+
 
         public StoredProContext()
         {

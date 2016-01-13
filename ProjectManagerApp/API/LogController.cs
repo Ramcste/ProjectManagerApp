@@ -34,7 +34,7 @@ namespace ProjectManagerApp.API
 
         [HttpGet]
         [Route("API/Log/GetLogHistoryAscProjectId")]
-        public JsonResult<List<Report>> GetLogHistoryAscProjectId(int developerid,int projectid)
+        public JsonResult<List<Report>> GetLogHistoryAscProjectId(int developerid,int ?projectid)
         {
             var reports = dal.GetLogsHistoryByProjectId(developerid,projectid);
             return Json(reports);
@@ -43,7 +43,7 @@ namespace ProjectManagerApp.API
 
         [HttpGet]
         [Route("API/Log/GetLogsHistory")]
-        public JsonResult<List<Report>> GetLogsHistory(int id, int projectid, DateTime fromdate, DateTime todate)
+        public JsonResult<List<Report>> GetLogsHistory(int id, int? projectid, DateTime? fromdate, DateTime? todate)
         {
             //int DeveloperId = 1;//(developerid.HasValue) ? developerid.Value : User.Identity.GetUserId<int>();
 

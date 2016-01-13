@@ -33,5 +33,11 @@ namespace ProjectManagerApp.Models.DAL.Output
         [StoredProcAttributes.Direction(System.Data.ParameterDirection.Input)]
         [StoredProcAttributes.ParameterType(System.Data.SqlDbType.Bit)]
         public bool Status { get; set; }
+
+        [StoredProcAttributes.Name("IsDeleted")]
+        [StoredProcAttributes.Direction(System.Data.ParameterDirection.Input)]
+        [StoredProcAttributes.ParameterType(System.Data.SqlDbType.Bit)]
+        public bool IsDeleted { get; set; }
+
     }
 }
