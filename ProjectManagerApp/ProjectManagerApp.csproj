@@ -292,6 +292,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\ProjectManagerAppContext.cs" />
+    <Compile Include="Models\ProjectManagerPasswordHasher.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -493,6 +494,7 @@
     </Content>
     <Content Include="Areas\Admin\Views\ProjectsDevelopers\_UpdateProjectsDevelopers.cshtml" />
     <Content Include="Areas\Admin\Views\ProjectsDevelopers\_ProjectsDeveloperList.cshtml" />
+    <Content Include="Areas\Admin\Views\Projects\AdminPage.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -553,6 +555,7 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Account\Info.cshtml" />
     <Content Include="Views\Home\Logshistory.cshtml" />
+    <Content Include="Views\Home\WelcomePage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

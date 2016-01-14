@@ -140,5 +140,12 @@ namespace ProjectManagerApp.Areas.Admin.Controllers
             }
             base.Dispose(disposing);
         }
+
+        public ActionResult AdminPage()
+        {
+            ViewBag.Message = "Welcome to the ProjectManagerApp Admin Panel";
+
+            return View();
+        }
     }
 }

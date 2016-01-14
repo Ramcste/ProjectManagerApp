@@ -10,6 +10,7 @@ using ProjectManagerApp.Areas.Admin.Models;
 using ProjectManagerApp.Areas.Admin.DAL;
 using Microsoft.AspNet.Identity;
 using ProjectManagerApp.Models.DAL;
+using ProjectManagerApp.Models.DAL.Output;
 
 namespace ProjectManagerApp.Areas.Admin.Controllers
 {
@@ -25,7 +26,7 @@ namespace ProjectManagerApp.Areas.Admin.Controllers
 
             ViewBag.Projects = dal.GetProjectsResultSheet();
 
-            //  var projectsDevelopers = db.ProjectsDevelopers.Include(p => p.AspNetUser).Include(p => p.Project);
+           //var projectsDevelopers = db.ProjectsDevelopers.Include(p => p.AspNetUser).Include(p => p.Project);
 
             var projectsDevelopers = dal.GetProjectsDevelopersResultSheetFilter(0, 0);
 
@@ -58,6 +59,7 @@ namespace ProjectManagerApp.Areas.Admin.Controllers
             ViewBag.ProjectsDeveloper = daluser.GetProjects(0);
             ViewBag.DeveloperId = new SelectList(db.AspNetUsers, "Id", "Email");
             ViewBag.ProjectsId = new SelectList(db.Projects, "Id", "Name");
+          
             return View();
         }
 
@@ -68,7 +70,10 @@ namespace ProjectManagerApp.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,DeveloperId,ProjectsId")] ProjectsDeveloper projectsDeveloper)
         {
+          
+            //ViewBag.ProjectsDeveloper = daluser.GetProjects(0);
             int developerid = projectsDeveloper.DeveloperId;
+            
             string projectsDeveloperCSV = Request.Form["chkProjectsDeveloper"];
 
             if (ModelState.IsValid)
@@ -83,6 +88,7 @@ namespace ProjectManagerApp.Areas.Admin.Controllers
 
             ViewBag.DeveloperId = new SelectList(db.AspNetUsers, "Id", "Email", projectsDeveloper.DeveloperId);
             ViewBag.ProjectsId = new SelectList(db.Projects, "Id", "Name", projectsDeveloper.ProjectsId);
+
             return View(projectsDeveloper);
         }
 
@@ -128,7 +134,7 @@ namespace ProjectManagerApp.Areas.Admin.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.DeveloperId = new SelectList(db.AspNetUsers, "Id", "Email", projectsDeveloper.DeveloperId);
-            ViewBag.ProjectsId = new SelectList(db.Projects, "Id", "Name", projectsDeveloper.ProjectsId);
+           // ViewBag.ProjectsId = new SelectList(db.Projects, "Id", "Name", projectsDeveloper.ProjectsId);
             return View(projectsDeveloper);
         }
 

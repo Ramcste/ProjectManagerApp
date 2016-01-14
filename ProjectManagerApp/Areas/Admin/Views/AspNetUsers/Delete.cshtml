@@ -90,14 +90,13 @@
             {
                 foreach (var item in ViewBag.UserRoles as List<NameValuePair>)
                 {
-                    <div class="col-md-4">
-                        <label class="checkbox">
-                            <input type="checkbox" name="chkUserRole" class="checkbox style-0" value="@item.Id" checked="@item.IsSelected">
-                            <i></i><span>@item.Name</span>
-                        </label>
-                    </div>
+                    if (item.IsSelected == true)
+                    {
+                        <ul>
+                            <li>@item.Name</li>
+                        </ul>
 
-
+                    }
                 }
 
 

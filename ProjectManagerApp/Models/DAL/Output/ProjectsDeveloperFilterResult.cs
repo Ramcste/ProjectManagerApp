@@ -18,5 +18,11 @@ namespace ProjectManagerApp.Models.DAL.Output
         public string UserName { get; set; }
 
         public string Email { get; set; }
+
+        public string PhoneNumber { get; set; }
+
+        public string ClientName { get; set; }
+
+        public string Description { get; set; }
     }
 }

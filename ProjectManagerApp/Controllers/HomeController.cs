@@ -58,5 +58,12 @@ namespace ProjectManagerApp.Controllers
 
             return View();
         }
+
+        public ActionResult WelcomePage()
+        {
+            ViewBag.Message = "Welcome to the developer log page";
+
+            return View();
+        }
     }
 }

@@ -10,7 +10,7 @@
         <h4>ProjectsDeveloper</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.Id)
+        @*@Html.HiddenFor(model => model.Id)*@
 
         <div class="form-group">
             @Html.LabelFor(model => model.DeveloperId, "Developer Email", htmlAttributes: new { @class = "control-label col-md-2" })
@@ -23,10 +23,10 @@
         <div class="form-group">
             @Html.Label("Projects Name", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-
-                @if ((ViewBag.ProjectsDeveloper as List<NameValuePair>).Count > 0)
+               
+                 @if ((ViewBag.ProjectsDeveloper as List<NameValuePair>).Count > 0)
                 {
-                    foreach (var item in ViewBag.ProjectsDeveloper as List<NameValuePair>)
+                   foreach (var item in ViewBag.ProjectsDeveloper as List<NameValuePair>)
                     {
                         <div class="col-md-4">
                             <label class="checkbox">

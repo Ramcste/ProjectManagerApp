@@ -9,17 +9,35 @@ using System.Web.Mvc;
 using ProjectManagerApp.Areas.Admin.Models;
 using ProjectManagerApp.Areas.Admin.DAL;
 using ProjectManagerApp.Models.DAL;
+using ProjectManagerApp.Models;
+using System.Threading.Tasks;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace ProjectManagerApp.Areas.Admin.Controllers
 {
     public class AspNetUsersController : Controller
     {
+        private ApplicationUserManager _userManager;
+
         private ProjectManagerAppEntities db = new ProjectManagerAppEntities();
 
         private DALUser daluser = new DALUser();
 
         private ProjectDal dal = new ProjectDal();
         // GET: Admin/AspNetUsers
+
+        public ApplicationUserManager UserManager
+        {
+            get
+            {
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
+        }
         public ActionResult Index()
         {
             ViewBag.Users = dal.GetAspNetUsersResultSheet();
@@ -46,8 +64,11 @@ namespace ProjectManagerApp.Areas.Admin.Controllers
         // GET: Admin/AspNetUsers/Create
         public ActionResult Create()
         {
+            RegisterViewModel user = new RegisterViewModel();
+            user.Email = "";
+            user.Password = "";
             ViewBag.UserRoles = daluser.GetRoles(0);
-            return View();
+            return View(user);
         }
 
         // POST: Admin/AspNetUsers/Create
@@ -55,34 +76,79 @@ namespace ProjectManagerApp.Areas.Admin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Email,PhoneNumber,UserName,Address,PhoneNumber2,IsActive,IsDeleted")] AspNetUser aspNetUser)
+        
+        public async Task<ActionResult> Create(RegisterViewModel model)
         {
-            string userRoleCSV = Request.Form["chkUserRole"];
-            if (ModelState.IsValid)
-            {
-                db.AspNetUsers.Add(aspNetUser);
-                db.SaveChanges();
-                dal.GetAllAspNetUserRolesUpdate(aspNetUser.Id, userRoleCSV);
-                return RedirectToAction("Index");
+
+            ViewBag.UserRoles = daluser.GetRoles(0);
+
+            model.Id = 0;
+            
+            if (ModelState.IsValid) {
+
+                string userRoleCSV = Request.Form["chkUserRole"];
+
+                var user = new ApplicationUser();
+                user.UserName = model.UserName;
+                user.Email = model.Email;
+                user.Address = model.Address;
+                user.PhoneNumber = model.PhoneNumber1;
+                user.PhoneNumber2 = model.PhoneNumber2;
+                user.IsActive = true;
+                user.IsDeleted = false;
+                user.EmailConfirmed = true;
+                user.LockoutEnabled = true;
+
+                if (model.Password != null)
+                {
+                    ProjectManagerPasswordHasher ph = new ProjectManagerPasswordHasher();
+                    user.PasswordHash = ph.HashPassword(model.Password);
+                }
+
+                IdentityResult result = await UserManager.CreateAsync(user, model.Password);
+               
+               
+              
+                if (result.Succeeded)
+                {
+                    dal.GetAllAspNetUserRolesUpdate(user.Id, userRoleCSV);
+
+                   
+                }
+                RedirectToAction("Index", "AspNetUsers");
+
             }
 
-            return View(aspNetUser);
+            return View(model);
+
         }
 
+
+       
+
+
         // GET: Admin/AspNetUsers/Edit/5
-        public ActionResult Edit(int? id)
+        public async Task<ActionResult> Edit(int id)
         {
             ViewBag.UserRoles = daluser.GetRoles(id);
-            if (id == null)
+
+
+            ApplicationUser user = await UserManager.FindByIdAsync(id);
+
+            RegisterViewModel editUser = await generateRegisterViewModelFromAspNetUser(user, id);
+
+
+            if (id == default(int))
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            AspNetUser aspNetUser = db.AspNetUsers.Find(id);
-            if (aspNetUser == null)
+
+            
+            if (user == null)
             {
                 return HttpNotFound();
             }
-            return View(aspNetUser);
+            return View(editUser);
         }
 
         // POST: Admin/AspNetUsers/Edit/5
@@ -90,17 +156,38 @@ namespace ProjectManagerApp.Areas.Admin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Email,PhoneNumber,UserName,Address,PhoneNumber2,IsActive,IsDeleted")] AspNetUser aspNetUser)
+     
+        public async Task<ActionResult> Edit(RegisterViewModel model)
         {
+            ApplicationUser user = await UserManager.FindByIdAsync(model.Id);
+
+            user.UserName = model.UserName;
+            user.Email = model.Email;
+            user.Address = model.Address;
+            user.PhoneNumber = model.PhoneNumber1;
+            user.PhoneNumber2 = model.PhoneNumber2;           
+            user.IsActive = model.IsActive;
+            user.IsDeleted = model.IsDeleted;
+           
+
             string userRoleCSV = Request.Form["chkUserRole"];
-            if (ModelState.IsValid)
+       
+            if (model.Password != null)
             {
-                db.Entry(aspNetUser).State = EntityState.Modified;
-                db.SaveChanges();
-                dal.GetAllAspNetUserRolesUpdate(aspNetUser.Id, userRoleCSV);
-                return RedirectToAction("Index");
+                ProjectManagerPasswordHasher ph = new ProjectManagerPasswordHasher();
+                user.PasswordHash = ph.HashPassword(model.Password);
             }
-            return View(aspNetUser);
+
+            IdentityResult result = await UserManager.UpdateAsync(user);
+            if (result.Succeeded)
+            {
+              
+                  //return RedirectToAction("Index", "User");
+
+                dal.GetAllAspNetUserRolesUpdate(user.Id, userRoleCSV);
+            }
+            return RedirectToAction("Index", "AspNetUsers");
+
         }
 
         // GET: Admin/AspNetUsers/Delete/5
@@ -157,6 +244,29 @@ namespace ProjectManagerApp.Areas.Admin.Controllers
 
             return Json(email,JsonRequestBehavior.AllowGet);
         }
+
+
+        protected async Task<RegisterViewModel> generateRegisterViewModelFromAspNetUser(ApplicationUser user, int id)
+        {
+            if (user == null) user = await UserManager.FindByIdAsync(id);
+
+            RegisterViewModel u = new RegisterViewModel();
+            u.Id = user.Id;
+            u.UserName = user.UserName;
+            u.Email = user.Email;
+            u.Address = user.Address;
+            u.Password = user.PasswordHash;
+            u.ConfirmPassword = user.PasswordHash;
+            u.PhoneNumber1 = user.PhoneNumber;
+            u.PhoneNumber2 = user.PhoneNumber2;        
+            u.IsDeleted = user.IsDeleted;
+            u.IsActive = user.IsActive;
+            
+            return u;
+        }
+
+
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
