@@ -18,10 +18,10 @@
 {
     <div class="row">
 
-        <div class="col-md-6">
+        <div class="col-md-5">
             <div class="row">
                 <div class="col-md-2">
-                    <p>Developer:</p>
+                    <p>Developer</p>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
@@ -46,12 +46,13 @@
         </div>
 
 
-        <div class="col-md-5">
+        <div class="col-md-6">
 
             <div class="row">
-                <div class="col-md-3">
-                    <p>Is Active:</p>
+                <div class="col-md-1">
+                    <p>Active</p>
                 </div>
+
                 <div class="col-md-3">
                     <div class="form-group">
                         @Html.DropDownList("isActive", new SelectList(new List<Object> {
@@ -60,13 +61,24 @@
                     </div>
                 </div>
 
-                <div class="col-md-3">
-                    <p>Is Deleted:</p>
+                <div class="col-md-1">
+                    <p>Deleted</p>
                 </div>
+
                 <div class="col-md-3">
                     <div class="form-group">
                         @Html.DropDownList("isDeleted", new SelectList(new List<Object> { new { value = "True", text = "True" }, new { value = "False", text = "False" } }, "text", "value" ), "All", new { @class = "form-control" })
                     </div>
+                </div>
+
+                <div class="col-md-1">
+                    <p>Role</p>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        @Html.DropDownList("roleid", new SelectList(ViewBag.Roles, "Id","Name"), "All", new { @class = "form-control" })
+                    </div>
+
                 </div>
 
             </div>

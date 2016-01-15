@@ -80,13 +80,11 @@
             }
         </dd>
 
-     <dt>
+        <dt>
          @Html.DisplayName("Roles")
      </dt>  
-        <dd>
-         
-
-@foreach (var item in ViewBag.UserRoles as List<NameValuePair>)
+     
+        <dd>@foreach (var item in ViewBag.UserRoles as List<NameValuePair>)
 {
     if (item.IsSelected == true)
     {
@@ -106,10 +104,48 @@
 
 }
            
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Projects Name")
+        </dt>
+
+        <dd>
 
 
+            @if ((ViewBag.ProjectsDeveloper as List<NameValuePair>).Count > 0)
+            {
+
+
+                foreach (var item in ViewBag.ProjectsDeveloper as List<NameValuePair>)
+                {
+
+                    if (item.IsSelected == true)
+                    {
+                        <ul>
+                            <li>
+                                <span>@item.Name</span><br />
+                            </li>
+                        </ul>
+
+
+
+                    }
+
+
+
+                }
+
+            }
 
         </dd>
+
+
+
+
+
+
+
     </dl>
 </div>
 <br />

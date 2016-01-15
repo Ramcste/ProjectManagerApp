@@ -116,12 +116,12 @@
 <div class="row">
     <div class="col-md-5"></div>
     <div class="col-md-4">
+        
+    </div>
+    <div class="col-md-3">
         <div class="form-group">
             <input type="button" id="savebutton" value="Save" class="btn btn-default" />
         </div>
-    </div>
-    <div class="col-md-3">
-        
     </div>
 </div>
 
@@ -192,7 +192,7 @@
     // function to check if workstartime is greater than workendtime
 
     $(document).ready(function () {
-        $('#datetimepicker2').mouseleave(function () {
+        $('#workendingtime').focusout(function () {
             var starttime = parseFloat(ConvertTimeFormat("24", $('#workstartingtime').val()));
             var endtime = parseFloat(ConvertTimeFormat1("24", $('#workendingtime').val()));
 
@@ -201,14 +201,22 @@
             var shours = parseInt(workstime[0]);
             var sminute = parseInt(workstime[1]);
             var ehours = parseInt(worketime[0]);
+            console.log(worketime[1]);
             var eminute = parseInt(worketime[1]);
+          
+            //alert("eminutes", eminute);
+            console.log(eminute);
+
+            if (isNaN(eminute)) {
+                eminute = 0;
+            }
             var hdiff = ehours - shours;
             var mdiff = eminute - sminute;
 
             if (endtime > starttime) {
           
 
-                $('#duration').val(hdiff + ":" + mdiff);
+                //$('#duration').val(hdiff + ":" + mdiff);
 
                 if (mdiff<0) {
                     mdiff = mdiff + 60;
@@ -228,6 +236,12 @@
                 mdiff = eminute - sminute;
                 $('#duration').val(hdiff1 + ":" + mdiff);
             }
+
+            else if (eminute==0)
+            {
+                alert("wrong");
+            }
+
             else {
                 alert("work finished time must be greater than work start time");
                 $('#duration').val("00" + ":" + "00");
@@ -389,7 +403,7 @@
 
 
 <style>
-    .logtable {
+    #logtable {
         border: 1px solid #666;
         width: 100%;
     }
@@ -400,9 +414,12 @@
         padding: 2px;
     }
 
-    th{
-        height:50px;
-    }
+    
+     thead {
+    background-color: #4CAF50;
+      height:50px;
+    color: black;
+}
 
     .highlight {
         background-color: red;

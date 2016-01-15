@@ -30,7 +30,9 @@ namespace ProjectManagerApp.Areas.Admin.Controllers
             ViewBag.Users = dal.GetAspNetUsersResultSheet();
 
             var logs = dal.GetLogResultSheetByFilter(0,0,"",null,null).ToList<LogFiltered>();
-          //  var logs = (db.Logs).OrderBy(log=>log.Date).ToList();
+             //var logs = (db.Logs).OrderBy(log=>log.Date).ToList();
+            ViewBag.Messsage = "Please select developer name or project name to view the log result sheet";
+
             return View(logs);
         }
 

@@ -137,12 +137,8 @@
         var pid=($('#dropdown option:selected').val() == "")? 0 :$('#dropdown option:selected').val();
         var fromdate = ($('#fromdate').val() == "") ? null : $('#fromdate').val();
         var todate = ($('#todate').val() == "") ? null : $('#todate').val();
-        //  alert(pid);
-        //alert(did);
-
-        //  var url = '/API/Log/GetLogHistoryAscProjectId';
-        //$.get(url, { developerid: did,projectid:pid}, function(data) {
         var url = '/API/Log/GetLogsHistory';
+
         $.get(url, { id: did, projectid: pid, fromdate: fromdate, todate: todate }, function(data) {
             console.log(data);
             var report = "";
@@ -198,60 +194,11 @@
     // for search button click operation
 
     $(function() {
-        $('#searchbutton').click(function() {
-
-            var did = @HttpContext.Current.User.Identity.GetUserId();
-            var pid = $('#dropdown option:selected').val();
-            var fromdate = ($('#fromdate').val() == "") ? null : $('#fromdate').val();
-            var todate = ($('#todate').val() == "") ? null : $('#todate').val();
-
-           
-            if(true) {
+        $('#searchbutton').click(function() {       
                 // to remove exisiting records of table
-                $('.logtable tr').remove();
-
-                var url = '/API/Log/GetLogsHistory';
-                $.get(url, { id: did, projectid: pid, fromdate: fromdate, todate: todate }, function(data) {
-                    console.log(data);
-                    var report = "";
-                    var len = data.length;
-                    for (var i = 0; i < len; i++) {
-                        report += '<tr>' +
-                            '<td>' + '<input type="checkbox" class="rowcheckbox" onclick="check(this);"/>' + ' </td>' +
-                            '<td>' + '<input type="hidden" class="logid" value="' + data[i].Id + '"/>' + '</td>' +
-                            '<td class="description">' + data[i].Description + '</td>' +
-                            '<td class="projectname">' + data[i].Name + '</td>' +
-                            '<td class="duration">' + data[i].Duration + '</td>' +
-                            '<td class="workstime">' + data[i].WorkStartTime + '</td>' +
-                            '<td class="worketime">' + data[i].WorkEndTime + '</td>' +
-                            '<td class="date">' + data[i].Date + '</td>' +
-                            '<td>' +
-                            '<span style="display:inline;">' +
-                            '<input type="button" id="editbutton" onclick="editbuttonclick(this);" value="Edit"/>' +
-                            '<input type="button" id="deletebutton" onclick="deletebuttonclick(this);" value="Delete"/>' +
-                            '<span>' +
-                            '</td>' +
-                            '</tr>';
-                    }
-
-                    if (report != "") {
-                        $('#logshistory .logtable').append(report);
-                        console.log("success");
-                        $('.logrowcheckbox').show();
-
-                    } else {
-                        console.log("no data to show");
-                        $('.logrowcheckbox').hide();
-                        $('#logshistory .logtable').hide();
-                        alert("there is no records for this search!!");
-
-                    }
-
-
-                });
-            }
-
-
+                $('.logtable').find('tr:gt(0)').remove();
+                LoadHistoryDefault();
+               
         });
     });
 
@@ -344,27 +291,35 @@
 
     // for checking all the log columns checked
     function check(obj) {
-        $(".logtable tr").click(function() {
-            //$(this).find('td').toggleClass("highlight");
+      //  $(".logtable tr").click(function() {
+            //console.log("obj",obj.checked);
+             
+       // if($(this).prop("checked",false)){
+              if(obj.checked){
+              var logid = $(obj).closest("tr").find(".logid").val();             
+               //var logid=$('.logid').val();
+              selectedlogid.push(logid);
+              console.log("Again checked")
+              console.log("push id",logid);
+                }
+            
+                 
+        else {    
+                  var logid = $(obj).closest("tr").find(".logid").val();
+                    var index=selectedlogid.indexOf(logid);
+                    if(index>-1){
+                        selectedlogid.splice(index,1);
+                    }
+                    selectedlogid.join(",");
+                    count++;
+                    console.log("pop id",logid);
+              
 
-            if ($(".rowcheckbox").is(':checked')) {
+                }
+            
 
-                logid = $(this).closest("tr").find(".logid").val();
-                selectedlogid.push(logid);
-                selectedlogid.join(",");
-                count++;
-
-            } else{
-                $(this).prop("checked", false);
-                logid = $(this).closest("tr").find(".logid").val();
-                selectedlogid.pop(logid);
-                console.log(logid);
-                count--;
-               // alert("unchecked");
-            }
-
-        });
-
+   //   });
+        console.log("selectedlogid length:",selectedlogid.length);
         // alert(count);
     }
 
@@ -515,14 +470,43 @@
 
     function bulkcheck(ob) {
 
-        if (selectedlogid.length > 0) {
-            $('.bulkeditoption').show();
-            check();
+        if ($(ob).is(':checked')) {
+            $(".logtable input[type=checkbox]").each(function () {
+                 $(this).prop("checked", true);
+                    //var logid = $(this).closest("tr").find(".logid").val();
+                  
+                    //    selectedlogid.push(logid);
+                    //    selectedlogid.join(",");
+                    
+                    //count++;
+                    //console.log("selectedlog push id:",selectedlogid);
+                    check(this);
+                    $('.bulkeditoption').show();
+
+                
+            });
+
         } else {
-            //   if((ob).is(!checked)){
-            alert("you haven't selected any row so there is nothing to delete");
-            // }
+            $(".logtable input[type=checkbox]").each(function () {
+                $(this).prop("checked", false);
+                var logid = $(this).closest("tr").find(".logid").val();
+                selectedlogid.pop(logid);
+                console.log("selectedlog pop id:",selectedlogid);
+                count--;
+            });
         }
+
+     
+               
+        //if (selectedlogid.length > 0) {
+        //    $('.bulkeditoption').show();
+        //    check();
+        //} 
+        //else {
+            
+        //    alert("you haven't selected any row so there is nothing to delete");
+            
+        //}
 
     }
 
@@ -547,13 +531,13 @@
                 var url = '/API/Log/GetBulkLogDelete';
                 var developerid = @HttpContext.Current.User.Identity.GetUserId();
 
-                // console.log("selectedlogid 1111:", selectedlogid);
-                $.get(url, { logids: selectedlogid.toString(), developerid: developerid }, function(data) {
+                 console.log("selectedlogid 1111:", selectedlogid);
+                //$.get(url, { logids: selectedlogid.toString(), developerid: developerid }, function(data) {
 
-                    //alert(data);
-                    console.log("success");
-                    location.reload();
-                });
+                //    //alert(data);
+                //    console.log("success");
+                //    location.reload();
+                //});
             } else {
                 // console.log("selected logid length:", selectedlogid.toString());
             }
@@ -577,6 +561,13 @@
         font-weight: bold;    
         padding: 2px;
     }
+
+      thead {
+    background-color: #4CAF50;
+    height:50px;
+    color: black;
+}
+
       .highlight {
          background-color: red;
      }

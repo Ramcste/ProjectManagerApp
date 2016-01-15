@@ -114,9 +114,13 @@
 
 <br />
 
+@*<h2>@ViewBag.Message</h2>*@
+
+<h2>@ViewBag.Messsage</h2>
 
 <div id="tblLogsList">
-
+   
+  
     @Html.Partial("_LogList")
    
 </div>
@@ -127,6 +131,8 @@
 @Scripts.Render("~/bundles/jqueryajaxform")
 @Scripts.Render("~/bundles/datetimepicker")
 <script>
+
+
 
     $('.optional').hide();
 
@@ -145,7 +151,7 @@
         //    alert("Between Selected");
         //});
       
-
+        $('#tblLogsList').hide();
     });
 
 
@@ -162,5 +168,12 @@
     
     });
 
+    $('#searchbutton').click(function () {
+        $('h2').hide();
+        $('#tblLogsList').show();
+
+    });
+
+    
 
 </script>

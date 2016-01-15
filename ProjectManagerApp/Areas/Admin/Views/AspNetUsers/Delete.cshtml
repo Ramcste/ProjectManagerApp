@@ -104,6 +104,40 @@
 
         </dd>
 
+        <dt>
+            @Html.DisplayName("Projects Name")
+        </dt>
+
+        <dd>
+
+
+            @if ((ViewBag.ProjectsDeveloper as List<NameValuePair>).Count > 0)
+            {
+
+
+                foreach (var item in ViewBag.ProjectsDeveloper as List<NameValuePair>)
+                {
+
+                    if (item.IsSelected == true)
+                    {
+                        <ul>
+                            <li>
+                                <span>@item.Name</span><br />
+                            </li>
+                        </ul>
+
+
+
+                    }
+
+
+
+                }
+
+            }
+
+        </dd>
+
     </dl>
 
     @using (Html.BeginForm()) {

@@ -211,16 +211,19 @@ namespace ProjectManagerApp.Models.DAL
 
         // aspnet users sheet by filter
 
-        public List<AspNetUser> GetAspNetUsersResultSheetByFilter(int? id,string email,string isdeleted,string isactive)
+        public List<AspNetUser> GetAspNetUsersResultSheetByFilter(int? id,string email,string isdeleted,string isactive,int? roleid)
         {
             int Id = id.HasValue ? id.Value : 0;
+
+            int RoleId = roleid.HasValue ? roleid.Value : 0;
 
             AspNetUsersFilter inputparams = new AspNetUsersFilter
             {
                 Id = Id,
                 Email = email,
                 IsDeleted=isdeleted,
-                IsActive=isactive
+                IsActive=isactive,
+                RoleId=RoleId
             };
 
             var users = db.AspNetUsersResultSheetByFilter.CallStoredProc(inputparams).ToList<AspNetUser>();

@@ -42,7 +42,10 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.TextAreaFor(model=>model.Description,5,50, new {htmlAttributes = new { @class = "form-control" } })
+
+                @*<textarea rows="4" id="" class="form-control"></textarea>*@
+
                 @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -55,8 +58,9 @@
                     @*@Html.EditorFor(model => model.IsDeleted)*@
 
                     @Html.DropDownList("IsDeleted", new SelectList(new List<Object> {
-                                                                                  new { value="True",text="True" },
-                                                                                  new { value="False", text="False"}
+                                                                                   new { value="False", text="False"},
+                                                                                   new { value="True",text="True" }
+                                                                                
                                                                                   }, "value", "text"), new { @class = "form-control" })
 
 

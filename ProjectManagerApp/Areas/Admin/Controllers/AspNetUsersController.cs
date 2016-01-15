@@ -40,6 +40,7 @@ namespace ProjectManagerApp.Areas.Admin.Controllers
         }
         public ActionResult Index()
         {
+            ViewBag.Roles = daluser.GetRoles(0);
             ViewBag.Users = dal.GetAspNetUsersResultSheet();
             return View(db.AspNetUsers.ToList());
         }
@@ -48,6 +49,7 @@ namespace ProjectManagerApp.Areas.Admin.Controllers
         public ActionResult Details(int? id)
         {
             ViewBag.UserRoles = daluser.GetRoles(id);
+            ViewBag.ProjectsDeveloper = daluser.GetProjects(id);
 
             if (id == null)
             {
@@ -68,6 +70,7 @@ namespace ProjectManagerApp.Areas.Admin.Controllers
             user.Email = "";
             user.Password = "";
             ViewBag.UserRoles = daluser.GetRoles(0);
+            ViewBag.ProjectsDeveloper = daluser.GetProjects(0);
             return View(user);
         }
 
@@ -81,11 +84,13 @@ namespace ProjectManagerApp.Areas.Admin.Controllers
         {
 
             ViewBag.UserRoles = daluser.GetRoles(0);
+            ViewBag.ProjectsDeveloper = daluser.GetProjects(0);
 
             model.Id = 0;
             
             if (ModelState.IsValid) {
 
+                string projectsDeveloperCSV = Request.Form["chkProjectsDeveloper"];
                 string userRoleCSV = Request.Form["chkUserRole"];
 
                 var user = new ApplicationUser();
@@ -112,15 +117,16 @@ namespace ProjectManagerApp.Areas.Admin.Controllers
                 if (result.Succeeded)
                 {
                     dal.GetAllAspNetUserRolesUpdate(user.Id, userRoleCSV);
+                    dal.GetProjectsDeveloperUpdate(user.Id, projectsDeveloperCSV);
 
-                   
                 }
-                RedirectToAction("Index", "AspNetUsers");
+               return RedirectToAction("Index", "AspNetUsers");
+                
 
             }
 
-            return View(model);
-
+            
+            return View ("Create", model);
         }
 
 
@@ -131,7 +137,7 @@ namespace ProjectManagerApp.Areas.Admin.Controllers
         public async Task<ActionResult> Edit(int id)
         {
             ViewBag.UserRoles = daluser.GetRoles(id);
-
+            ViewBag.ProjectsDeveloper = daluser.GetProjects(id);
 
             ApplicationUser user = await UserManager.FindByIdAsync(id);
 
@@ -156,44 +162,52 @@ namespace ProjectManagerApp.Areas.Admin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-     
+
         public async Task<ActionResult> Edit(RegisterViewModel model)
         {
             ApplicationUser user = await UserManager.FindByIdAsync(model.Id);
 
-            user.UserName = model.UserName;
-            user.Email = model.Email;
-            user.Address = model.Address;
-            user.PhoneNumber = model.PhoneNumber1;
-            user.PhoneNumber2 = model.PhoneNumber2;           
-            user.IsActive = model.IsActive;
-            user.IsDeleted = model.IsDeleted;
-           
+            //if (ModelState.IsValid)
+            //{
 
-            string userRoleCSV = Request.Form["chkUserRole"];
-       
-            if (model.Password != null)
-            {
-                ProjectManagerPasswordHasher ph = new ProjectManagerPasswordHasher();
-                user.PasswordHash = ph.HashPassword(model.Password);
-            }
+                user.UserName = model.UserName;
+                user.Email = model.Email;
+                user.Address = model.Address;
+                user.PhoneNumber = model.PhoneNumber1;
+                user.PhoneNumber2 = model.PhoneNumber2;
+                user.IsActive = model.IsActive;
+                user.IsDeleted = model.IsDeleted;
 
-            IdentityResult result = await UserManager.UpdateAsync(user);
-            if (result.Succeeded)
-            {
-              
-                  //return RedirectToAction("Index", "User");
+                string projectsDeveloperCSV = Request.Form["chkProjectsDeveloper"];
+                string userRoleCSV = Request.Form["chkUserRole"];
 
-                dal.GetAllAspNetUserRolesUpdate(user.Id, userRoleCSV);
-            }
-            return RedirectToAction("Index", "AspNetUsers");
+                if (model.Password != null)
+                {
+                    ProjectManagerPasswordHasher ph = new ProjectManagerPasswordHasher();
+                    user.PasswordHash = ph.HashPassword(model.Password);
+                }
 
+                IdentityResult result = await UserManager.UpdateAsync(user);
+                if (result.Succeeded)
+                {
+
+                    //return RedirectToAction("Index", "User");
+
+                    dal.GetAllAspNetUserRolesUpdate(user.Id, userRoleCSV);
+                    dal.GetProjectsDeveloperUpdate(user.Id, projectsDeveloperCSV);
+                }
+                return RedirectToAction("Index", "AspNetUsers");
+
+            //}
+
+           // return View("Edit", model);
         }
 
         // GET: Admin/AspNetUsers/Delete/5
         public ActionResult Delete(int? id)
         {
             ViewBag.UserRoles = daluser.GetRoles(id);
+            ViewBag.ProjectsDeveloper = daluser.GetProjects(id);
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -221,11 +235,11 @@ namespace ProjectManagerApp.Areas.Admin.Controllers
 
 
         // for filtering aspnet user
-        public ActionResult GetAspNetUsersResultSheetByFilter(int? developerid, string email, string isActive,string isDeleted)
+        public ActionResult GetAspNetUsersResultSheetByFilter(int? developerid, string email, string isActive,string isDeleted,int ?roleid)
 
         {
 
-            var users = dal.GetAspNetUsersResultSheetByFilter(developerid,email,isActive,isDeleted);
+            var users = dal.GetAspNetUsersResultSheetByFilter(developerid,email,isActive,isDeleted,roleid);
             return PartialView("_AspNetUsersList",users);
 
         }

@@ -14,5 +14,7 @@ namespace ProjectManagerApp.Models.DAL.Output
         public string IsDeleted { get; set; }
 
         public string IsActive { get; set; }
+
+        public int RoleId { get; set; }
     }
 }
