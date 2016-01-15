@@ -1,4 +1,3 @@
-E:\Workspace\ProjectManagerApp\ProjectManagerApp\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
 E:\Workspace\ProjectManagerApp\ProjectManagerApp\bin\roslyn\csc.exe
 E:\Workspace\ProjectManagerApp\ProjectManagerApp\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
 E:\Workspace\ProjectManagerApp\ProjectManagerApp\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
@@ -28,6 +27,7 @@ E:\Workspace\ProjectManagerApp\ProjectManagerApp\bin\Microsoft.Owin.Security.Coo
 E:\Workspace\ProjectManagerApp\ProjectManagerApp\bin\Microsoft.Owin.Security.dll
 E:\Workspace\ProjectManagerApp\ProjectManagerApp\bin\Microsoft.Owin.Security.Facebook.dll
 E:\Workspace\ProjectManagerApp\ProjectManagerApp\bin\Microsoft.Owin.Security.Google.dll
+E:\Workspace\ProjectManagerApp\ProjectManagerApp\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
 E:\Workspace\ProjectManagerApp\ProjectManagerApp\bin\Microsoft.Owin.Security.OAuth.dll
 E:\Workspace\ProjectManagerApp\ProjectManagerApp\bin\Microsoft.Owin.Security.Twitter.dll
 E:\Workspace\ProjectManagerApp\ProjectManagerApp\bin\Microsoft.Web.Infrastructure.dll
@@ -79,3 +79,4 @@ E:\Workspace\ProjectManagerApp\ProjectManagerApp\obj\Debug\ProjectManagerApp.Mig
 E:\Workspace\ProjectManagerApp\ProjectManagerApp\obj\Debug\ProjectManagerApp.csproj.GenerateResource.Cache
 E:\Workspace\ProjectManagerApp\ProjectManagerApp\obj\Debug\ProjectManagerApp.dll
 E:\Workspace\ProjectManagerApp\ProjectManagerApp\obj\Debug\ProjectManagerApp.pdb
+E:\Workspace\ProjectManagerApp\ProjectManagerApp\obj\Debug\ProjectManagerApp.csprojResolveAssemblyReference.cache

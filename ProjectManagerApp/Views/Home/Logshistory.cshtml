@@ -88,8 +88,8 @@
                    <td> Description</td>
                    <td> Project Name</td>
                    <td> Duration</td>
-                   <td> WorkStartTime</td>
-                   <td> WorkEndTime</td>
+                   <td> StartTime</td>
+                   <td> EndTime</td>
                    <td> Date</td>
                    <td> Operation</td>
                </tr>
@@ -99,12 +99,18 @@
            </tbody>
        </table>
  
+
+    <div class="alert alert-info">
+        There is no data to show in the table.
+    </div>
+
 </div>
 <br/>
 <br/>
 
 <script>
 
+    $('.alert-info').hide();
     // hide bulkeditor
     $('.bulkeditoption').hide();
 
@@ -133,6 +139,8 @@
 
     function LoadHistoryDefault()
     {
+        $('.alert-info').hide();
+        $('#logshistory .logtable').show();
         var did = @HttpContext.Current.User.Identity.GetUserId();
         var pid=($('#dropdown option:selected').val() == "")? 0 :$('#dropdown option:selected').val();
         var fromdate = ($('#fromdate').val() == "") ? null : $('#fromdate').val();
@@ -172,7 +180,8 @@
                 console.log("no logs to show");
                 $('.logrowcheckbox').hide();
                 $('#logshistory .logtable').hide();
-                alert("no data to show");
+                // alert("no data to show");
+                $('.alert-info').show();
 
             }
 
@@ -532,12 +541,12 @@
                 var developerid = @HttpContext.Current.User.Identity.GetUserId();
 
                  console.log("selectedlogid 1111:", selectedlogid);
-                //$.get(url, { logids: selectedlogid.toString(), developerid: developerid }, function(data) {
+                $.get(url, { logids: selectedlogid.toString(), developerid: developerid }, function(data) {
 
-                //    //alert(data);
-                //    console.log("success");
-                //    location.reload();
-                //});
+                    //alert(data);
+                    console.log("success");
+                   location.reload();
+                });
             } else {
                 // console.log("selected logid length:", selectedlogid.toString());
             }

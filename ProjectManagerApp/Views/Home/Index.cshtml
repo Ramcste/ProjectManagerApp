@@ -86,6 +86,9 @@
         </div>
     </div>
 
+<div class="alert alert-danger">
+    something went wrong while  Adding. try again!!
+</div>
 
 
 <br/>
@@ -98,8 +101,8 @@
                 <td>Description</td>
                 <td>Project Name</td>
                 <td>Duration</td>
-                <td>WorkStartTime</td>
-                <td>WorkEndTime</td>
+                <td>Start Time</td>
+                <td>End Time</td>
                 <td>Date</td>
                 <td></td>
                 <td>Operation</td>
@@ -109,6 +112,15 @@
           
         </tbody>
     </table>
+
+    <div class="alert alert-success">
+        Log Record Saved Successfully
+    </div>
+
+    <div class="alert alert-warning">
+        something went wrong while  saving. try again!!
+    </div>
+
 </div>
 
 <br/>
@@ -133,6 +145,10 @@
     $('h2').hide();
     $('#savebutton').hide();
 
+    $('.alert-success').hide();
+    $('.alert-warning').hide();
+    $('.alert-danger').hide();
+
     $(document).ready(function () {
         $('#datetimepicker1').datetimepicker({
             format: 'h:mm a'
@@ -153,51 +169,57 @@
         });
     });
     $('#logtable').hide();
-    // workstarting time
+    
 
-    function ConvertTimeFormat(format, str) {
+    // for 20.10
 
-        var time = $('#workstartingtime').val();
+    function ConvertTimeFormat(format, time) {
+
+        //var time = $('#workstartingtime').val();
         var hours = Number(time.match(/^(\d+)/)[1]);
         var minutes = Number(time.match(/:(\d+)/)[1]);
         var AMPM = time.match(/\s(.*)$/)[1];
         if (AMPM == "pm" && hours < 12) hours = hours + 12;
         if (AMPM == "am" && hours == 12) hours = hours - 12;
-        // var sHours = hours;
-        var sHours = hours;
-        var sMinutes = minutes;
-        // var sMinutes = minutes;
+        var sHours = hours.toString();
+        var sMinutes = minutes.toFixed(2);
         if (hours < 10) sHours = "0" + sHours;
         if (minutes < 10) sMinutes = "0" + sMinutes;
         return (sHours + "." + sMinutes);
-    }
+    };
 
-        //workending time
-    function ConvertTimeFormat1(format,str) {
+        //for 20:10
+    function ConvertTimeFormat1(format, time) {
 
-        var time1 = $('#workendingtime').val();
-        var hours1 = Number(time1.match(/^(\d+)/)[1]);
-        var minutes1 = Number(time1.match(/:(\d+)/)[1]);
-        var AMPM1 = time1.match(/\s(.*)$/)[1];
+        //var time1 = $('#workendingtime').val();
+        var hours1 = Number(time.match(/^(\d+)/)[1]);
+        var minutes1 = Number(time.match(/:(\d+)/)[1]);
+        var AMPM1 = time.match(/\s(.*)$/)[1];
         if (AMPM1 == "pm" && hours1 < 12) hours1 = hours1 + 12;
         if (AMPM1 == "am" && hours1 == 12) hours1 = hours1 - 12;
-        var sHours1 = hours1;
-        var sMinutes1 = minutes1;
+        var sHours1 = hours1.toString();
+        var sMinutes1 = minutes1.toString();
         if (hours1 < 10) sHours1 = "0" + sHours1;
         if (minutes1 < 10) sMinutes1 = "0" + sMinutes1;
 
-        return (sHours1+"."+sMinutes1);
-    }
+        return (sHours1 + ":" + sMinutes1);
+    };
+
 
     // function to check if workstartime is greater than workendtime
 
     $(document).ready(function () {
         $('#workendingtime').focusout(function () {
             var starttime = parseFloat(ConvertTimeFormat("24", $('#workstartingtime').val()));
-            var endtime = parseFloat(ConvertTimeFormat1("24", $('#workendingtime').val()));
+            var endtime = parseFloat(ConvertTimeFormat("24", $('#workendingtime').val()));
 
-            var workstime = starttime.toString().split('.');
-            var worketime = endtime.toString().split('.');
+            console.log("starttime",starttime);
+
+            console.log("endtime",endtime);
+
+
+            var workstime = starttime.toFixed(2).split('.');
+            var worketime = endtime.toFixed(2).split('.');
             var shours = parseInt(workstime[0]);
             var sminute = parseInt(workstime[1]);
             var ehours = parseInt(worketime[0]);
@@ -207,9 +229,9 @@
             //alert("eminutes", eminute);
             console.log(eminute);
 
-            if (isNaN(eminute)) {
-                eminute = 0;
-            }
+            //if (isNaN(eminute)) {
+            //    eminute = 0;
+            //}
             var hdiff = ehours - shours;
             var mdiff = eminute - sminute;
 
@@ -237,10 +259,10 @@
                 $('#duration').val(hdiff1 + ":" + mdiff);
             }
 
-            else if (eminute==0)
-            {
-                alert("wrong");
-            }
+            //else if (eminute==0)
+            //{
+            //    alert("wrong");
+            //}
 
             else {
                 alert("work finished time must be greater than work start time");
@@ -254,6 +276,9 @@
 
     $(document).ready(function () {
         $('#addbutton').click(function () {
+            $('.alert-danger').hide();
+            $('.alert-success').hide();
+          
             var description = $('#description').val();
             var name = $('#dropdown option:selected').text();
             var projectid = $("#dropdown option:selected").val();
@@ -291,7 +316,8 @@
                 $('#savebutton').show();
                 reset();
             } else {
-                alert("input field value is missing");
+                // alert("input field value is missing");
+                $('.alert-danger').show();
             }
          
         });
@@ -314,10 +340,6 @@
 
     $(document).ready(function () {
         $('#savebutton').click(function () {
-
-            // var description = $('.logrow .projectid').html();
-
-            // alert(description);
 
             //fetching data from div by iteration and converting them to xml and json
             var html = new Array();
@@ -358,15 +380,18 @@
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
                 success: function (data) {
-                    alert("Data Saved Successfully");
+                   // alert("Data Saved Successfully");
 
                     // to empty temptable after saving records in database
-                    $('#temptable').empty();
+                    $('#temptable #logtable tbody').empty();
+                    $('#temptable #logtable').hide();
+                   // $('#temptable #logtable').find('tr:gt(0)').remove();
                     $('#savebutton').hide();
-
+                    $('.alert-success').show();
                 },
                 error:function() {
-                    alert("something went wrong while  saving. try again!!");
+                    // alert("something went wrong while  saving. try again!!");
+                    $('.alert-warning').show();
                 }
             });
 
