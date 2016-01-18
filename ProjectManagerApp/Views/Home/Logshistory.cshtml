@@ -88,8 +88,8 @@
                    <td> Description</td>
                    <td> Project Name</td>
                    <td> Duration</td>
-                   <td> StartTime</td>
-                   <td> EndTime</td>
+                   <td> Start Time</td>
+                   <td> End Time</td>
                    <td> Date</td>
                    <td> Operation</td>
                </tr>
@@ -433,10 +433,11 @@
                         contentType: 'application/json; charset=utf-8',
                         success: function(data) {
                             alert("Data Updated Successfully");
-                            location.reload();
+                           location.reload();
+                           // $('#logshistory .logtable').reload();
                         },
                         error: function() {
-                            alert("something went wrong while  saving. try again!!");
+                            alert("something went wrong while saving. try again!!");
                         }
                     });
 

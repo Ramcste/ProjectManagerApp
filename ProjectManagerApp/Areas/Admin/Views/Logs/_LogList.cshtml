@@ -1,8 +1,24 @@
-﻿@model List<ProjectManagerApp.Models.DAL.Output.LogFiltered>
+﻿@model IEnumerable<ProjectManagerApp.Models.DAL.Output.LogFiltered>
 @*@using ProjectManagerApp.Models.DAL.Output.LogFiltered*@
+
+    @{ 
+
+        int totalhour = 0, totalminutes = 0;
+    }
 <table class="table table-striped">
 
-    <tr></tr>
+    <tr>
+      
+        <th>@Html.DisplayNameFor(model => model.Description)</th>
+        <th>@Html.DisplayNameFor(model => model.Name)</th>
+        <th>@Html.DisplayNameFor(model => model.WorkStartTime)</th>
+        <th>@Html.DisplayNameFor(model => model.WorkEndTime)</th>
+        <th>@Html.DisplayNameFor(model => model.Duration)</th>
+        <th>@Html.DisplayNameFor(model => model.Date)</th>
+        <th>@Html.DisplayNameFor(model => model.UserName)</th>
+        <th>@Html.DisplayNameFor(model => model.Description)</th>
+        <th></th>
+    </tr>
 
 
     @foreach (var item in Model)
@@ -24,18 +40,63 @@
                 @Html.DisplayFor(modelItem => item.Duration)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Date)
+                @{ 
+                    var val = item.Date.ToShortDateString();
+                }
+                @Html.DisplayFor(modelItem => val)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.UserName)
             </td>
+  
             <td>
+
                 @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
                 @Html.ActionLink("Details", "Details", new { id = item.Id }) |
                 @Html.ActionLink("Delete", "Delete", new { id = item.Id })
             </td>
+
+         
+
+            <td>
+
+                @{
+
+                    string[] totalduration;
+                    string duration;
+
+                    duration = item.Duration;
+
+                    totalduration = duration.Split(':');
+                    int hour = int.Parse(totalduration[0]);
+                    int len = totalduration[1].Length;
+                    int min = int.Parse(totalduration[1]);
+                    
+
+                    totalminutes += min;
+                    totalhour += hour;
+
+                    if (totalminutes > 60)
+                    {
+                        int h = totalminutes / 60;
+                        totalhour += h;
+                        totalminutes = totalminutes % 60;
+                    }
+
+
+                }
+
+
+            </td>
+
         </tr>
     }
 
+
 </table>
 
+<br />
+<div class="row">
+   
+    <p>Total Duration<input type="text" id="totalduration" value="@totalhour:@totalminutes"  class="form-control" /></p>
+</div>

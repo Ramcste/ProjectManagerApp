@@ -198,7 +198,7 @@
         if (AMPM1 == "pm" && hours1 < 12) hours1 = hours1 + 12;
         if (AMPM1 == "am" && hours1 == 12) hours1 = hours1 - 12;
         var sHours1 = hours1.toString();
-        var sMinutes1 = minutes1.toString();
+        var sMinutes1 = minutes1.toFixed(2);
         if (hours1 < 10) sHours1 = "0" + sHours1;
         if (minutes1 < 10) sMinutes1 = "0" + sMinutes1;
 
@@ -227,7 +227,7 @@
             var eminute = parseInt(worketime[1]);
           
             //alert("eminutes", eminute);
-            console.log(eminute);
+            //console.log(eminute);
 
             //if (isNaN(eminute)) {
             //    eminute = 0;

@@ -44,7 +44,7 @@
         </div>
         <div class="col-md-2">
             <div class="form-group">
-                @Html.DropDownList("projectid", new SelectList(ViewBag.Projects, "Id", "Name"), "--Select--", new { @class = "form-control" })
+                @Html.DropDownList("projectid", new SelectList(ViewBag.Projects, "Id", "Name"), "Select Project", new { @class = "form-control" })
 
             </div>
 
@@ -124,6 +124,10 @@
     @Html.Partial("_LogList")
    
 </div>
+
+<br />
+
+<br />
 
 @*<script src="~/Scripts/jquery-1.10.2.js"></script>
 <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>*@

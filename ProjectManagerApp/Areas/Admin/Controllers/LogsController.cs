@@ -33,6 +33,8 @@ namespace ProjectManagerApp.Areas.Admin.Controllers
              //var logs = (db.Logs).OrderBy(log=>log.Date).ToList();
             ViewBag.Messsage = "Please select developer name or project name to view the log result sheet";
 
+          
+
             return View(logs);
         }
 

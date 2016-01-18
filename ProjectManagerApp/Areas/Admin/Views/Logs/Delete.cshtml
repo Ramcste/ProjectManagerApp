@@ -56,7 +56,12 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Date)
+
+            @{
+                var val = Model.Date.ToShortDateString();
+            }
+
+            @Html.DisplayFor(model => val)
         </dd>
 
         <dt>
