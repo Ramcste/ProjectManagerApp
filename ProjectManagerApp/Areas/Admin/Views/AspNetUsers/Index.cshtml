@@ -3,7 +3,8 @@
 @{
     ViewBag.Title = "Index";
 }
-@Scripts.Render("~/bundles/jquery")
+
+
 <h2>Index</h2>
 
 <div class="filter">
@@ -57,7 +58,7 @@
                     <div class="form-group">
                         @Html.DropDownList("isActive", new SelectList(new List<Object> {
                                                                       new { value = "True", text = "True" },
-                                                                      new { value = "False", text = "False" } }, "text", "value" ), "All", new { @class = "form-control" })
+                                                                      new { value = "False", text = "False" } }, "value", "text" ), "All", new { @class = "form-control" })
                     </div>
                 </div>
 
@@ -67,7 +68,9 @@
 
                 <div class="col-md-3">
                     <div class="form-group">
-                        @Html.DropDownList("isDeleted", new SelectList(new List<Object> { new { value = "True", text = "True" }, new { value = "False", text = "False" } }, "text", "value" ), "All", new { @class = "form-control" })
+                        @Html.DropDownList("isDeleted", new SelectList(new List<Object> {
+                                                                       new { value = "True", text = "True" },
+                                                                       new { value = "False",text = "False" } }, "value", "text" ), "All", new { @class = "form-control" })
                     </div>
                 </div>
 
@@ -169,6 +172,10 @@
           width: 25%;
           list-style: none;
           background-color:blue;
+      }
+
+      .ui-helper-hidden-accessible{
+          display:none;
       }
 
 </style>

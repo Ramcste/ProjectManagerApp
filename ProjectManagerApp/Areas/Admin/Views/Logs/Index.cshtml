@@ -3,10 +3,13 @@
 
 @{
     ViewBag.Title = "Index";
+   
 }
 
+
+
 <h2>Index</h2>
-<div class="filter">
+<div class="row">
 
     @using (Ajax.BeginForm("GetLogResultSheetByFilter", "Logs", new AjaxOptions
     {
@@ -65,7 +68,7 @@
                                                                             new { value="Previous Month", text="Previous Month"},
                                                                             new { value="This Week",text="This Week"},
                                                                             new { value="Previous Week",text="Previous Week"},
-                                                                               new { value="Between",text="Between"}
+                                                                            new { value="Between",text="Between"}
                                                                             }, "value", "text"), "Select Option", new { @class = "form-control", id="optiondropdown" })
             </div>
 

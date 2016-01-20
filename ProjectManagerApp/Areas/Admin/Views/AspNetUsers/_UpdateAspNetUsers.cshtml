@@ -2,6 +2,7 @@
 @using ProjectManagerApp.Areas.Admin.DAL
 
 
+
 @using (Html.BeginForm(null,null,FormMethod.Post,new { id="frmUser"}))
 {
     @Html.AntiForgeryToken()
@@ -54,6 +55,30 @@
 
 
         <div class="form-group">
+            @Html.LabelFor(model => model.IsActive, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @*@Html.EditorFor(model => model.IsActive, new { htmlAttributes = new { @class = "form-control" } })*@
+                @Html.DropDownList("isActive", new SelectList(new List<Object> { new { value = "True", text = "True" }, new { value = "False", text = "False" } }, "text", "value"), "All", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.IsDeleted, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @*@Html.EditorFor(model => model.IsDeleted, new { htmlAttributes = new { @class = "form-control" } })*@
+                @Html.DropDownList("isDeleted", new SelectList(new List<Object> {  new { value = "False", text = "False" }, new { value = "True", text = "True" } }, "text", "value"), "All", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.IsDeleted, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+
+
+
+        <div class="form-group">
             @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
             <div class="col-md-10">
                 @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
@@ -78,7 +103,7 @@
                     {
                         <div class="col-md-4">
                             <label class="checkbox">
-                                <input type="checkbox" name="chkUserRole" class="checkbox style-0" value="@item.Id" checked="@item.IsSelected">
+                                <input type="checkbox" name="chkUserRole" class="checkbox style-0 visible-checkbox" value="@item.Id" checked="@item.IsSelected" style="visibility: visible;">
                                 <i></i><span>@item.Name</span>
                             </label>
                         </div>
@@ -103,7 +128,7 @@
                     {
                         <div class="col-md-4">
                             <label class="checkbox">
-                                <input type="checkbox" name="chkProjectsDeveloper" class="checkbox style-0" value="@item.Id" checked="@item.IsSelected">
+                                <input type="checkbox" name="chkProjectsDeveloper" class="checkbox style-0 visible-checkbox" value="@item.Id" checked="@item.IsSelected" style="visibility: visible;">
                                 <i></i><span>@item.Name</span>
                             </label>
                         </div>
@@ -214,3 +239,5 @@
     
 
 </script>
+
+

@@ -116,10 +116,10 @@ namespace ProjectManagerApp.Controllers
 
                     }
 
-                    //else if (UserManager.IsInRole(user.Id, "Developer"))
-                    //{
-                    //    return RedirectToAction("Index", "Home");
-                    //}
+                    else if (UserManager.IsInRole(user.Id, "Developer"))
+                    {
+                        return RedirectToAction("Index", "Home");
+                    }
 
                     else if (UserManager.IsInRole(user.Id, "SuperAdmin"))
                     {

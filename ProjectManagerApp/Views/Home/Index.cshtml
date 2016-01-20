@@ -3,15 +3,16 @@
 
 @{
     ViewBag.Title = "Home Page";
+  
 }
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/jqueryval")
+    @*@Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")*@
     @Scripts.Render("~/bundles/datetimepicker")
 
 
 <h1>Logs Entry</h1>
-    <div class="container body-content">
+    <div class="body-content">
         <div class="content">
             <div class="row">
                 <div class="col-md-5">
@@ -388,6 +389,7 @@
                    // $('#temptable #logtable').find('tr:gt(0)').remove();
                     $('#savebutton').hide();
                     $('.alert-success').show();
+                    $('h2').hide();
                 },
                 error:function() {
                     // alert("something went wrong while  saving. try again!!");
