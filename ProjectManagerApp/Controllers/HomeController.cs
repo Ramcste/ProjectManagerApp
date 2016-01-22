@@ -14,17 +14,19 @@ using ProjectManagerApp.Models.DAL.Output;
 
 namespace ProjectManagerApp.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private ProjectManagerAppContext db=new ProjectManagerAppContext();
-        [Authorize]
+
+        private ProjectDal dal = new ProjectDal();
         public ActionResult Index()
         {
             // ViewBag.Projects = new ProjectDal().GetProjectsResultSheet();
 
             int developerid = User.Identity.GetUserId<int>();
 
-            ViewBag.Projects = new ProjectDal().GetProjectsDeveloperResultSheet(developerid); 
+            ViewBag.Projects = dal.GetProjectsDeveloperResultSheet(developerid); 
             var  model=  new Projects();
 
             return View(model);
@@ -37,11 +39,15 @@ namespace ProjectManagerApp.Controllers
 
             int developerid = User.Identity.GetUserId<int>();
 
-            ViewBag.Projects = new ProjectDal().GetProjectsDeveloperResultSheet(developerid);
+            ViewBag.Projects = dal.GetProjectsDeveloperResultSheet(developerid);
 
-            var model = new Projects();
+            //var model = new Projects();
 
-            return View(model);
+            var logs = new ProjectDal().GetDeveloperLogResulSheet(developerid, 0, null, null);
+
+           // return PartialView("_DeveloperLogList", logs);
+
+            return View(logs);
         }
 
         
@@ -64,6 +70,18 @@ namespace ProjectManagerApp.Controllers
             ViewBag.Message = "Welcome to the developer log page";
 
             return View();
+        }
+
+
+        public ActionResult GetDeveloperLogResultSheetByFilter(int ?projectId, DateTime? fromdate, DateTime? todate)
+        {
+           // List<LogFiltered> logs = new List<LogFiltered>();
+            int developerId = User.Identity.GetUserId<int>();
+          
+
+           var logs = dal.GetDeveloperLogResulSheet(developerId,projectId,fromdate,todate);
+
+            return PartialView("_DeveloperLogList",logs);
         }
     }
 }

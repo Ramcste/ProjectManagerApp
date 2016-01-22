@@ -6,8 +6,10 @@ using ProjectManagerApp.Areas.Admin.Models;
 
 namespace ProjectManagerApp.Areas.Admin.Controllers
 {
+    [Authorize]
     public class AspNetRolesController : Controller
     {
+       
         private ProjectManagerAppEntities db = new ProjectManagerAppEntities();
 
         // GET: Admin/AspNetRoles

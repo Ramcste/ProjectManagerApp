@@ -59,6 +59,28 @@ namespace ProjectManagerApp.Models.DAL
            return report;
         }
 
+        // for partial view
+
+        public List<LogFiltered> GetDeveloperLogResulSheet(int developerid, int? projectid, DateTime? fromdate, DateTime? todate)
+        {
+            int projectId = projectid.HasValue ? projectid.Value : 0;
+
+
+            Loghistory inputparams = new Loghistory()
+            {
+                DeveloperId = developerid,
+                ProjectId = projectId,
+                FromDate = fromdate,
+                ToDate = todate
+
+            };
+
+
+            var logs = db.DeveloperLogsResultSheetProc.CallStoredProc(inputparams).ToList<LogFiltered>();
+
+            return logs;
+        }
+
         public List<Report> GetLogsHistoryByProjectId(int developerid,int? projectid)
         {
             int projectId = projectid.HasValue ? projectid.Value : 0;

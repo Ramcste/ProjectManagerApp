@@ -58,6 +58,16 @@ namespace ProjectManagerApp.Models.DAL
         public StoredProc<LogHistoryByDeveloperId> LogsResultAscDateSheetProc { get; set; }
 
 
+        // for developer log resultsheet in partialview
+
+        [StoredProcAttributes.Name("[DeveloperLogs.ResultSheet]")]
+
+        [StoredProcAttributes.ReturnTypes(typeof(LogFiltered))]
+
+        public StoredProc<Loghistory> DeveloperLogsResultSheetProc { get; set; }
+
+
+
         // for specific developer specific projects
 
         [StoredProcAttributes.Name("[ProjectsDeveloper.ResultSheet]")]

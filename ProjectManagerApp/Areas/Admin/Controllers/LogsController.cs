@@ -13,10 +13,11 @@ using System.Web.Http.Results;
 using ProjectManagerApp.Models.DAL.Input;
 using ProjectManagerApp.Helpers;
 using ProjectManagerApp.Models.DAL.Output;
+using Microsoft.AspNet.Identity;
 
 namespace ProjectManagerApp.Areas.Admin.Controllers
 {
-  //  [Authorize(Roles = "Admin")]
+   [Authorize]
     public class LogsController : Controller
     {
         private ProjectManagerAppEntities db = new ProjectManagerAppEntities();
@@ -120,18 +121,27 @@ namespace ProjectManagerApp.Areas.Admin.Controllers
         // GET: Admin/Logs/Edit/5
         public ActionResult Edit(int? id)
         {
-            ViewBag.Projects = dal.GetProjectsResultSheet();
+            Log log = new Log();
+
+            //  int developerId= User.Identity.GetUserId<int>();
+
+            // ViewBag.Projects = dal.GetProjectsResultSheet();
+
+          
             ViewBag.Users = dal.GetAspNetUsersResultSheet();
 
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Log log = db.Logs.Find(id);
+             log = db.Logs.Find(id);
             if (log == null)
             {
                 return HttpNotFound();
             }
+
+            ViewBag.Projects = dal.GetProjectsDeveloperResultSheet(log.DeveloperId);
+
             return View(log);
         }
 
@@ -142,7 +152,7 @@ namespace ProjectManagerApp.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Description,ProjectId,WorkStartTime,WorkEndTime,Duration,Date,DeveloperId")] Log log)
         {
-            ViewBag.Projects = dal.GetProjectsResultSheet();
+            ViewBag.Projects = dal.GetProjectsDeveloperResultSheet(log.DeveloperId);
             ViewBag.Users = dal.GetAspNetUsersResultSheet();
 
             if (ModelState.IsValid)

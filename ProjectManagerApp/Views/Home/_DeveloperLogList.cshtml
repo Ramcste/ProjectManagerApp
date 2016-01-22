@@ -1,0 +1,115 @@
+﻿@model IEnumerable<ProjectManagerApp.Models.DAL.Output.LogFiltered>
+
+@if (Model.Count() > 0)
+{
+
+
+<div class="projectlogedit row">
+        <div class="col-md-2">
+            <div id="bulkeditoroption">
+
+                <input type="checkbox" class="logrowcheckbox" onclick="bulkcheck(this);" />
+                <select class="bulkeditoption" onchange="bulkeditor(this);">
+
+                    <option>Select Option</option>
+
+                    @*<option value="0" id="bulkedit">Bulk Edit</option>*@
+
+                    <option value="1" id="bulkdelete"> Bulk Delete</option>
+
+                </select>
+
+
+            </div>
+        </div>
+        <div class="col-md-10">
+
+        </div>
+
+    </div>
+
+    <br />
+
+<table class="table table-striped">
+    <tr>
+        <th>@Html.DisplayName("Option")</th>
+        <th></th>
+        <th>@Html.DisplayNameFor(model => model.Description)</th>
+        <th>@Html.DisplayNameFor(model => model.Name)</th>
+        <th>@Html.DisplayNameFor(model => model.WorkStartTime)</th>
+        <th>@Html.DisplayNameFor(model => model.WorkEndTime)</th>
+        <th>@Html.DisplayNameFor(model => model.Duration)</th>
+        <th>@Html.DisplayNameFor(model => model.Date)</th>
+        <th>@Html.DisplayName("Operation")</th>
+
+    </tr>
+
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                <input type="checkbox" class="rowcheckbox" onclick="check(this);" />
+            </td>
+
+            <td>
+                @Html.HiddenFor(modelItem => item.Id, new { @class = "logid" })
+            </td>
+
+            <td>
+                <span class="description">@item.Description</span>
+
+            </td>
+            <td>
+                <span class="projectname">@item.Name</span>
+
+            </td>
+            <td>
+                <span class="workstime">@item.WorkStartTime</span>
+
+            </td>
+            <td>
+                <span class="worketime">@item.WorkEndTime</span>
+
+            </td>
+            <td>
+                <span class="duration">@item.Duration</span>
+
+            </td>
+            <td>
+                @{
+                    var val = item.Date.ToShortDateString();
+                }
+                <span class="date"> @item.Date.ToShortDateString()</span>
+
+            </td>
+
+            <td>
+
+                <span style="display:inline;">
+
+                    <input type="button" id="editbutton" onclick="editbuttonclick(this);" value="Edit" />
+                    <input type="button" id="deletebutton" onclick="deletebuttonclick(this);" value="Delete" />
+                
+                </span>
+
+            </td>
+
+        </tr>
+                    }
+
+</table>
+}
+else
+{
+
+<div class="alert alert-info">
+    There is no data to show in the table.
+</div>
+
+}
+
+<script>
+    $('.bulkeditoption').hide();
+</script>
+ 

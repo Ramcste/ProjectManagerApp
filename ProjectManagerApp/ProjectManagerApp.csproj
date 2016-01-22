@@ -615,6 +615,7 @@
     <Content Include="Views\Home\Logshistory.cshtml" />
     <Content Include="Views\Home\WelcomePage.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Home\_DeveloperLogList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

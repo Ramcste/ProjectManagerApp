@@ -57,8 +57,10 @@
         <div class="form-group">
             @Html.LabelFor(model => model.IsActive, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @*@Html.EditorFor(model => model.IsActive, new { htmlAttributes = new { @class = "form-control" } })*@
-                @Html.DropDownList("isActive", new SelectList(new List<Object> { new { value = "True", text = "True" }, new { value = "False", text = "False" } }, "text", "value"), "All", new { @class = "form-control" })
+         
+                @Html.DropDownList("isActive", new SelectList(new List<Object> {
+                                                                                   new { value = "True", text = "True" },
+                                                                                   new { value = "False",text = "False" } }, "value", "text"), new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -68,8 +70,8 @@
         <div class="form-group">
             @Html.LabelFor(model => model.IsDeleted, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @*@Html.EditorFor(model => model.IsDeleted, new { htmlAttributes = new { @class = "form-control" } })*@
-                @Html.DropDownList("isDeleted", new SelectList(new List<Object> {  new { value = "False", text = "False" }, new { value = "True", text = "True" } }, "text", "value"), "All", new { @class = "form-control" })
+             
+                   @Html.DropDownList("isDeleted", new SelectList(new List<Object> {  new { value = "False", text = "False" }, new { value = "True", text = "True" } }, "value", "text"), new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.IsDeleted, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -160,23 +162,23 @@
             //Rules for validation
             rules: {
                 Email: {
-                    required: true
+                   // required: true
                 },
 
                 UserName: {
-                    required: true
+                  //  required: true
                 },
 
                 Address: {
-                    required: true
+                   // required: true
                 },
 
                 PhoneNumber: {
-                    required: true
+                  //  required: true
                 },
 
                 PhoneNumber2: {
-                    required: true
+                   // required: true
                 }
                
 
@@ -185,23 +187,23 @@
             //messsages for validation
             messages: {
                 Email: {
-                    required: 'Please enter valid email address'
+                   // required: 'Please enter valid email address'
                 },
 
                 UserName: {
-                    required: 'Please enter valid username'
+                   // required: 'Please enter valid username'
                 },
 
                 Address: {
-                    required: 'Please enter address'
+                  //  required: 'Please enter address'
                 },
 
                 PhoneNumber: {
-                    required: 'Please enter a valid phonenumber'
+                   // required: 'Please enter a valid phonenumber'
                 },
 
                 PhoneNumber2: {
-                    required: 'Please enter different than first phonenumber'
+                   // required: 'Please enter different than first phonenumber'
                 }
 
             },
@@ -221,17 +223,17 @@
 
     warnUserForFormPostError = function () {
 
-        alert("fill out all the blanks");
-        //$.SmartMessageBox({
-        //    title: "Error",
-        //    content: "<b>There are some error(s) in form with red back ground. Please correct them before saving<b>",
-        //    buttons: '[Ok]'
+        //alert("fill out all the blanks");
+        $.SmartMessageBox({
+            title: "Error",
+            content: "<b>There are some error(s) in form with red back ground. Please correct them before saving<b>",
+            buttons: '[Ok]'
 
-        //}, function (ButtonPressed) {
-        //    if (ButtonPressed == "Ok") {
+        }, function (ButtonPressed) {
+            if (ButtonPressed == "Ok") {
 
-        //    }
-        //});
+            }
+        });
     };
 
 

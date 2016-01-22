@@ -132,6 +132,53 @@
     // function to check if workstartime is greater than workendtime
 
     $(document).ready(function () {
+
+        $('#WorkStartTime').focusout(function () {
+            var starttime = parseFloat(ConvertTimeFormat("24", $('#WorkStartTime').val()));
+            var endtime = parseFloat(ConvertTimeFormat("24", $('#WorkEndTime').val()));
+
+            var workstime = starttime.toFixed(2).split('.');
+            var worketime = endtime.toFixed(2).split('.');
+            var shours = parseInt(workstime[0]);
+            var sminute = parseInt(workstime[1]);
+            var ehours = parseInt(worketime[0]);
+            var eminute = parseInt(worketime[1]);
+            var hdiff = ehours - shours;
+            var mdiff = eminute - sminute;
+
+
+
+            if (endtime > starttime) {
+                //  alert(" endtime is greater");
+
+                $('#Duration').val(hdiff + ":" + mdiff);
+
+                if (mdiff < 0) {
+                    mdiff = mdiff + 60;
+                    hdiff = hdiff - 1;
+                    $('#Duration').val(hdiff + ":" + mdiff);
+                }
+                else {
+                    $('#Duration').val(hdiff + ":" + mdiff);
+                }
+
+                //alert(endtime);
+            }
+
+
+            else if (endtime == starttime && mdiff >= 0) {
+                var hdiff1 = 0;
+                mdiff = eminute - sminute;
+                $('#Duration').val(hdiff1 + ":" + mdiff);
+            }
+            else {
+                alert("work finished time must be greater than work start time");
+                $('#Duration').val("00" + ":" + "00");
+            }
+
+        });
+
+
         $('#WorkEndTime').focusout(function () {
             var starttime = parseFloat(ConvertTimeFormat("24", $('#WorkStartTime').val()));
             var endtime = parseFloat(ConvertTimeFormat("24", $('#WorkEndTime').val()));
@@ -254,17 +301,17 @@
     });
     warnUserForFormPostError = function () {
 
-        alert("fill out all the blanks");
-        //$.SmartMessageBox({
-        //    title: "Error",
-        //    content: "<b>There are some error(s) in form with red back ground. Please correct them before saving<b>",
-        //    buttons: '[Ok]'
+        //alert("fill out all the blanks");
+        $.SmartMessageBox({
+            title: "Error",
+            content: "<b>There are some error(s) in form with red back ground. Please correct them before saving<b>",
+            buttons: '[Ok]'
 
-        //}, function (ButtonPressed) {
-        //    if (ButtonPressed == "Ok") {
+        }, function (ButtonPressed) {
+            if (ButtonPressed == "Ok") {
 
-        //    }
-        //});
+            }
+        });
     };
 
 

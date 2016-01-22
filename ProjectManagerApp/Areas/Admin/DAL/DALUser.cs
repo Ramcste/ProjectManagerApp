@@ -30,7 +30,8 @@ namespace ProjectManagerApp.Areas.Admin.DAL
         public List<NameValuePair> GetProjects(int? userId)
         {
             var projectsdeveloperlist = (from p in db.Projects
-                                         join pd in db.ProjectsDevelopers.Where(pd => pd.DeveloperId == userId) on p.Id equals pd.ProjectsId into tmpUR
+                                         join pd in db.ProjectsDevelopers.Where(pd => pd.DeveloperId == userId) on p.Id equals pd.ProjectsId  into tmpUR
+                                         where p.IsDeleted == false && p.Status == true
                                          from tur in tmpUR.DefaultIfEmpty()
                                          select new NameValuePair
                                          {

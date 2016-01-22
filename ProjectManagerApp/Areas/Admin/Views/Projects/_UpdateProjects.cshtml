@@ -159,17 +159,17 @@
     });
     warnUserForFormPostError = function () {
 
-        alert("fill out all the blanks");
-        //$.SmartMessageBox({
-        //    title: "Error",
-        //    content: "<b>There are some error(s) in form with red back ground. Please correct them before saving<b>",
-        //    buttons: '[Ok]'
+        //alert("fill out all the blanks");
+        $.SmartMessageBox({
+            title: "Error",
+            content: "<b>There are some error(s) in form with red back ground. Please correct them before saving<b>",
+            buttons: '[Ok]'
 
-        //}, function (ButtonPressed) {
-        //    if (ButtonPressed == "Ok") {
+        }, function (ButtonPressed) {
+            if (ButtonPressed == "Ok") {
 
-        //    }
-        //});
+            }
+        });
     };
 
 

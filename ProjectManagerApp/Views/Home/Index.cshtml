@@ -5,15 +5,13 @@
     ViewBag.Title = "Home Page";
   
 }
-
-    @*@Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/jqueryval")*@
+  
     @Scripts.Render("~/bundles/datetimepicker")
 
 
 <h1>Logs Entry</h1>
     <div class="body-content">
-        <div class="content">
+        
             <div class="row">
                 <div class="col-md-5">
                     <div class="row">
@@ -26,7 +24,7 @@
                         <div class="col-md-5">
 
                             <div class="form-group">
-                                @Html.DropDownListFor(model => model.Id, new SelectList(ViewBag.Projects, "id", "Name") , new { @class = "form-control", id = "dropdown" })
+                                @Html.DropDownListFor(model => model.Id, new SelectList(ViewBag.Projects, "id", "Name"), new { @class = "form-control", id = "dropdown" })
 
                             </div>
 
@@ -85,18 +83,16 @@
            
          
         </div>
-    </div>
-
-<div class="alert alert-danger">
-    something went wrong while  Adding. try again!!
-</div>
+    
 
 
 <br/>
+<div id="message"></div>
 <br/>
-<h2>Logs</h2>
+<div id="head"></div>
 <div id="temptable">
     <table id="logtable">
+    
         <thead>
             <tr>
                 <td>Description</td>
@@ -114,42 +110,36 @@
         </tbody>
     </table>
 
-    <div class="alert alert-success">
-        Log Record Saved Successfully
-    </div>
+    
 
-    <div class="alert alert-warning">
-        something went wrong while  saving. try again!!
-    </div>
+  
 
 </div>
+
+<br />
 
 <br/>
 <br/>
 <div class="row">
     <div class="col-md-5"></div>
-    <div class="col-md-4">
-        
-    </div>
-    <div class="col-md-3">
-        <div class="form-group">
-            <input type="button" id="savebutton" value="Save" class="btn btn-default" />
+    <div class="col-md-4"></div>
+    <div class="col-md-2"></div>
+    <div class="col-md-1">
+        <div class="savebuttoncls">
+          
         </div>
     </div>
 </div>
 
+<div id="message1"></div>
+
+
 
 <script type="text/javascript">
 
-    @*var id=@HttpContext.Current.User.identity.GetUserid();
-    alert(id);*@
-    $('h2').hide();
-    $('#savebutton').hide();
-
-    $('.alert-success').hide();
-    $('.alert-warning').hide();
-    $('.alert-danger').hide();
-
+        $('h2').hide();
+        $('#savebutton').hide();
+       
     $(document).ready(function () {
         $('#datetimepicker1').datetimepicker({
             format: 'h:mm a'
@@ -271,15 +261,76 @@
             }
 
         });
+
+        $('#workstartingtime').focusout(function () {
+            var starttime = parseFloat(ConvertTimeFormat("24", $('#workstartingtime').val()));
+            var endtime = parseFloat(ConvertTimeFormat("24", $('#workendingtime').val()));
+
+            console.log("starttime", starttime);
+
+            console.log("endtime", endtime);
+
+
+            var workstime = starttime.toFixed(2).split('.');
+            var worketime = endtime.toFixed(2).split('.');
+            var shours = parseInt(workstime[0]);
+            var sminute = parseInt(workstime[1]);
+            var ehours = parseInt(worketime[0]);
+            console.log(worketime[1]);
+            var eminute = parseInt(worketime[1]);
+
+            //alert("eminutes", eminute);
+            //console.log(eminute);
+
+            //if (isNaN(eminute)) {
+            //    eminute = 0;
+            //}
+            var hdiff = ehours - shours;
+            var mdiff = eminute - sminute;
+
+            if (endtime > starttime) {
+
+
+                //$('#duration').val(hdiff + ":" + mdiff);
+
+                if (mdiff < 0) {
+                    mdiff = mdiff + 60;
+                    hdiff = hdiff - 1;
+                    $('#duration').val(hdiff + ":" + mdiff);
+                }
+                else {
+                    $('#duration').val(hdiff + ":" + mdiff);
+                }
+
+
+            }
+
+
+            else if (endtime == starttime && mdiff >= 0) {
+                var hdiff1 = 0;
+                mdiff = eminute - sminute;
+                $('#duration').val(hdiff1 + ":" + mdiff);
+            }
+
+                //else if (eminute==0)
+                //{
+                //    alert("wrong");
+                //}
+
+            else {
+                alert("work finished time must be greater than work start time");
+                $('#duration').val("00" + ":" + "00");
+            }
+
+        });
+
     });
 
     var count = 0;
 
     $(document).ready(function () {
         $('#addbutton').click(function () {
-            $('.alert-danger').hide();
-            $('.alert-success').hide();
-          
+      
             var description = $('#description').val();
             var name = $('#dropdown option:selected').text();
             var projectid = $("#dropdown option:selected").val();
@@ -290,10 +341,14 @@
 
           //  alert(id);
 
+
+
+        
+           
+
             var report = "";
 
             if (description !== "" && name !== "" && duration !== "" && workstime !== "" && worketime !== "" && date !== "") {
-
 
                 report += '<tr class="logrow">' +
                     '<td class="description">' + description + '</td>' +
@@ -309,22 +364,91 @@
                     '</tr>';
                     console.log(report);
                     $('#logtable').show();
-                    $('#logtable').append(report)
+                    $('#logtable').append(report);
 
                 count++;
 
-                $('h2').show();
-                $('#savebutton').show();
+                $('#head').html('<h2>Logs</h2>');
+                $('.savebuttoncls').html('<input type="button" id="savebutton" value="Save" class="btn btn-default" onclick="savebuttonclicked(this);" />');
+                $('.alert-danger').hide();
+                $('.alert-success').hide();
                 reset();
             } else {
-                // alert("input field value is missing");
-                $('.alert-danger').show();
+              
+               $('#message').html('<div class="alert alert-danger">Fill out all the blanks!!</div>');
+               $('.alert-success').hide();
             }
          
         });
 
 
     });
+
+
+    // saving button clicked
+
+    function savebuttonclicked(ob) {
+
+       
+        //fetching data from div by iteration and converting them to xml and json
+        var html = new Array();
+        html.push('<logs>');
+        $.each($('#logtable tr.logrow'), function (index, rec) {
+            var description = $($(rec).children('td.description')).html();
+            var projectid = $($(rec).children('td.projectname').find('input[type=hidden].projectid')).val();
+            var duration = $($(rec).children('td.duration')).html();
+            var workstime = $($(rec).children('td.workstime')).html();
+            var worketime = $($(rec).children('td.worketime')).html();
+            var date = $($(rec).children('td.date')).html();
+            var developerid = $($(rec).children('td.developerid').find('input[type=hidden].developerid')).val();
+            html.push('<LineItem ');
+            html.push('Description="' + description + '"');
+            html.push('ProjectId="' + projectid + '"');
+            html.push('Duration="' + duration + '"');
+            html.push('WorkStartTime="' + workstime + '"');
+            html.push('WorkEndTime="' + worketime + '"');
+            html.push('Date="' + date + '"');
+            html.push('DeveloperId="' + developerid + '"');
+            html.push('></LineItem>');
+            //console.log(projectid);
+        });
+        html.push('</logs>');
+        console.log(html.join(''));
+        var logXML = html.join(' ');
+        // var json = sys.Serialization.JavaScriptSerializer.serialize(logXML);
+        var json = '{"logXML":' + JSON.stringify(logXML) + '}';
+        console.log(json);
+
+        //to count the no of rows inside div
+        // var count = $('#temptable .logrow').length;
+
+        $.ajax({
+            type: 'POST',
+            url: '/API/Log/SaveReport',
+            data: json,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                // alert("Data Saved Successfully");
+
+                // to empty temptable after saving records in database
+                $('#temptable #logtable tbody').empty();
+                $('#temptable #logtable').hide();
+                // $('#temptable #logtable').find('tr:gt(0)').remove();
+                $('#savebutton').hide();
+                $('.alert-danger').hide();
+                $('#message1').html('<div class="alert alert-success"> Log Record Saved Successfully </div>');
+               
+                $('h2').hide();
+            },
+            error: function () {
+                // alert("something went wrong while  saving. try again!!");
+                //$('.alert-warning').show();
+                $('#message1').html('<div class="alert alert-danger">something went wrong while  saving. try again!!</div>');
+            }
+        });
+
+    }
 
     //clearing the fields after adding
     function reset() {
@@ -339,67 +463,70 @@
 
     //saving logdata into databas
 
-    $(document).ready(function () {
-        $('#savebutton').click(function () {
+    //$(document).ready(function () {
+    //    $('#savebutton').click(function () {
 
-            //fetching data from div by iteration and converting them to xml and json
-            var html = new Array();
-            html.push('<logs>');
-            $.each($('#logtable tr.logrow'), function (index, rec) {
-                var description = $($(rec).children('td.description')).html();
-                var projectid = $($(rec).children('td.projectname').find('input[type=hidden].projectid')).val();
-                var duration = $($(rec).children('td.duration')).html();
-                var workstime = $($(rec).children('td.workstime')).html();
-                var worketime = $($(rec).children('td.worketime')).html();
-                var date = $($(rec).children('td.date')).html();
-                var developerid = $($(rec).children('td.developerid').find('input[type=hidden].developerid')).val();
-                html.push('<LineItem ');
-                html.push('Description="' + description + '"');
-                html.push('ProjectId="' + projectid + '"');
-                html.push('Duration="' + duration + '"');
-                html.push('WorkStartTime="' + workstime + '"');
-                html.push('WorkEndTime="' + worketime + '"');
-                html.push('Date="' + date + '"');
-                html.push('DeveloperId="' + developerid + '"');
-                html.push('></LineItem>');
-                //console.log(projectid);
-            });
-            html.push('</logs>');
-            console.log(html.join(''));
-            var logXML = html.join(' ');
-            // var json = sys.Serialization.JavaScriptSerializer.serialize(logXML);
-            var json = '{"logXML":' + JSON.stringify(logXML) + '}';
-            console.log(json);
+           
 
-            //to count the no of rows inside div
-            // var count = $('#temptable .logrow').length;
+    //        //fetching data from div by iteration and converting them to xml and json
+    //        var html = new Array();
+    //        html.push('<logs>');
+    //        $.each($('#logtable tr.logrow'), function (index, rec) {
+    //            var description = $($(rec).children('td.description')).html();
+    //            var projectid = $($(rec).children('td.projectname').find('input[type=hidden].projectid')).val();
+    //            var duration = $($(rec).children('td.duration')).html();
+    //            var workstime = $($(rec).children('td.workstime')).html();
+    //            var worketime = $($(rec).children('td.worketime')).html();
+    //            var date = $($(rec).children('td.date')).html();
+    //            var developerid = $($(rec).children('td.developerid').find('input[type=hidden].developerid')).val();
+    //            html.push('<LineItem ');
+    //            html.push('Description="' + description + '"');
+    //            html.push('ProjectId="' + projectid + '"');
+    //            html.push('Duration="' + duration + '"');
+    //            html.push('WorkStartTime="' + workstime + '"');
+    //            html.push('WorkEndTime="' + worketime + '"');
+    //            html.push('Date="' + date + '"');
+    //            html.push('DeveloperId="' + developerid + '"');
+    //            html.push('></LineItem>');
+    //            //console.log(projectid);
+    //        });
+    //        html.push('</logs>');
+    //        console.log(html.join(''));
+    //        var logXML = html.join(' ');
+    //        // var json = sys.Serialization.JavaScriptSerializer.serialize(logXML);
+    //        var json = '{"logXML":' + JSON.stringify(logXML) + '}';
+    //        console.log(json);
 
-            $.ajax({
-                type: 'POST',
-                url: '/API/Log/SaveReport',
-                data: json,
-                dataType: 'json',
-                contentType: 'application/json; charset=utf-8',
-                success: function (data) {
-                   // alert("Data Saved Successfully");
+    //        //to count the no of rows inside div
+    //        // var count = $('#temptable .logrow').length;
 
-                    // to empty temptable after saving records in database
-                    $('#temptable #logtable tbody').empty();
-                    $('#temptable #logtable').hide();
-                   // $('#temptable #logtable').find('tr:gt(0)').remove();
-                    $('#savebutton').hide();
-                    $('.alert-success').show();
-                    $('h2').hide();
-                },
-                error:function() {
-                    // alert("something went wrong while  saving. try again!!");
-                    $('.alert-warning').show();
-                }
-            });
+    //        $.ajax({
+    //            type: 'POST',
+    //            url: '/API/Log/SaveReport',
+    //            data: json,
+    //            dataType: 'json',
+    //            contentType: 'application/json; charset=utf-8',
+    //            success: function (data) {
+    //               // alert("Data Saved Successfully");
 
-        });
+    //                // to empty temptable after saving records in database
+    //                $('#temptable #logtable tbody').empty();
+    //                $('#temptable #logtable').hide();
+    //               // $('#temptable #logtable').find('tr:gt(0)').remove();
+    //                $('#savebutton').hide();
+    //                $('#message1').html('<div class="alert alert-success"> Log Record Saved Successfully </div>');
+    //                $('h2').hide();
+    //            },
+    //            error:function() {
+    //                // alert("something went wrong while  saving. try again!!");
+    //                //$('.alert-warning').show();
+    //                $('#message1').html('<div class="alert alert-danger">something went wrong while  saving. try again!!</div>');
+    //            }
+    //        });
 
-    });
+    //    });
+
+    //});
 
 
     //function for button to delete
@@ -424,6 +551,7 @@
         // console.log("sasasasa",obj);
         $(obj).parent().parent().parent().toggleClass("highlight");
     }
+
 
 
 </script>

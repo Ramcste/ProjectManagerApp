@@ -16,6 +16,7 @@ using Microsoft.AspNet.Identity.Owin;
 
 namespace ProjectManagerApp.Areas.Admin.Controllers
 {
+    [Authorize]
     public class AspNetUsersController : Controller
     {
         private ApplicationUserManager _userManager;
