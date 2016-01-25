@@ -1,0 +1,67 @@
+/*
+ * It is advised not to edit the smartadmin_production.css
+ * as this will override any changes you make in the 
+ * later versions of this theme. 
+ * 
+ * We advise that you use use this CSS to override 
+ * SmartAdmin styles. 
+ * 
+ * Rename the stylesheet to whatever your liking so it will stay
+ * unique to you with each update of SmartAdmin.
+ */
+
+/*
+ * INDEX
+ * 
+ * - HTML
+ * - BODY
+ * - CUSTOM STYLES
+ */
+/*.modalPopUpBackground {
+	background-color: #FFFFFF;
+	display: none;
+	height: 100%;
+	left: 0;
+	opacity: 0.5;
+	position: fixed;
+	top: 0;
+	width: 100%;
+	z-index: 5;
+}
+.loadingCursor {
+	background-image: url("../img/ajax-loader.gif");
+	background-position: center center;
+	background-repeat: no-repeat;
+	height: 100%;
+	position: fixed;
+	width: 100%;
+	z-index: 99999 !important;
+}
+.ui-datepicker-inline.ui-datepicker.ui-widget.ui-widget-content.ui-helper-clearfix.ui-corner-all {
+	border: none;
+	width:100%;
+}
+.ui-datepicker-header.ui-widget-header.ui-helper-clearfix.ui-corner-all {
+	background: none;
+	border: none;
+}
+.ui-datepicker .ui-datepicker-title {
+	margin: 0 2em;
+	width:111px;
+	
+}
+.ui-timepicker-title.ui-widget-header.ui-helper-clearfix.ui-corner-all{
+	background:url(images/timepickerBgImage.png) repeat-x scroll 0 0 rgba(0, 0, 0, 0);
+	font-weight:normal;
+}
+
+.ui-timepicker-table.ui-widget-content.ui-corner-all {margin-left:-5px; font-size:12px;}
+.periods{
+	font-weight:normal;
+}
+
+.ui-timepicker .ui-state-default{font-size:12px; width:100%;}
+
+.totallist .dl-horizontal dt{
+    width:300px;
+}*/

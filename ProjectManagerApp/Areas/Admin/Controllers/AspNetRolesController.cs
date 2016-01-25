@@ -6,7 +6,7 @@ using ProjectManagerApp.Areas.Admin.Models;
 
 namespace ProjectManagerApp.Areas.Admin.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "SuperAdmin,Admin")]
     public class AspNetRolesController : Controller
     {
        

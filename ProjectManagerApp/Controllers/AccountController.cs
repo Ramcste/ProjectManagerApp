@@ -109,6 +109,7 @@ namespace ProjectManagerApp.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
+
                     if (UserManager.IsInRole(user.Id, "Admin"))
 
                     {
@@ -130,8 +131,8 @@ namespace ProjectManagerApp.Controllers
                     {
                         return RedirectToLocal(returnUrl);
                     }
-                   
-                    //return RedirectToLocal(returnUrl);
+
+                //return RedirectToLocal(returnUrl);
 
 
                 case SignInStatus.LockedOut:
@@ -217,6 +218,8 @@ namespace ProjectManagerApp.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    UserManager.AddToRole(user.Id, "Developer");
+
                     //   await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
 
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771

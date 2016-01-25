@@ -73,20 +73,33 @@ namespace ProjectManagerApp
                 ));
 
 
+
+            // for datetimepicker css
+
+            bundles.Add(new StyleBundle("~/Content/bootstrap-datetimepicker").Include(
+                "~/Content/bootstrap-datetimepicker.css"));
+
             // css:start
 
-            bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
-                      "~/Content/css/demo.min.css",
-                      "~/Content/css/font-awesome.min.css",
-                      "~/Content/css/lockscreen.min.css",
-                      "~/Content/css/smartadmin-production.min.css",
-                      "~/Content/css/smartadmin-rtl.min.css",
-                      "~/Content/css/smartadmin-skins.min.css",
-                      "~/Content/Site.css",
-                       "~/Content/css/jquery.ui.timepicker.css"
-                       ));
 
+            bundles.Add(new StyleBundle("~/Content/css").Include(
+                   "~/Content/css/bootstrap.css",
+                   "~/Content/css/demo.css",
+                   "~/Content/css/font-awesome.css",
+                   "~/Content/css/lockscreen.css",
+                   "~/Content/css/smartadmin-production.css",
+                    "~/Content/css/smartadmin-production-plugins.css",
+                   "~/Content/css/smartadmin-rtl.css",
+                   "~/Content/css/smartadmin-skins.css"
+
+                    ));
+
+            // for Site css
+
+            bundles.Add(new StyleBundle("~/Content/Site").Include(
+                "~/Content/css/Site.css"
+                ));
+                  
             // bootstrap dialog
 
             bundles.Add(new StyleBundle("~/Content/bootstrap-dialog-css").Include(

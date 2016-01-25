@@ -1,4 +1,8 @@
 ﻿@model ProjectManagerApp.Models.RegisterViewModel
+
+@{
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+}
 @{
     ViewBag.Title = "Register";
 }
@@ -59,9 +63,13 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
+                    <div class="col-md-offset-1 col-md-8">
                         <input type="submit" class="btn btn-default" value="Register" />
+                     <div class="col-md-2"></div>
+                       @Html.ActionLink("Login", "Login")
+                       
                     </div>
+  
                 </div>
                 }
 

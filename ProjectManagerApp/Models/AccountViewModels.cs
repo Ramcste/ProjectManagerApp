@@ -67,6 +67,7 @@ namespace ProjectManagerApp.Models
         public int Id { get; set; }
 
         [Required]
+        [DataType(DataType.EmailAddress, ErrorMessage = "Please enter a valid email address")]
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
@@ -93,26 +94,16 @@ namespace ProjectManagerApp.Models
         public string Address { get; set; }
 
         [Required]
-        [DataType(DataType.Text)]
         [Display(Name = "PhoneNumber 2")]
+        [DataType(DataType.PhoneNumber, ErrorMessage = "Please enter a second valid phone number")]
         public string PhoneNumber2 { get; set; }
 
         [Required]
-        [DataType(DataType.Text)]
         [Display(Name = "PhoneNumber 1")]
+        [DataType(DataType.PhoneNumber, ErrorMessage = "Please enter a  valid phone number")]
         public string PhoneNumber1 { get; set; }
 
-
-        [Required]
-        [DataType(DataType.Text)]
-        [Display(Name ="Is Active")]
-
         public bool IsActive { get; set; }
-
-
-        [Required]
-        [DataType(DataType.Text)]
-        [Display(Name = "Is Deleted")]
 
         public bool IsDeleted { get; set; }
 

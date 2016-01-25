@@ -16,7 +16,7 @@ using Microsoft.AspNet.Identity.Owin;
 
 namespace ProjectManagerApp.Areas.Admin.Controllers
 {
-    [Authorize]
+   
     public class AspNetUsersController : Controller
     {
         private ApplicationUserManager _userManager;
@@ -144,13 +144,14 @@ namespace ProjectManagerApp.Areas.Admin.Controllers
 
             RegisterViewModel editUser = await generateRegisterViewModelFromAspNetUser(user, id);
 
+            //if (user.IsDeleted == true) return RedirectToAction("Index", "User");
 
+           
             if (id == default(int))
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            
             if (user == null)
             {
                 return HttpNotFound();
@@ -166,13 +167,12 @@ namespace ProjectManagerApp.Areas.Admin.Controllers
 
         public async Task<ActionResult> Edit(RegisterViewModel model)
         {
+
+           // ModelState.Remove("Password");
             ApplicationUser user = await UserManager.FindByIdAsync(model.Id);
-
-            //if (ModelState.IsValid)
-            //{
-
-                user.UserName = model.UserName;
-                user.Email = model.Email;
+      
+                //user.UserName = model.UserName;
+                //user.Email = model.Email;
                 user.Address = model.Address;
                 user.PhoneNumber = model.PhoneNumber1;
                 user.PhoneNumber2 = model.PhoneNumber2;
@@ -181,6 +181,9 @@ namespace ProjectManagerApp.Areas.Admin.Controllers
 
                 string projectsDeveloperCSV = Request.Form["chkProjectsDeveloper"];
                 string userRoleCSV = Request.Form["chkUserRole"];
+
+
+               // ModelState.Remove("Password");
 
                 if (model.Password != null)
                 {
@@ -191,19 +194,18 @@ namespace ProjectManagerApp.Areas.Admin.Controllers
                 IdentityResult result = await UserManager.UpdateAsync(user);
                 if (result.Succeeded)
                 {
-
-                    //return RedirectToAction("Index", "User");
+                //if (model.Password != null)
+                //{
+                //    IdentityResult securityToken = await UserManager.UpdateSecurityStampAsync(model.Id);
+                //}
 
                     dal.GetAllAspNetUserRolesUpdate(user.Id, userRoleCSV);
                     dal.GetProjectsDeveloperUpdate(user.Id, projectsDeveloperCSV);
                 }
                 return RedirectToAction("Index", "AspNetUsers");
 
-            //}
-
-           // return View("Edit", model);
-        }
-
+            }
+            
         // GET: Admin/AspNetUsers/Delete/5
         public ActionResult Delete(int? id)
         {
@@ -227,8 +229,13 @@ namespace ProjectManagerApp.Areas.Admin.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             AspNetUser aspNetUser = db.AspNetUsers.Find(id);
-            db.AspNetUsers.Remove(aspNetUser);
-            db.SaveChanges();
+
+                aspNetUser.IsDeleted = true;
+				  aspNetUser.IsActive = false;
+				
+                db.SaveChanges();
+            
+           
             return RedirectToAction("Index");
         }
 

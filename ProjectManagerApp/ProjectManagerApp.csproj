@@ -190,11 +190,9 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\AspNetRolesController.cs" />
-    <Compile Include="Areas\Admin\Controllers\AspNetUserRolesController.cs" />
     <Compile Include="Areas\Admin\Controllers\AspNetUsersController.cs" />
     <Compile Include="Areas\Admin\Controllers\LogsController.cs" />
     <Compile Include="Areas\Admin\Controllers\ProjectsController.cs" />
-    <Compile Include="Areas\Admin\Controllers\ProjectsDevelopersController.cs" />
     <Compile Include="Areas\Admin\DAL\DALUser.cs" />
     <Compile Include="Areas\Admin\DAL\NameValuePair.cs" />
     <Compile Include="Areas\Admin\Models\AspNetRole.cs">
@@ -315,15 +313,23 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\css\bootstrap-dialog.min.css" />
+    <Content Include="Content\css\bootstrap.css" />
     <Content Include="Content\css\bootstrap.min.css" />
+    <Content Include="Content\css\demo.css" />
     <Content Include="Content\css\demo.min.css" />
+    <Content Include="Content\css\font-awesome.css" />
     <Content Include="Content\css\font-awesome.min.css" />
     <Content Include="Content\css\invoice.min.css" />
     <Content Include="Content\css\jquery.ui.timepicker.css" />
+    <Content Include="Content\css\lockscreen.css" />
     <Content Include="Content\css\lockscreen.min.css" />
     <Content Include="Content\css\Site.css" />
+    <Content Include="Content\css\smartadmin-production-plugins.css" />
+    <Content Include="Content\css\smartadmin-production.css" />
     <Content Include="Content\css\smartadmin-production.min.css" />
+    <Content Include="Content\css\smartadmin-rtl.css" />
     <Content Include="Content\css\smartadmin-rtl.min.css" />
+    <Content Include="Content\css\smartadmin-skins.css" />
     <Content Include="Content\css\smartadmin-skins.min.css" />
     <Content Include="Content\css\your_style.css" />
     <Content Include="Content\favicon\1favicon.ico" />
@@ -479,11 +485,6 @@
     <Content Include="Areas\Admin\Views\Logs\_UpdateLog.cshtml" />
     <Content Include="Areas\Admin\Views\AspNetUsers\_AspNetUsersList.cshtml" />
     <Content Include="Areas\Admin\Views\AspNetUsers\_UpdateAspNetUsers.cshtml" />
-    <Content Include="Areas\Admin\Views\AspNetUserRoles\Create.cshtml" />
-    <Content Include="Areas\Admin\Views\AspNetUserRoles\Delete.cshtml" />
-    <Content Include="Areas\Admin\Views\AspNetUserRoles\Details.cshtml" />
-    <Content Include="Areas\Admin\Views\AspNetUserRoles\Edit.cshtml" />
-    <Content Include="Areas\Admin\Views\AspNetUserRoles\Index.cshtml" />
     <Content Include="Areas\Admin\Views\AspNetRoles\Create.cshtml" />
     <Content Include="Areas\Admin\Views\AspNetRoles\Delete.cshtml" />
     <Content Include="Areas\Admin\Views\AspNetRoles\Details.cshtml" />
@@ -491,13 +492,6 @@
     <Content Include="Areas\Admin\Views\AspNetRoles\Index.cshtml" />
     <Content Include="Areas\Admin\Views\AspNetRoles\_AspNetRolesList.cshtml" />
     <Content Include="Areas\Admin\Views\AspNetRoles\_UpdateAspNetRoles.cshtml" />
-    <Content Include="Areas\Admin\Views\AspNetUserRoles\_AspNetUserRolesList.cshtml" />
-    <Content Include="Areas\Admin\Views\AspNetUserRoles\_UpdateAspNetUserRoles.cshtml" />
-    <Content Include="Areas\Admin\Views\ProjectsDevelopers\Create.cshtml" />
-    <Content Include="Areas\Admin\Views\ProjectsDevelopers\Delete.cshtml" />
-    <Content Include="Areas\Admin\Views\ProjectsDevelopers\Details.cshtml" />
-    <Content Include="Areas\Admin\Views\ProjectsDevelopers\Edit.cshtml" />
-    <Content Include="Areas\Admin\Views\ProjectsDevelopers\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Projects\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Projects\Delete.cshtml" />
     <Content Include="Areas\Admin\Views\Projects\Details.cshtml" />
@@ -512,13 +506,12 @@
     <Content Include="Areas\Admin\Models\ProjectManagerAdminModel.edmx.diagram">
       <DependentUpon>ProjectManagerAdminModel.edmx</DependentUpon>
     </Content>
-    <Content Include="Areas\Admin\Views\ProjectsDevelopers\_UpdateProjectsDevelopers.cshtml" />
-    <Content Include="Areas\Admin\Views\ProjectsDevelopers\_ProjectsDeveloperList.cshtml" />
     <Content Include="Areas\Admin\Views\Projects\AdminPage.cshtml" />
     <Content Include="Content\fonts\fontawesome-webfont.eot" />
     <Content Include="Content\fonts\fontawesome-webfont.ttf" />
     <Content Include="Content\fonts\fontawesome-webfont.woff" />
     <Content Include="Content\fonts\FontAwesome.otf" />
+    <None Include="Properties\PublishProfiles\ProjectManagerApp.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -616,6 +609,7 @@
     <Content Include="Views\Home\WelcomePage.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\_DeveloperLogList.cshtml" />
+    <Content Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

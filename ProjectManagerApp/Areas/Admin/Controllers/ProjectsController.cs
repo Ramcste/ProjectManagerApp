@@ -12,7 +12,7 @@ using ProjectManagerApp.Areas.Admin.DAL;
 
 namespace ProjectManagerApp.Areas.Admin.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "SuperAdmin,Admin")]
     public class ProjectsController : Controller
     {
         private ProjectManagerAppEntities db = new ProjectManagerAppEntities();

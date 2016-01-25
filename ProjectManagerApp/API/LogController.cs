@@ -105,6 +105,17 @@ namespace ProjectManagerApp.API
 
             return Json(report);
         }
+
+
+        [HttpGet]
+        [Route("API/Log/GetProjectsListByDeveloperId")]
+
+        public JsonResult<List<Projects>> GetProjectsListByDeveloperId(int developerid)
+        {
+            var projects = dal.GetProjectsDeveloperResultSheet(developerid);
+
+            return Json(projects);
+        }
     }
 
 

@@ -17,7 +17,7 @@ using Microsoft.AspNet.Identity;
 
 namespace ProjectManagerApp.Areas.Admin.Controllers
 {
-   [Authorize]
+    [Authorize(Roles = "SuperAdmin,Admin")]
     public class LogsController : Controller
     {
         private ProjectManagerAppEntities db = new ProjectManagerAppEntities();
@@ -90,7 +90,7 @@ namespace ProjectManagerApp.Areas.Admin.Controllers
         // GET: Admin/Logs/Create
         public ActionResult Create()
         {
-            ViewBag.Projects = dal.GetProjectsResultSheet();
+           // ViewBag.Projects = dal.GetProjectsResultSheet();
             ViewBag.Users = dal.GetAspNetUsersResultSheet();
 
             return View();
@@ -103,8 +103,9 @@ namespace ProjectManagerApp.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Description,ProjectId,WorkStartTime,WorkEndTime,Duration,Date,DeveloperId")] Log log)
         {
-            ViewBag.Projects = dal.GetProjectsResultSheet();
+           // ViewBag.Projects = dal.GetProjectsResultSheet();          
             ViewBag.Users = dal.GetAspNetUsersResultSheet();
+           // ViewBag.Projects = dal.GetProjectsDeveloperResultSheet(log.DeveloperId);
 
             if (ModelState.IsValid)
             {
