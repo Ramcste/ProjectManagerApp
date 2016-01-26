@@ -43,3 +43,16 @@ input[type="checkbox"].input-validation-error {
 .totallist .dl-horizontal dt{
     width:300px;
 }
+
+/**modal backdrop*/
+.modal-backdrop {
+    z-index: 0 !important;
+}
+/*modal body*/
+
+/**form-action no color**/
+.form-actions.no-color{
+    float:left; 
+    background:transparent; 
+    border:none;
+}

@@ -8,7 +8,7 @@
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>AspNetUser</h4>
+        @*<h4>AspNetUser</h4>*@
         <hr />
         @Html.ValidationSummary(false)
         
@@ -58,9 +58,15 @@
             @Html.LabelFor(model => model.IsActive, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
 
-               @Html.DropDownList("Status", new SelectList(new List<Object> {
-                    new { value="True",text="True" },
-                    new { value="False", text="False"}}, "value", "text"), new { @class = "form-control" })
+               @Html.DropDownList("IsActive", new SelectList(new List<Object> {
+                                                                              new { value="True",text="True" },
+
+                                                                              new { value="False", text="False"}
+
+                                                                              }, "value", "text"), new { @class = "form-control" })
+
+
+
 
                     @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
 </div>

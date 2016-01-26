@@ -43,7 +43,11 @@ namespace ProjectManagerApp.Areas.Admin.Controllers
         {
             ViewBag.Roles = daluser.GetRoles(0);
             ViewBag.Users = dal.GetAspNetUsersResultSheet();
-            return View(db.AspNetUsers.ToList());
+
+            var users = from user in db.AspNetUsers where user.IsActive == true && user.IsDeleted == false select user; 
+                
+            
+            return View(users.ToList());
         }
 
         // GET: Admin/AspNetUsers/Details/5

@@ -315,5 +315,22 @@ namespace ProjectManagerApp.Models.DAL
             return projectsdevelopers;
         }
         
+
+
+        // for todays log resultsheet of specific developer
+
+        public List<LogFiltered> GetTodyasLogResultShet(int developerid)
+        {
+            ProjectsDevelopers inputparams = new ProjectsDevelopers
+            {
+                DeveloperId = developerid
+            };
+
+            var logs = db.TodyasLogsResultSheetProc.CallStoredProc(inputparams).ToList<LogFiltered>();
+
+
+            return logs;
+        }
+
     }
 }

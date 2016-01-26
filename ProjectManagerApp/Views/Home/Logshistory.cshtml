@@ -1,6 +1,4 @@
 ﻿@using Microsoft.AspNet.Identity
-@*@using ProjectManagerApp.Models.DAL.Output.Projects*@
-
 @model List<ProjectManagerApp.Models.DAL.Output.LogFiltered>
 
 @{
@@ -49,10 +47,11 @@
 }
 </div>
 
-<h2>Log History</h2>
 
 <br/>
+<div id="message"></div>
 
+<br />
 
 <div id="tblDeveloperLogList">
     @Html.Partial("_DeveloperLogList")
@@ -61,10 +60,12 @@
 
 </div>
 
-
-<br/>
 <br/>
 
+<br/>
+
+
+<br />
 @Styles.Render("~/Content/bootstrap-datetimepicker")
 @Scripts.Render("~/bundles/jqueryajaxform")
 @Scripts.Render("~/bundles/datetimepicker")
@@ -76,9 +77,7 @@
    // $('.logrowcheckbox').hide();
     // hide bulkeditor
     $('.bulkeditoption').hide();
-
-   
-
+ 
     $('#edit').hide();
     $(document).ready(function() {
         
@@ -105,80 +104,66 @@
 
     // for deleting specific log columns from database
     function deletebuttonclick(ob) {
-        var con = confirm("Are you sure want to delete it?");
-        logid = $(ob).closest("tr").find(".logid").val();
-        console.log(logid);
 
-        if (con == true) {
-
-            var url = '/API/Log/GetSeletedLogsDelete';
-            $.get(url, { id: logid }, function(data) {
-                location.reload();
-
-            });
-
-        } else {
-            console.log(logid);
-        }
-
+        BootstrapDialog.show({
+            title: 'Log Delete',
+            message: 'Are you sure you want to delete it?',
+            draggable: true,
+            buttons: [{
+                cssClass:'btn-primary',
+                label: 'Yes',
+                action: function(dialog) {
+                    logid = $(ob).closest("tr").find(".logid").val();             
+                    var url = '/API/Log/GetSeletedLogsDelete';
+                    $.get(url, { id: logid }, function(data) {
+                        console.log("successfully deleted");
+                        location.reload();
+                    });
+                    
+                    dialog.close();                  
+                }
+            }, {
+                cssClass:'btn-warning',
+                label: 'Close',
+                action: function(dialog) {
+                    dialog.close();
+                }
+            }]
+        });
     }
-
     // for editing specific log columns from database
     function editbuttonclick(ob) {
-     
-        var result = confirm("Are you sure you want to edit it?");
+  
+        BootstrapDialog.show({
+            title: 'Log Edit',
+            message: 'Are you sure you want to edit it?',
+            draggable: true,
+            buttons: [{
+                cssClass:'btn-primary',
+                label: 'Yes',
+                action: function(dialog) {
 
-        if (result == true) {
-           
-            logid = $(ob).closest("tr").find(".logid").val();
-            description = $(ob).closest("tr").find(".description").text(); // Finds the closest row <tr> // Gets a descendent with class="nr"    // Retrieves the text within <td>
-            projectname = $(ob).closest("tr").find(".projectname").text();
-            duration = $(ob).closest("tr").find(".Duration").text();
-            workstime = $(ob).closest("tr").find(".workstime").text();
-            worketime = $(ob).closest("tr").find(".worketime").text();
-            date = $(ob).closest("tr").find(".date").text();
-
-            editlog(logid, description, projectname, duration, workstime, worketime, date, developerid);
-           
-            //console.log("description",description);
-            //console.log("projectname",date);
-          
-        }
-        //  alert(logid+""+ description +""+projectname+""+ duration+""+ workstime+""+ worketime+""+ date+""+ developerid);
-
-      
+                    logid = $(ob).closest("tr").find(".logid").val();
+                    description = $(ob).closest("tr").find(".description").text(); // Finds the closest row <tr> // Gets a descendent with class="nr"    // Retrieves the text within <td>
+                    projectname = $(ob).closest("tr").find(".projectname").text();
+                    duration = $(ob).closest("tr").find(".duration").text();
+                    workstime = $(ob).closest("tr").find(".workstime").text();
+                    worketime = $(ob).closest("tr").find(".worketime").text();
+                    date = $(ob).closest("tr").find(".date").text();
+                    dialog.close();
+                    editlog(logid, description, projectname, duration, workstime, worketime, date, developerid);
+                }
+            }, {
+                cssClass:'btn-warning',
+                label: 'Close',
+                action: function(dialog) {
+                    dialog.close();
+                }
+            }]
+        });    
     }
 
-    // for deleting specific columns selected
-    function editor(ob) {
-        var option = ob.value;
-        console.log(option);
-
-        if (option == 1) {
-            var con = confirm("Are you sure want to delete it?");
-            logid = $(ob).closest("tr").find(".logid").val();
-            //console.log(logid);
-
-            if (con == true) {
-
-                var url = '/API/Log/GetSeletedLogsDelete';
-                $.get(url, { id: logid }, function(data) {
-                    console.log("successfully deleted");
-                    location.reload();
-                });
-
-            } else {
-                //console.log(logid);
-            }
-
-        } else if (option == 0) {
-
-
-        }
-
-    }
-
-
+  
     var count = 0;
 
     // for checking all the log columns checked
@@ -201,25 +186,20 @@
                     selectedlogid.join(",");
                     count++;
                     console.log("pop id",logid);
-              
 
                 }
-            
-
-   //   });
+           
         console.log("selectedlogid length:",selectedlogid.length);
         // alert(count);
     }
 
-    // for confirmation to delete recors or not
+    
 
 
     // for editing logs
 
     function editlog(logid, description, projectname, duration, workstime, worketime, date, developerid) {
-        //  alert(description);
-        //  alert(date);
-        //  alert(projectid);
+        
 
         dialogAddItem = new BootstrapDialog({
             title: 'Are you sure you want to edit it?',
@@ -308,19 +288,33 @@
                         dataType: 'json',
                         contentType: 'application/json; charset=utf-8',
                         success: function(data) {
-                            alert("Data Updated Successfully");
-                            
-                            location.reload();
+
+                            //alert("Data Updated Successfully");
+                            $('.alert-danger').hide();
+                         
+                            $('#tblDeveloperLogList').load('/Home/GetDeveloperLogResultSheetByFilter')
+
+                            $('#message').html('<div class="alert alert-success">  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> Log Record Updated  Successfully </div>');
+                           
                            
                         },
                         error: function() {
-                            alert("something went wrong while saving. try again!!");
+
+                            $('.alert-success').hide();
+                          //alert("something went wrong while saving. try again!!");
+                            $('#message').html('<div class="alert alert-danger">  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> something went wrong while  saving. try again!!</div>');
                         }
                     });
 
 
                     dialog.close();
 
+                }
+            },{
+                cssClass:'btn-warning',
+                label: 'Close',
+                action: function(dialog) {
+                    dialog.close();
                 }
             }
             ]
@@ -382,37 +376,35 @@
 
     function bulkeditor(ob) {
 
-        var option = ob.value;
+        BootstrapDialog.show({
+            title: 'Log Delete',
+            message: 'Are you sure you want to bulk delete it?',
+            draggable: true,
+            buttons: [{
+                cssClass:'btn-primary',
+                label: 'Yes',
+                action: function(dialog) {
+                    var url = '/API/Log/GetBulkLogDelete';
+                    var developerid = @HttpContext.Current.User.Identity.GetUserId();
+                    console.log("selectedlogid 1111:", selectedlogid);
+                    $.get(url, { logids: selectedlogid.toString(), developerid: developerid }, function(data) {
 
+                        //alert(data);
+                        console.log("success");
+                        location.reload();
+                    });
 
-        //if (option == 0) {
-        //    var response = confirm("Are you sure you want to bulk edit it?");
-        //    if (response == true) {
-        //        alert("please check the no of items you want to edit it from log records.");
-        //    }
-        //}
-
-        if (option == 1) {
-            var response1 = confirm("Are you sure you want to bulk delete it?");
-            if (response1 == true) {
-
-
-
-                var url = '/API/Log/GetBulkLogDelete';
-                var developerid = @HttpContext.Current.User.Identity.GetUserId();
-
-                 console.log("selectedlogid 1111:", selectedlogid);
-                $.get(url, { logids: selectedlogid.toString(), developerid: developerid }, function(data) {
-
-                    //alert(data);
-                    console.log("success");
-                   location.reload();
-                });
-            } else {
-                // console.log("selected logid length:", selectedlogid.toString());
-            }
-        }
-
+                    dialog.close();
+                  
+                }
+            }, {
+                cssClass:'btn-warning',
+                label: 'Close',
+                action: function(dialog) {
+                    dialog.close();
+                }
+            }]
+        });
 
     }
 
@@ -440,10 +432,11 @@
     color: black;
 }
 
-      .highlight {
+ .highlight {
          background-color: red;
      }
-     
+
+      
 </style>
 
 

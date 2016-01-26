@@ -77,6 +77,18 @@ namespace ProjectManagerApp.Models.DAL
         public StoredProc<Output.ProjectsDevelopers> ProjectsDeveloperResultSheetProc { get; set; }
 
 
+        // display todays log of specific developer
+
+        [StoredProcAttributes.Name("[Logs.TodaysResultSheet]")]
+
+        [StoredProcAttributes.ReturnTypes(typeof(LogFiltered))]
+
+        public StoredProc<ProjectsDevelopers> TodyasLogsResultSheetProc { get; set; }
+
+
+
+
+
         // for admin
 
         [StoredProcAttributes.Name("[AspNetUsers.ResultSheet]")]

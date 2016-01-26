@@ -166,7 +166,7 @@
                 <ul>
                     @if(User.IsInRole("SuperAdmin")||User.IsInRole("Admin"))
                     {
-                        <li>
+                        @*<li>
                             <a id="menuProjects" href="@(Url.Action("Index","Projects", new { Area="Admin" }))"><span>Projects Lists</span></a>
                         </li>
 
@@ -180,12 +180,23 @@
                        
                          <li>
                             <a id="menuRoles" href="@(Url.Action("Index","AspNetRoles", new { Area="Admin" }))"><span>Manage Role</span></a>
+                        </li>*@
+
+
+                        <li>
+                            <a href="#"><i class="fa fa-lg fa-fw fa-gears"></i><span class="menu-item-parent">User Administration</span></a>
+                            <ul>
+                                <li><a id="menuProjects" href='@(Url.Action("Index", "Projects", new { Area="Admin" }))'><i class="fa fa-lg fa-fw fa-reorder"></i> <span class="menu-item-parent">Projects List</span></a></li>
+                                <li><a id="menuLogs" href='@(Url.Action("Index", "Logs", new { Area="Admin" }))'><i class="fa fa-lg fa-fw fa-cutlery"></i> <span class="menu-item-parent">Logs List</span></a></li>
+                                <li><a id="menuUsers" href='@(Url.Action("Index", "AspNetUsers", new { Area="Admin" }))'><i class="fa fa-lg fa-fw fa-reorder"></i> <span class="menu-item-parent">User List</span></a></li>
+                                <li><a id="menuRoles" href='@(Url.Action("Index", "AspNetRoles", new { Area="Admin" }))'><i class="fa fa-lg fa-fw fa-cutlery"></i> <span class="menu-item-parent">Role List</span></a></li>
+                            </ul>
                         </li>
 
                     }
 
-                    @if (User.IsInRole("Developer"))
-                    {
+                    @*@if (User.IsInRole("Developer"))
+                    {*@
 
                         <li>
                             <a id="menuWelcome" href="@(Url.Action("WelcomePage","Home", new {Area="" }))"><span>Index</span></a>
@@ -199,7 +210,7 @@
                             <a id="menuLogsHistory" href="@(Url.Action("Logshistory","Home", new {Area="" }))"><span>Logs History</span></a>
                         </li>
 
-                    }
+                    @*}*@
                    
 
                 </ul>

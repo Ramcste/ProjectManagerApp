@@ -22,30 +22,22 @@ namespace ProjectManagerApp.Controllers
         private ProjectDal dal = new ProjectDal();
         public ActionResult Index()
         {
-            // ViewBag.Projects = new ProjectDal().GetProjectsResultSheet();
-
-            int developerid = User.Identity.GetUserId<int>();
-
-            ViewBag.Projects = dal.GetProjectsDeveloperResultSheet(developerid); 
-            var  model=  new Projects();
-
-            return View(model);
-        }
-
-        [Authorize]
-        public ActionResult Logshistory()
-        {
-            // ViewBag.Projects = new ProjectDal().GetProjectsResultSheet();
-
             int developerid = User.Identity.GetUserId<int>();
 
             ViewBag.Projects = dal.GetProjectsDeveloperResultSheet(developerid);
 
-            //var model = new Projects();
+            var logs = dal.GetTodyasLogResultShet(developerid);
+            return View(logs);
+        }
+
+   
+        public ActionResult Logshistory()
+        {
+            int developerid = User.Identity.GetUserId<int>();
+
+            ViewBag.Projects = dal.GetProjectsDeveloperResultSheet(developerid);
 
             var logs = new ProjectDal().GetDeveloperLogResulSheet(developerid, 0, null, null);
-
-           // return PartialView("_DeveloperLogList", logs);
 
             return View(logs);
         }
@@ -82,6 +74,14 @@ namespace ProjectManagerApp.Controllers
            var logs = dal.GetDeveloperLogResulSheet(developerId,projectId,fromdate,todate);
 
             return PartialView("_DeveloperLogList",logs);
+        }
+
+
+        public ActionResult GetTodaysLog()
+        {
+            int developerid= User.Identity.GetUserId<int>();
+            var logs = dal.GetTodyasLogResultShet(developerid);
+            return PartialView("_TodaysDeveloperLog",logs);
         }
     }
 }
