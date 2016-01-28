@@ -1,7 +1,7 @@
 ﻿@using Microsoft.AspNet.Identity
 
-@*@model List<ProjectManagerApp.Models.DAL.Output.LogFiltered>
-@using ProjectManagerApp.Models.DAL.Output.Projects*@
+@model List<ProjectManagerApp.Models.DAL.Output.LogFiltered>
+
 
 @{
     ViewBag.Title = "Home Page";
@@ -18,7 +18,7 @@
                     <div class="row">
                         <div class="col-md-7">
                             <div class="form-group">
-                                <input type="text" style="height: 35px" id="description" placeholder="What have you done?" class="form-control"/>
+                                <textarea  id="description" placeholder="What have you done?" class="form-control"></textarea>
 
                             </div>
                         </div>
@@ -92,7 +92,7 @@
 <br />
 
 <div id="tblDeveloperLog">
-    @Html.Partial("_TodaysDeveloperLog")
+    @Html.Partial("_TodaysDeveloperLog",Model)
 </div>
 
 <br/>
@@ -103,26 +103,49 @@
 
 
 <script type="text/javascript">
-       
-    $(document).ready(function () {
+   
+
+    $(document).ready(function(){
+    
         $('#datetimepicker1').datetimepicker({
             format: 'h:mm a'
 
         });
-
-    });
-    $(document).ready(function () {
+    });    
+    $(document).ready(function(){
+    
         $('#datetimepicker2').datetimepicker({
             format: 'h:mm a'
 
         });
     });
     $(document).ready(function(){
-        $('#datetimepicker3').datetimepicker({
-            format: 'YYYY-M-D'
+    
+   $('#datetimepicker3').datetimepicker({
+       format: 'YYYY-M-D'
+     
         });
+          
+        
+        //$('#date').datetimepicker({
+        //            format: 'YYYY-M-D'
+        //        });
+    
+    });
 
-       
+    $(function(){
+
+        //$('#date').datetimepicker({
+        //        format: 'YYYY-M-D'
+        //    });
+
+        $('#workendingtime').datetimepicker({
+                format: 'h:mm a'
+            });
+
+        $('#workstartingtime').datetimepicker({
+                format: 'h:mm a'
+            });
     });
    
     
@@ -199,7 +222,7 @@
 
            
             else {
-                alert("work finished time must be greater than work start time");
+                $('#message').html('<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> Work finished time must be greater than work start time!!</div>');
                 $('#duration').val("00" + ":" + "00");
             }
 
@@ -243,8 +266,8 @@
             }
 
             else {
-                alert("work finished time must be greater than work start time");
                 $('#duration').val("00" + ":" + "00");
+                $('#message').html('<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> Work finished time must be greater than work start time!!</div>');
             }
 
         });
@@ -254,8 +277,7 @@
     var count = 0;
 
     $(function () {
-        $('#addbutton').click(function () {
-      
+        $('#addbutton').click(function () {      
             var description = $('#description').val();
             var name = $('#dropdown option:selected').text();
             var projectid = $("#dropdown option:selected").val();
@@ -264,60 +286,79 @@
             var worketime = $('#workendingtime').val();
             var date = $('#date').val();
             var developerid = @HttpContext.Current.User.Identity.GetUserId();
-
-            var report = "";
-
+         
             if (description !== "" && name !== "" && duration !== "" && workstime !== "" && worketime !== "" && date !== "") 
             {
+                var len=0;
+                var url='/API/Log/GetTodayLogTimeCheck';
+                $.get(url,{developerid:developerid,starttime:workstime,endtime:worketime,date:date},function(result,status){
+                    console.log(result,status);
+                    len = result.length;
+                    console.log("length:",len);
 
-                    var html = new Array();
-                    html.push('<logs>');
-                    html.push('<LineItem ');
-                    html.push('Description="' + description + '"');
-                    html.push('ProjectId="' + projectid + '"');
-                    html.push('Duration="' + duration + '"');
-                    html.push('WorkStartTime="' + workstime + '"');
-                    html.push('WorkEndTime="' + worketime + '"');
-                    html.push('Date="' + date + '"');
-                    html.push('DeveloperId="' + developerid + '"');
-                    html.push('></LineItem>');
-                    html.push('</logs>');
-                    console.log(html.join(''));
-                    var logXML = html.join(' ');
-                    var json = '{"logXML":' + JSON.stringify(logXML) + '}';
-                    console.log(json);
-                    $.ajax({
-                        type: 'POST',
-                        url: '/API/Log/SaveReport',
-                        data: json,
-                        dataType: 'json',
-                        contentType: 'application/json; charset=utf-8',
-                        success: function (data) {                
-                            $('.alert-danger').hide();
-                            $('#message').html('<div class="alert alert-success"> <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> Log Record Saved Successfully </div>');
-                            $('#tblDeveloperLog').load('/Home/GetTodaysLog');
-                           
-                        },
-                        error: function () {
-                            $('#message').html('<div class="alert alert-danger">something went wrong while  saving. try again!!</div>');
-                        }
-                    });
+                    if(len>0)
+                    {
+                
+                        $('#message').html('<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>There is already log saved  for this timeline.So enter correct time line </div>');              
+                        $('.alert-success').hide();
+                    }
 
-                count++;
-                reset();
-            } 
-            
-            else {
-              
+                    else
+                    {
+                        var html = new Array();
+                        html.push('<logs>');
+                        html.push('<LineItem ');
+                        html.push('Description="' + description + '"');
+                        html.push('ProjectId="' + projectid + '"');
+                        html.push('Duration="' + duration + '"');
+                        html.push('WorkStartTime="' + workstime + '"');
+                        html.push('WorkEndTime="' + worketime + '"');
+                        html.push('Date="' + date + '"');
+                        html.push('DeveloperId="' + developerid + '"');
+                        html.push('></LineItem>');
+                        html.push('</logs>');
+                        console.log(html.join(''));
+                        var logXML = html.join(' ');
+                        var json = '{"logXML":' + JSON.stringify(logXML) + '}';
+                        console.log(json);
+                        $.ajax({
+                            type: 'POST',
+                            url: '/API/Log/SaveReport',
+                            data: json,
+                            dataType: 'json',
+                            contentType: 'application/json; charset=utf-8',
+                            success: function (data) {                
+                                $('.alert-danger').hide();
+                                $('#message').html('<div class="alert alert-success"> <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> Log Record Saved Successfully </div>');
+                          
+                                var url='/Home/GetTodaysLog';
+                                $.get(url,function(data){
+                                    $('#tblDeveloperLog').html(data);
+                            
+                                });
+                                reset();
+                            },
+                            error: function () {
+                                $('#message').html('<div class="alert alert-danger">  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> something went wrong while  saving. try again!!</div>');
+                            }
+                        });
+
+
+                    }  
+                });
+                                
+           
+            }
+            else
+            {       
                 $('#message').html('<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> Fill out all the blanks!!</div>');
-               $('.alert-success').hide();
+                $('.alert-success').hide();
             }
          
+       
+
         });
-
-
     });
-
     //clearing the fields after adding
     function reset() {
         document.getElementById("description").value = "";
@@ -330,7 +371,7 @@
    
     // for deleting specific log columns from database
     function deletebuttonclick(ob) {
-
+      
         BootstrapDialog.show({
             title: 'Log Delete',
             message: 'Are you sure you want to delete it?',
@@ -343,7 +384,12 @@
                     var url = '/API/Log/GetSeletedLogsDelete';
                     $.get(url, { id: logid }, function(data) {
                         console.log("successfully deleted");
-                        location.reload();
+                        var url='/Home/GetTodaysLog';
+                        $.get(url,function(data){
+                            $('#tblDeveloperLog').html(data);
+                            
+                        });
+                        
                     });
                     
                     dialog.close();                  
@@ -360,7 +406,7 @@
     
     // for editing specific log columns from database
     function editbuttonclick(ob) {
-  
+       
             BootstrapDialog.show({
                 title: 'Log Edit',
                 message: 'Are you sure you want to edit it?',
@@ -380,6 +426,8 @@
                         var developerid = @HttpContext.Current.User.Identity.GetUserId();                       
                         dialog.close();
                         editlog(logid, description, projectname, duration, workstime, worketime, date, developerid);
+
+                        console.log("desc:",description);
                     }
                 }, {
                     cssClass:'btn-warning',
@@ -388,13 +436,15 @@
                         dialog.close();
                     }
                 }]
-            });    
+            });  
+        
+         ob.stopPropagation();
         }
 
 
     function editlog(logid, description, projectname, duration, workstime, worketime, date, developerid) {
         
-        console.log(duration);
+        console.log(description);
 
         dialogAddItem = new BootstrapDialog({
             title: 'Are you sure you want to edit it?',
@@ -404,7 +454,7 @@
                     '<div class="row">' +
                     '<div class="col-md-2 form-group">Description</div>'+
                     '<div class="col-md-6">' +
-                    '<input type="text" class="form-control" id="editdescription" value="' + description + '"   />' +
+                    '<textarea class="form-control" id="editdescription" >'+description+'</textarea>'+
                     '</div>' +
                     '<div class="col-md-4">' +
                     '<select id="projects" class="form-control">' +
@@ -467,6 +517,19 @@
             },
             onshown: function(dialogRef) {
 
+                $('#datetimepicker1').datetimepicker({
+                    format: 'h:mm a'
+
+                });
+
+                $('#datetimepicker2').datetimepicker({
+                    format: 'h:mm a'
+
+                });
+
+                $('#datetimepicker3').datetimepicker({
+                    format: 'YYYY-M-D'
+                });
               
                 $('#editworkstime').datetimepicker({
                     format: 'h:mm a'
@@ -520,6 +583,7 @@
 
            
                         else {
+                            
                             alert("work finished time must be greater than work start time");
                             $('#editduration').val("00" + ":" + "00");
                         }
@@ -589,50 +653,70 @@
 
                     console.log(duration);
 
-                    var html = new Array();
-                    html.push('<logs>');
-                    html.push('<LineItem ');
-                    html.push('Id="' + logid + '"');
-                    html.push('D="' + description + '"');
-                    html.push('pr="' + projectid + '"');
-                    html.push('wst="' + workstime + '"');
-                    html.push('wet="' + worketime + '"');
-                    html.push('d="' + duration + '"');
-                    html.push('date="' + edate + '"');
-                    html.push('did="' + developerid + '"');
-                    html.push('></LineItem>');
-                    html.push('</logs>');
-                    console.log(html.join(''));
-                    var editlogXML = html.join(' ');
-                    
-                    var json = '{"editlogXML":' + JSON.stringify(editlogXML) + '}';
-                    console.log(json);
+                    var len=0;
+                    var url='/API/Log/GetTodayLogTimeCheck';
+                    $.get(url,{developerid:developerid,starttime:workstime,endtime:worketime,date:date},function(result,status){
+                        console.log(result,status);
+                        len = result.length;
+                        console.log("length:",len);
 
-                    //console.log(json);
-                    $.ajax({
-                        type: 'POST',
-                        url: '/API/Log/GetLogsUpdate',
-                        data: json,
-                        dataType: 'json',
-                        contentType: 'application/json; charset=utf-8',
-                        success: function(data) {
-
-                            //alert("Data Updated Successfully");
-                            $('.alert-danger').hide();
-                            location.reload();
-
-                            $('#message').html('<div class="alert alert-success"> Log Record Updated  Successfully </div>');
-                           
-                           
-                        },
-                        error: function() {
-
-                            $('.alert-success').hide();
-                            //alert("something went wrong while saving. try again!!");
-                            $('#message').html('<div class="alert alert-danger">something went wrong while  saving. try again!!</div>');
+                        if(len>1)
+                        {
+                
+                            alert("There is already log saved  for this timeline.So enter correct time line");
+                            // $('#message').html('<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>There is already log saved  for this timeline.So enter correct time line </div>');              
+                            // $('.alert-success').hide();
                         }
-                    });
 
+                        else
+                        {
+					
+                            var html = new Array();
+                            html.push('<logs>');
+                            html.push('<LineItem ');
+                            html.push('Id="' + logid + '"');
+                            html.push('D="' + description + '"');
+                            html.push('pr="' + projectid + '"');
+                            html.push('wst="' + workstime + '"');
+                            html.push('wet="' + worketime + '"');
+                            html.push('d="' + duration + '"');
+                            html.push('date="' + edate + '"');
+                            html.push('did="' + developerid + '"');
+                            html.push('></LineItem>');
+                            html.push('</logs>');
+                            console.log(html.join(''));
+                            var editlogXML = html.join(' ');
+                    
+                            var json = '{"editlogXML":' + JSON.stringify(editlogXML) + '}';
+                            console.log(json);
+
+                            //console.log(json);
+                            $.ajax({
+                                type: 'POST',
+                                url: '/API/Log/GetLogsUpdate',
+                                data: json,
+                                dataType: 'json',
+                                contentType: 'application/json; charset=utf-8',
+                                success: function(data) {
+
+                                    //alert("Data Updated Successfully");
+                                    $('.alert-danger').hide();
+                           
+                                    $('#tblDeveloperLog').load('/Home/GetTodaysLog');
+
+                                    $('#message').html('<div class="alert alert-success"> <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> Log Record Updated  Successfully </div>');
+                          
+                                },
+                                error: function() {
+
+                                    $('.alert-success').hide();
+                          
+                                    $('#message').html('<div class="alert alert-danger"> <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> something went wrong while  saving. try again!!</div>');
+                                }
+                            });
+                        }
+
+                    });
 
                     dialog.close();
 
@@ -668,13 +752,7 @@
             }
             $("#projects").html(options.join(''));
         });
-
-
     }
-
-
-
-
     
 </script>
 
@@ -703,7 +781,3 @@
     }
 </style>
 
-
-@*@Styles.Render("~/Content/bootstrap-datetimepicker")
-@Scripts.Render("~/bundles/jqueryajaxform")
-@Scripts.Render("~/bundles/datetimepicker")*@

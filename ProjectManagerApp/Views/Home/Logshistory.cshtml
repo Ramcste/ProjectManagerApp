@@ -9,7 +9,7 @@
 @Styles.Render("~/Content/bootstrap-dialog-css")
 
 
-<h2>Logs History</h2>
+<h2>Logs History </h2>
 
 <div class="filter">
 
@@ -66,9 +66,7 @@
 
 
 <br />
-@Styles.Render("~/Content/bootstrap-datetimepicker")
-@Scripts.Render("~/bundles/jqueryajaxform")
-@Scripts.Render("~/bundles/datetimepicker")
+
 
 
 
@@ -90,6 +88,37 @@
         });
     });
   
+ 
+    // for 20.10
+
+    function ConvertTimeFormat(format, time) {
+        var hours = Number(time.match(/^(\d+)/)[1]);
+        var minutes = Number(time.match(/:(\d+)/)[1]);
+        var AMPM = time.match(/\s(.*)$/)[1];
+        if (AMPM == "pm" && hours < 12) hours = hours + 12;
+        if (AMPM == "am" && hours == 12) hours = hours - 12;
+        var sHours = hours.toString();
+        var sMinutes = minutes.toFixed(2);
+        if (hours < 10) sHours = "0" + sHours;
+        if (minutes < 10) sMinutes = "0" + sMinutes;
+        return (sHours + "." + sMinutes);
+    };
+
+    //for 20:10
+    function ConvertTimeFormat1(format, time) {
+        var hours1 = Number(time.match(/^(\d+)/)[1]);
+        var minutes1 = Number(time.match(/:(\d+)/)[1]);
+        var AMPM1 = time.match(/\s(.*)$/)[1];
+        if (AMPM1 == "pm" && hours1 < 12) hours1 = hours1 + 12;
+        if (AMPM1 == "am" && hours1 == 12) hours1 = hours1 - 12;
+        var sHours1 = hours1.toString();
+        var sMinutes1 = minutes1.toFixed(2);
+        if (hours1 < 10) sHours1 = "0" + sHours1;
+        if (minutes1 < 10) sMinutes1 = "0" + sMinutes1;
+
+        return (sHours1 + ":" + sMinutes1);
+    };
+
 
     // count the number of records we want to bulk edit or delete
 
@@ -117,7 +146,8 @@
                     var url = '/API/Log/GetSeletedLogsDelete';
                     $.get(url, { id: logid }, function(data) {
                         console.log("successfully deleted");
-                        location.reload();
+                        var url='/Home/GetTodaysLog';
+                        $('#tblDeveloperLogList').load('/Home/GetDeveloperLogResultSheetByFilter')
                     });
                     
                     dialog.close();                  
@@ -160,7 +190,9 @@
                     dialog.close();
                 }
             }]
-        });    
+        }); 
+        
+        ob.stopPropagation();
     }
 
   
@@ -205,14 +237,14 @@
             title: 'Are you sure you want to edit it?',
             message:
                 '<div class="modal-bodydata">' +
-                    //first row
+                         //first row
                     '<div class="row">' +
-                    '<div class="col-md-8">' +
-                    '<input type="text" class="form-control" id="editdescription" value="' + description + '"   />' +
+                    '<div class="col-md-2 form-group">Description</div>'+
+                    '<div class="col-md-6">' +
+                    '<textarea class="form-control" id="editdescription">'+description+'</textarea>'+
                     '</div>' +
                     '<div class="col-md-4">' +
                     '<select id="projects" class="form-control">' +
-                    //'<option>' + projectname + '</option>' +
                     '</select>' +
                     '</div>' +
                     '</div>' +
@@ -221,10 +253,40 @@
                     //second row
 
                     '<div class="row">' +
-                    '<div class="col-md-3">' +
-                    '<label class="form-control" >' + "Date" + '</label>' +
+                     '<div class="col-md-2">Start Time</div>'+
+                    '<div class="col-md-4">' +
+                     '<div class="form-group">' +
+                    '<div class="input-group date" id="datetimepicker1" style="width:150px">' +
+                    '<input type="text" class="form-control" value="' + workstime + '" id="editworkstime" />' +
+                    '<span class="input-group-addon">' +
+                    '<span class="glyphicon glyphicon-time"></span>' +
+                    '</span>' +
                     '</div>' +
-                    '<div class="col-md-6">' +
+                    '</div>' +
+                    '</div>' +
+                     '<div class="col-md-2">End Time</div>'+
+                    '<div class="col-md-4">' +
+                    '<div class="form-group">' +
+                    '<div class="input-group date" id="datetimepicker2" style="width:150px">' +
+                    '<input type="text" class="form-control" value="' + worketime + '" id="editworketime" />' +
+                    '<span class="input-group-addon">' +
+                    '<span class="glyphicon glyphicon-time"></span>' +
+                    '</span>' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>' +
+                    '<br/>' +
+
+                    //third row
+
+                    '<div class="row">' +
+                    '<div class="col-md-2">Duration</div>'+
+                    '<div class="col-md-3">' +
+                    '<input type="text" class="form-control" value="' + duration + '" id="editduration" />' +
+                    '</div>' +
+                     '<div class="col-md-2">Date</div>'+
+                    '<div class="col-md-5">' +
                     '<div class="form-group">' +
                     '<div class="input-group date" id="datetimepicker3" style="width:150px">' +
                     '<input type="text" class="form-control" value="' + date + '" id="editdate" />' +
@@ -241,11 +303,125 @@
                 //   alert('Dialog is popping up, its message is ');
             },
             onshown: function(dialogRef) {
+                
+                $('#datetimepicker1').datetimepicker({
+                    format: 'h:mm a'
+
+                });
+
+                $('#datetimepicker2').datetimepicker({
+                    format: 'h:mm a'
+
+                });
+              
+                $('#editworkstime').datetimepicker({
+                    format: 'h:mm a'
+                });
+                $('#editworketime').datetimepicker({
+                    format: 'h:mm a'
+                });
+                $('#editdate').datetimepicker({
+                    format:'M/D/YYYY'
+                });
+
                 $('#datetimepicker3').datetimepicker({
 
                     format:'M/D/YYYY'
                 });
                 getprojectname();
+
+
+                                     
+                $('#editworkstime').focusout(function () {
+                    var starttime = parseFloat(ConvertTimeFormat("24", $('#editworkstime').val()));
+                    var endtime = parseFloat(ConvertTimeFormat("24", $('#editworketime').val()));
+
+                    console.log("starttime",starttime);
+
+                    console.log("endtime",endtime);
+
+                    var workstime = starttime.toFixed(2).split('.');
+                    var worketime = endtime.toFixed(2).split('.');
+                    var shours = parseInt(workstime[0]);
+                    var sminute = parseInt(workstime[1]);
+                    var ehours = parseInt(worketime[0]);
+                       
+                    var eminute = parseInt(worketime[1]);
+          
+                    var hdiff = ehours - shours;
+                    var mdiff = eminute - sminute;
+
+                    if (endtime > starttime) {
+
+                        if (mdiff<0) {
+                            mdiff = mdiff + 60;
+                            hdiff = hdiff - 1;
+                            $('#editduration').val(hdiff + ":" + mdiff);
+                        }
+                        else {
+                            $('#editduration').val(hdiff + ":" + mdiff);
+                        }
+
+                    }
+                    else if (endtime == starttime && mdiff>=0) {
+                        var hdiff1 = 0;
+                        mdiff = eminute - sminute;
+                        $('#editduration').val(hdiff1 + ":" + mdiff);
+                    }
+
+           
+                    else {
+                            
+                        alert("work finished time must be greater than work start time");
+                        $('#editduration').val("00" + ":" + "00");
+                    }
+
+                });
+
+                $('#editworketime').focusout(function () {
+                    var starttime = parseFloat(ConvertTimeFormat("24", $('#editworkstime').val()));
+                    var endtime = parseFloat(ConvertTimeFormat("24", $('#editworketime').val()));
+
+                    console.log("starttime", starttime);
+
+                    console.log("endtime", endtime);
+
+                    var workstime = starttime.toFixed(2).split('.');
+                    var worketime = endtime.toFixed(2).split('.');
+                    var shours = parseInt(workstime[0]);
+                    var sminute = parseInt(workstime[1]);
+                    var ehours = parseInt(worketime[0]);
+                       
+                    var eminute = parseInt(worketime[1]);
+
+                    var hdiff = ehours - shours;
+                    var mdiff = eminute - sminute;
+
+                    if (endtime > starttime) {
+                        if (mdiff < 0) {
+                            mdiff = mdiff + 60;
+                            hdiff = hdiff - 1;
+                            $('#editduration').val(hdiff + ":" + mdiff);
+                        }
+                        else {
+                            $('#editduration').val(hdiff + ":" + mdiff);
+                        }
+                    }
+
+
+                    else if (endtime == starttime && mdiff >= 0) {
+                        var hdiff1 = 0;
+                        mdiff = eminute - sminute;
+                        $('#editduration').val(hdiff1 + ":" + mdiff);
+                    }
+
+                    else {
+                        alert("work finished time must be greater than work start time");
+                        $('#editduration').val("00" + ":" + "00");
+                    }
+
+                });
+                
 
             },
             draggable: true,
@@ -258,54 +434,72 @@
                     var description = $('#editdescription').val();
                     var edate = $('#editdate').val();
                     var projectid = $('#projects option:selected').val();
+                    var workstime=$('#editworkstime').val();
+                    var worketime=$('#editworketime').val();
+                    var duration=$('#editduration').val();
 
-                    var html = new Array();
-                    html.push('<logs>');
-                    html.push('<LineItem ');
-                    html.push('Id="' + logid + '"');
-                    html.push('D="' + description + '"');
-                    html.push('pr="' + projectid + '"');
-                    html.push('wst="' + workstime + '"');
-                    html.push('wet="' + worketime + '"');
-                    html.push('d="' + duration + '"');
-                    html.push('date="' + edate + '"');
-                    html.push('did="' + developerid + '"');
-                    html.push('></LineItem>');
-                    //console.log(projectid);
 
-                    html.push('</logs>');
-                    console.log(html.join(''));
-                    var editlogXML = html.join(' ');
-                    
-                    var json = '{"editlogXML":' + JSON.stringify(editlogXML) + '}';
-                    console.log(json);
+                    var len=0;
+                    var url='/API/Log/GetTodayLogTimeCheck';
+                    $.get(url,{developerid:developerid,starttime:workstime,endtime:worketime,date:date},function(result,status){
+                        console.log(result,status);
+                        len = result.length;
+                        console.log("length:",len);
 
-                    //console.log(json);
-                    $.ajax({
-                        type: 'POST',
-                        url: '/API/Log/GetLogsUpdate',
-                        data: json,
-                        dataType: 'json',
-                        contentType: 'application/json; charset=utf-8',
-                        success: function(data) {
-
-                            //alert("Data Updated Successfully");
-                            $('.alert-danger').hide();
-                         
-                            $('#tblDeveloperLogList').load('/Home/GetDeveloperLogResultSheetByFilter')
-
-                            $('#message').html('<div class="alert alert-success">  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> Log Record Updated  Successfully </div>');
-                           
-                           
-                        },
-                        error: function() {
-
-                            $('.alert-success').hide();
-                          //alert("something went wrong while saving. try again!!");
-                            $('#message').html('<div class="alert alert-danger">  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> something went wrong while  saving. try again!!</div>');
+                        if(len>1)
+                        {
+                
+                            alert("There is already log saved  for this timeline.So enter correct time line");
+                            // $('#message').html('<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>There is already log saved  for this timeline.So enter correct time line </div>');              
+                            // $('.alert-success').hide();
                         }
-                    });
 
+                        else
+                        {
+					
+                            var html = new Array();
+                            html.push('<logs>');
+                            html.push('<LineItem ');
+                            html.push('Id="' + logid + '"');
+                            html.push('D="' + description + '"');
+                            html.push('pr="' + projectid + '"');
+                            html.push('wst="' + workstime + '"');
+                            html.push('wet="' + worketime + '"');
+                            html.push('d="' + duration + '"');
+                            html.push('date="' + edate + '"');
+                            html.push('did="' + developerid + '"');
+                            html.push('></LineItem>');
+                            html.push('</logs>');
+                            console.log(html.join(''));
+                            var editlogXML = html.join(' ');
+                    
+                            var json = '{"editlogXML":' + JSON.stringify(editlogXML) + '}';
+                            console.log(json);
+
+                            //console.log(json);
+                            $.ajax({
+                                type: 'POST',
+                                url: '/API/Log/GetLogsUpdate',
+                                data: json,
+                                dataType: 'json',
+                                contentType: 'application/json; charset=utf-8',
+                                success: function(data) {
+                                    $('.alert-danger').hide();
+                                    $('#tblDeveloperLogList').load('/Home/GetDeveloperLogResultSheetByFilter')
+                                    $('#message').html('<div class="alert alert-success"> <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> Log Record Updated  Successfully </div>');
+                           
+                           
+                                },
+                                error: function() {
+
+                                    $('.alert-success').hide();
+                          
+                                    $('#message').html('<div class="alert alert-danger"> <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> something went wrong while  saving. try again!!</div>');
+                                }
+                            });					
+                        }
+
+                    });
 
                     dialog.close();
 

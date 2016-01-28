@@ -332,5 +332,26 @@ namespace ProjectManagerApp.Models.DAL
             return logs;
         }
 
+
+
+        // for checking if the log exists it or not before saving log
+
+
+        public List<LogFiltered> GetLogTimeCheckToday(int developerid,string starttime,string endtime,DateTime date)
+        {
+            LogTimeCheck inputparams = new LogTimeCheck
+            {
+                DeveloperId = developerid,
+                StartTime = starttime,
+                EndTime = endtime,
+                Date = date
+
+            };
+
+            var logs = db.LogsTimeCheckSheetProc.CallStoredProc(inputparams).ToList<LogFiltered>();
+
+            return logs;
+        }
+
     }
 }

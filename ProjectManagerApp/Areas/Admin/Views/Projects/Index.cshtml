@@ -8,6 +8,8 @@
 <br />
 <h2>Projects Index</h2>
 
+<div id="divLoader" class="modalPopUpBackground loadingCursor" style="display:none; position:absolute;"></div>
+
 <div class="filter">
 @using (Ajax.BeginForm("GetProjectsResultSheetByFilter", "Projects", new AjaxOptions
 {
@@ -49,7 +51,7 @@
         </div>
 
         <div class="col-md-1">
-            <input type="submit"  value="Search" id="searchbutton" class="btn btn-default" onclick="$(this.form).submit();"/>
+            <input type="submit"  value="Search" id="btnSearch" class="btn btn-default" onclick="saveFilterValues();"/>
         </div>
 
 
@@ -76,10 +78,26 @@
     @Html.Partial("_ProjectsList")
 </div>
 
-@*<script src="~/Scripts/jquery-1.10.2.js"></script>
-<script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>*@
+<script>
 
+    loadFilterValues = function () {
+        $("#status").val(localStorage['Project_Status']);
+        $("#isDeleted").val(localStorage['Project_IsDeleted']);
+        $("#projectid").val(localStorage['Project_ProjectId']);
+     
+        $("#divLoader").removeClass("modalPopUpBackground").removeClass("loadingCursor");
+        setTimeout(function () {
+            $("#btnSearch").trigger("click");
+            $("#divLoader").addClass("modalPopUpBackground").addClass("loadingCursor");
+        }, 1);
+    };
 
+    saveFilterValues = function () {
 
-@Scripts.Render("~/bundles/jqueryajaxform")
+        localStorage['Project_Status'] = $("#status").val();
+        localStorage['Project_IsDeleted'] = $("#isDeleted").val();
+        localStorage['Project_ProjectId'] = $("#projectid").val();
+    };
 
+    loadFilterValues();
+</script>

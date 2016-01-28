@@ -195,22 +195,27 @@
 
                     }
 
-                    @*@if (User.IsInRole("Developer"))
-                    {*@
+                    <li>
+                        <a id="menuWelcome" href="@(Url.Action("WelcomePage","Home", new {Area="" }))"><span>Index</span></a>
+                    </li>
+
+                    <li>
+                        <a id="menuLogsEntry" href="@(Url.Action("Index","Home", new {Area="" }))"><span>Logs Entry</span></a>
+                    </li>
+
+                    <li>
+                        <a id="menuLogsHistory" href="@(Url.Action("Logshistory","Home", new {Area="" }))"><span>Logs History</span></a>
+                    </li>
+
+
+                    @if (User.IsInRole("Developer"))
+                    {
 
                         <li>
-                            <a id="menuWelcome" href="@(Url.Action("WelcomePage","Home", new {Area="" }))"><span>Index</span></a>
+                            <a id="menuUser" href="@(Url.Action("UsersEdit","Home", new {Area="" }))"><span>Manage Users</span></a>
                         </li>
 
-                        <li>
-                            <a id="menuLogsEntry" href="@(Url.Action("Index","Home", new {Area="" }))"><span>Logs Entry</span></a>
-                        </li>
-                       
-                        <li>
-                            <a id="menuLogsHistory" href="@(Url.Action("Logshistory","Home", new {Area="" }))"><span>Logs History</span></a>
-                        </li>
-
-                    @*}*@
+                    }
                    
 
                 </ul>

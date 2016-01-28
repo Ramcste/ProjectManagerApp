@@ -11,6 +11,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using ProjectManagerApp.Migrations;
 using ProjectManagerApp.Models;
+using ProjectManagerApp.Areas.Admin.Models;
 
 namespace ProjectManagerApp.Controllers
 {
@@ -19,6 +20,7 @@ namespace ProjectManagerApp.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private ProjectManagerAppEntities db = new ProjectManagerAppEntities();
 
         public AccountController()
         {
@@ -212,7 +214,11 @@ namespace ProjectManagerApp.Controllers
                     Email = model.Email,
                     Address = model.Address,
                     PhoneNumber = model.PhoneNumber1,
-                    PhoneNumber2 = model.PhoneNumber2
+                    PhoneNumber2 = model.PhoneNumber2,
+                    EmailConfirmed=true,
+                    IsActive=true,
+                    IsDeleted=false
+                    
 
                 };
                 var result = await UserManager.CreateAsync(user, model.Password);

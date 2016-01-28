@@ -43,8 +43,8 @@ namespace ProjectManagerApp.Helpers
             }
             else if (DatedOn == "Today")
             {
-                From = DateTime.Now;
-                Till = DateTime.Now;
+                From = DateTime.Now.Date;
+                Till = DateTime.Now.Date;
             }
             else if (DatedOn == "Yesterday")
             {

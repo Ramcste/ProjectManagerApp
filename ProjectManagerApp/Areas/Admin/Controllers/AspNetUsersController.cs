@@ -44,10 +44,13 @@ namespace ProjectManagerApp.Areas.Admin.Controllers
             ViewBag.Roles = daluser.GetRoles(0);
             ViewBag.Users = dal.GetAspNetUsersResultSheet();
 
-            var users = from user in db.AspNetUsers where user.IsActive == true && user.IsDeleted == false select user; 
-                
-            
-            return View(users.ToList());
+            //List<AspNetUser> users = (from user in db.AspNetUsers
+            //                          where user.IsActive == true 
+            //                          && user.IsDeleted == false select user).ToList<AspNetUser>(); 
+
+            List<AspNetUser> users = new List<AspNetUser>();
+
+            return View(users);
         }
 
         // GET: Admin/AspNetUsers/Details/5
@@ -133,10 +136,7 @@ namespace ProjectManagerApp.Areas.Admin.Controllers
             
             return View ("Create", model);
         }
-
-
-       
-
+      
 
         // GET: Admin/AspNetUsers/Edit/5
         public async Task<ActionResult> Edit(int id)
@@ -147,8 +147,6 @@ namespace ProjectManagerApp.Areas.Admin.Controllers
             ApplicationUser user = await UserManager.FindByIdAsync(id);
 
             RegisterViewModel editUser = await generateRegisterViewModelFromAspNetUser(user, id);
-
-            //if (user.IsDeleted == true) return RedirectToAction("Index", "User");
 
            
             if (id == default(int))
@@ -172,11 +170,8 @@ namespace ProjectManagerApp.Areas.Admin.Controllers
         public async Task<ActionResult> Edit(RegisterViewModel model)
         {
 
-           // ModelState.Remove("Password");
             ApplicationUser user = await UserManager.FindByIdAsync(model.Id);
       
-                //user.UserName = model.UserName;
-                //user.Email = model.Email;
                 user.Address = model.Address;
                 user.PhoneNumber = model.PhoneNumber1;
                 user.PhoneNumber2 = model.PhoneNumber2;
@@ -187,7 +182,6 @@ namespace ProjectManagerApp.Areas.Admin.Controllers
                 string userRoleCSV = Request.Form["chkUserRole"];
 
 
-               // ModelState.Remove("Password");
 
                 if (model.Password != null)
                 {
@@ -198,12 +192,12 @@ namespace ProjectManagerApp.Areas.Admin.Controllers
                 IdentityResult result = await UserManager.UpdateAsync(user);
                 if (result.Succeeded)
                 {
-                //if (model.Password != null)
-                //{
-                //    IdentityResult securityToken = await UserManager.UpdateSecurityStampAsync(model.Id);
-                //}
+                if (model.Password != null)
+                {
+                    IdentityResult securityToken = await UserManager.UpdateSecurityStampAsync(model.Id);
+                }
 
-                    dal.GetAllAspNetUserRolesUpdate(user.Id, userRoleCSV);
+                dal.GetAllAspNetUserRolesUpdate(user.Id, userRoleCSV);
                     dal.GetProjectsDeveloperUpdate(user.Id, projectsDeveloperCSV);
                 }
                 return RedirectToAction("Index", "AspNetUsers");

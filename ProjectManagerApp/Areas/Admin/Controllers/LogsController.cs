@@ -27,11 +27,11 @@ namespace ProjectManagerApp.Areas.Admin.Controllers
         //  sort by date
         public ActionResult Index()
         {
-            ViewBag.Projects = dal.GetProjectsResultSheet();
             ViewBag.Users = dal.GetAspNetUsersResultSheet();
+            ViewBag.Projects = dal.GetProjectsResultSheet();
 
             var logs = dal.GetLogResultSheetByFilter(0,0,"",null,null).ToList<LogFiltered>();
-             //var logs = (db.Logs).OrderBy(log=>log.Date).ToList();
+           
             ViewBag.Messsage = "Please select developer name or project name to view the log result sheet";
 
           
@@ -103,9 +103,9 @@ namespace ProjectManagerApp.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Description,ProjectId,WorkStartTime,WorkEndTime,Duration,Date,DeveloperId")] Log log)
         {
-           // ViewBag.Projects = dal.GetProjectsResultSheet();          
+                    
             ViewBag.Users = dal.GetAspNetUsersResultSheet();
-           // ViewBag.Projects = dal.GetProjectsDeveloperResultSheet(log.DeveloperId);
+         
 
             if (ModelState.IsValid)
             {
@@ -123,12 +123,7 @@ namespace ProjectManagerApp.Areas.Admin.Controllers
         public ActionResult Edit(int? id)
         {
             Log log = new Log();
-
-            //  int developerId= User.Identity.GetUserId<int>();
-
-            // ViewBag.Projects = dal.GetProjectsResultSheet();
-
-          
+             
             ViewBag.Users = dal.GetAspNetUsersResultSheet();
 
             if (id == null)

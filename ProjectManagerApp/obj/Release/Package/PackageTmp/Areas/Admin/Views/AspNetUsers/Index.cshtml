@@ -5,8 +5,12 @@
 }
 
 
+
+
+
 <h2>User Index</h2>
 
+<div id="divLoader" class="modalPopUpBackground loadingCursor" style="display:none; position:absolute;"></div>
 <div class="filter">
 
 @using (Ajax.BeginForm("GetAspNetUsersResultSheetByFilter", "AspNetUsers", new AjaxOptions
@@ -90,7 +94,7 @@
 
 
         <div class="col-md-1">
-            <input type="submit" value="Search" id="searchbutton" class="btn btn-default" onclick="$(this.form).submit();" />
+            <input type="submit" value="Search" id="btnSearch" class="btn btn-default"  onclick="saveFilterValues();"/>
         </div>
 
     </div>
@@ -106,14 +110,12 @@
 <br />
 
 <div id="tblAspNetUsers">
-    @Html.Partial("_AspNetUsersList")
+    @Html.Partial("_AspNetUsersList",Model)
 </div>
 
-@Scripts.Render("~/bundles/jqueryajaxform")
 
 
-<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js">
-    </script>
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"> </script>
 
 <script>
    
@@ -156,6 +158,37 @@
 
             });
     });
+
+    loadFilterValues = function () {
+       
+        $("#developerid").val(localStorage['User_UserName']);
+        $("#email").val(localStorage['User_Email']);
+        $("#isActive").val(localStorage['User_Status']);
+        $("#isDeleted").val(localStorage['User_Deleted']);
+        $("#roleid").val(localStorage['User_Role']);
+       
+        $("#divLoader").removeClass("modalPopUpBackground").removeClass("loadingCursor");
+        setTimeout(function () {
+            $("#btnSearch").trigger("click");
+          $("#divLoader").addClass("modalPopUpBackground").addClass("loadingCursor");
+        }, 1);
+    };
+
+    saveFilterValues = function () {
+
+        localStorage['User_Status'] = $("#isActive").val();
+        localStorage['User_UserName'] = $("#developerid option:selected").val();
+        localStorage['User_Email'] = $("#email").val();
+        localStorage['User_Deleted'] = $("#isDeleted").val();
+        localStorage['User_Role'] = $("#roleid").val();
+
+       
+    };
+
+   
+    loadFilterValues();
+
+  
 
 </script>
 

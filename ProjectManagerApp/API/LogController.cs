@@ -8,14 +8,14 @@ using ProjectManagerApp.Models;
 using ProjectManagerApp.Models.DAL;
 using ProjectManagerApp.Models.DAL.Input;
 using Projects = ProjectManagerApp.Models.DAL.Output.Projects;
-
+using ProjectManagerApp.Models.DAL.Output;
 
 namespace ProjectManagerApp.API
 {
     public class LogController : ApiController
     {
         ProjectDal dal = new ProjectDal();
-       
+
         private ProjectManagerAppEntities db = new ProjectManagerAppEntities();
 
 
@@ -34,9 +34,9 @@ namespace ProjectManagerApp.API
 
         [HttpGet]
         [Route("API/Log/GetLogHistoryAscProjectId")]
-        public JsonResult<List<Report>> GetLogHistoryAscProjectId(int developerid,int ?projectid)
+        public JsonResult<List<Report>> GetLogHistoryAscProjectId(int developerid, int? projectid)
         {
-            var reports = dal.GetLogsHistoryByProjectId(developerid,projectid);
+            var reports = dal.GetLogsHistoryByProjectId(developerid, projectid);
             return Json(reports);
         }
 
@@ -116,12 +116,21 @@ namespace ProjectManagerApp.API
 
             return Json(projects);
         }
+
+
+
+
+        // checking logtimecheck before saving it
+
+        [HttpGet]
+        [Route("API/Log/GetTodayLogTimeCheck")]
+        public JsonResult<List<LogFiltered>> GetTodayLogTimeCheck(int developerid, string starttime, string endtime,DateTime date)
+        {         
+                var logs = dal.GetLogTimeCheckToday(developerid, starttime, endtime,date.Date);
+
+                return Json(logs);
+            }
+            
+
+        }
     }
-
-
-        // for admin area
-
-        //  for filtering
-
-       
-}

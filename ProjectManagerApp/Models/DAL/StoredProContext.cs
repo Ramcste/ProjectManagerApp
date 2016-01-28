@@ -85,7 +85,13 @@ namespace ProjectManagerApp.Models.DAL
 
         public StoredProc<ProjectsDevelopers> TodyasLogsResultSheetProc { get; set; }
 
+        // check the log exist between this timeline or not
 
+        [StoredProcAttributes.Name("[Logs.TimeCheck]")]
+
+        [StoredProcAttributes.ReturnTypes(typeof(LogFiltered))]
+
+        public StoredProc<LogTimeCheck> LogsTimeCheckSheetProc { get; set; }
 
 
 

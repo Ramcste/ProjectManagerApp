@@ -20,5 +20,7 @@ namespace ProjectManagerApp.Areas.Admin.Models
     
         public virtual AspNetUser AspNetUser { get; set; }
         public virtual Project Project { get; set; }
+
+       
     }
 }

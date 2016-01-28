@@ -3,13 +3,13 @@
 
 @{
     ViewBag.Title = "Index";
-   
 }
 
+<h2>Index</h2>
 
+<div id="divLoader" class="modalPopUpBackground loadingCursor" style="display:none; position:absolute;"></div>
 
-<h2>Log Index</h2>
-<div class="row">
+<div class="filter">
 
     @using (Ajax.BeginForm("GetLogResultSheetByFilter", "Logs", new AjaxOptions
     {
@@ -20,89 +20,90 @@
     }))
     {
 
-    <div class="row">
-        <div class="col-md-2">
-            <p>Developer Name:</p>
-        </div>
-        <div class="col-md-2">
-            <div class="form-group">
-                @Html.DropDownList("developerid", new SelectList(ViewBag.Users, "Id", "UserName"), "Select Name", new { @class = "form-control"})
+        <div class="row">
+            <div class="col-md-2">
+                <p>Developer Name:</p>
             </div>
-        </div>
-        <div class="col-md-2">
-            <p>Search by Keywords</p>
-        </div>
-        <div class="col-md-3">
-
-            <div class="form-group">
-                @Html.Editor("keywords", new { htmlAttributes = new { @class = "form-control" } })
+            <div class="col-md-2">
+                <div class="form-group">
+                    @Html.DropDownList("developerid", new SelectList(ViewBag.Users, "Id", "UserName"), "Select Name", new { @class = "form-control" })
+                </div>
             </div>
+            <div class="col-md-2">
+                <p>Search by Keywords</p>
+            </div>
+            <div class="col-md-3">
+
+                <div class="form-group">
+                    @Html.Editor("keywords", new { htmlAttributes = new { @class = "form-control" } })
+                </div>
 
 
 
-
-        </div>
-        <div class="col-md-1">
-            <p>Filter By</p>
-        </div>
-        <div class="col-md-2">
-            <div class="form-group">
-                @Html.DropDownList("projectid", new SelectList(ViewBag.Projects, "Id", "Name"), "Select Project", new { @class = "form-control" })
 
             </div>
+            <div class="col-md-1">
+                <p>Filter By</p>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    @Html.DropDownList("projectid", new SelectList(ViewBag.Projects, "Id", "Name"), "Select Project", new { @class = "form-control" })
+
+                </div>
 
 
+            </div>
         </div>
-    </div>
-    <div class="row">
+        <div class="row">
 
-        <div class="col-md-1">
-            <p>FilterBy</p>
-        </div>
+            <div class="col-md-1">
+                <p>FilterBy</p>
+            </div>
 
-        <div class="col-md-2">
+            <div class="col-md-2">
 
-            <div class="form-group">
-                @Html.DropDownList("option", new SelectList(new List<Object> {
+                <div class="form-group">
+                    @Html.DropDownList("option", new SelectList(new List<Object> {
+                                                                            new { value="Today", text="Today" },
                                                                             new { value="This Month", text="This Month" },
                                                                             new { value="Previous Month", text="Previous Month"},
                                                                             new { value="This Week",text="This Week"},
                                                                             new { value="Previous Week",text="Previous Week"},
                                                                             new { value="Between",text="Between"}
-                                                                            }, "value", "text"), "Select Option", new { @class = "form-control", id="optiondropdown" })
+                                                                            }, "value", "text"), "Select Option", new { @class = "form-control", id = "optiondropdown" })
+                </div>
+
+
+
             </div>
 
+            <div class="optional">
+
+                <div class="col-md-1">
+                    <p>From</p>
+                </div>
 
 
-        </div>
+                <div class="col-md-2">
+                    @Html.Editor("fromdate", new { htmlAttributes = new { @class = "form-control" } })
+                </div>
 
-        <div class="optional">
 
-           <div class="col-md-1">
-                <p>From</p>
+                <div class="col-md-1">
+                    <p>To</p>
+                </div>
+
+                <div class="col-md-2">
+                    @Html.Editor("todate", new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+
             </div>
-
-
-            <div class="col-md-2">
-                @Html.Editor("fromdate", new { htmlAttributes = new { @class = "form-control" } })
-            </div>
-
 
             <div class="col-md-1">
-                <p>To</p>
-            </div>
-
-            <div class="col-md-2">
-                @Html.Editor("todate", new { htmlAttributes = new { @class = "form-control" } })
+                <input type="submit" value="Search" id="searchbutton" class="btn btn-default" onclick="saveFilterValues();" />
             </div>
 
         </div>
-
-        <div class="col-md-1">
-            <input type="submit" value="Search" id="searchbutton"  class="btn btn-default" onclick="$(this.form).submit();" />
-        </div>
-
-    </div>
 
     }
 </div>
@@ -117,26 +118,21 @@
 
 <br />
 
-@*<h2>@ViewBag.Message</h2>*@
+
 
 <h2>@ViewBag.Messsage</h2>
 
 <div id="tblLogsList">
-   
-  
+
+
     @Html.Partial("_LogList")
-   
+
 </div>
 
 <br />
 
 <br />
 
-@*<script src="~/Scripts/jquery-1.10.2.js"></script>
-<script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>*@
-
-@Scripts.Render("~/bundles/jqueryajaxform")
-@Scripts.Render("~/bundles/datetimepicker")
 <script>
 
 
@@ -153,26 +149,22 @@
             format: 'M/D/YYYY'
         });
 
-        //if($('#optiondropdown:selected' == 'Between')
-        //{
-        //    alert("Between Selected");
-        //});
-      
+
         $('#tblLogsList').hide();
     });
 
 
     $("#optiondropdown").change(function () {
     var selectedText1 = $("#optiondropdown option:selected").text();
-   // console.log(selectedText1);
+ 
     if (selectedText1 == "Between") {
-       // alert("Between");
+     
         $('.optional').show();
     }
     else {
         $('.optional').hide();
     }
-    
+
     });
 
     $('#searchbutton').click(function () {
@@ -181,6 +173,37 @@
 
     });
 
-    
+
+
+    loadFilterValues = function () {
+        $("#developerid").val(localStorage['Log_DeveloperId']);
+        $("#keywords").val(localStorage['Log_Keyword']);
+        $("#projectid").val(localStorage['Log_ProjectId']);
+        $("#option").val(localStorage['Log_Option']);
+        $("#fromdate").val(localStorage['Log_FromDate']);
+        $("#todate").val(localStorage['Log_ToDate']);
+
+
+        $("#divLoader").removeClass("modalPopUpBackground").removeClass("loadingCursor");
+        setTimeout(function () {
+            $("#searchbutton").trigger("click");
+            $("#divLoader").addClass("modalPopUpBackground").addClass("loadingCursor");
+        }, 1);
+    };
+
+    saveFilterValues = function () {
+
+        localStorage['Log_DeveloperId'] = $("#developerid").val();
+        localStorage['Log_Keyword'] = $("#keywords").val();
+        localStorage['Log_ProjectId'] = $("#projectid").val();
+        localStorage['Log_Option'] = $("#option").val();
+        localStorage['Log_FromDate'] = $("#fromdate").val();
+        localStorage['Log_ToDate'] = $("#todate").val();
+
+    };
+
+    loadFilterValues();
+
+
 
 </script>
