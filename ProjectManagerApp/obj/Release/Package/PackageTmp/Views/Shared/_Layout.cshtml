@@ -166,24 +166,8 @@
                 <ul>
                     @if(User.IsInRole("SuperAdmin")||User.IsInRole("Admin"))
                     {
-                        @*<li>
-                            <a id="menuProjects" href="@(Url.Action("Index","Projects", new { Area="Admin" }))"><span>Projects Lists</span></a>
-                        </li>
-
-                        <li>
-                            <a id="menuLogs" href="@(Url.Action("Index","Logs", new { Area="Admin" }))"><span>Log Lists</span></a>
-                        </li>
-
-                        <li>
-                            <a id="menuUsers" href="@(Url.Action("Index","AspNetUsers", new { Area="Admin" }))"><span>User Lists</span></a>
-                        </li>
-                       
-                         <li>
-                            <a id="menuRoles" href="@(Url.Action("Index","AspNetRoles", new { Area="Admin" }))"><span>Manage Role</span></a>
-                        </li>*@
-
-
-                        <li>
+  
+                      <li>
                             <a href="#"><i class="fa fa-lg fa-fw fa-gears"></i><span class="menu-item-parent">User Administration</span></a>
                             <ul>
                                 <li><a id="menuProjects" href='@(Url.Action("Index", "Projects", new { Area="Admin" }))'><i class="fa fa-lg fa-fw fa-reorder"></i> <span class="menu-item-parent">Projects List</span></a></li>

@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="6927f02bde62475f93ed4f70d9e5ca80" Name="Diagram1">
+      <Diagram DiagramId="52bbe7f9850a4310a563aebbde6981fe" Name="Diagram1">
         <EntityTypeShape EntityType="ProjectManagerAppModel.C__MigrationHistory" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="ProjectManagerAppModel.AspNetRole" Width="1.5" PointX="3.75" PointY="11.5" IsExpanded="true" />
         <EntityTypeShape EntityType="ProjectManagerAppModel.AspNetUserClaim" Width="1.5" PointX="3" PointY="6.125" IsExpanded="true" />
@@ -14,6 +14,7 @@
         <EntityTypeShape EntityType="ProjectManagerAppModel.Log" Width="1.5" PointX="6" PointY="2.875" IsExpanded="true" />
         <EntityTypeShape EntityType="ProjectManagerAppModel.Project" Width="1.5" PointX="3.75" PointY="2.125" IsExpanded="true" />
         <EntityTypeShape EntityType="ProjectManagerAppModel.ProjectsDeveloper" Width="1.5" PointX="6" PointY="10.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectManagerAppModel.QueuedEmail" Width="1.5" PointX="8.75" PointY="0.75" IsExpanded="true" />
         <AssociationConnector Association="ProjectManagerAppModel.FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId" ManuallyRouted="false" />
         <AssociationConnector Association="ProjectManagerAppModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
         <AssociationConnector Association="ProjectManagerAppModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />

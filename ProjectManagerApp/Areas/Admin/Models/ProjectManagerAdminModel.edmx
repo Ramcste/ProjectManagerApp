@@ -54,7 +54,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Email" Type="nvarchar" MaxLength="256" />
+          <Property Name="Email" Type="nvarchar" MaxLength="256" Nullable="false" />
           <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
           <Property Name="PasswordHash" Type="nvarchar(max)" />
           <Property Name="SecurityStamp" Type="nvarchar(max)" />
@@ -65,8 +65,8 @@
           <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
           <Property Name="AccessFailedCount" Type="int" Nullable="false" />
           <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
-          <Property Name="Address" Type="nvarchar(max)" />
-          <Property Name="PhoneNumber2" Type="nvarchar(max)" />
+          <Property Name="Address" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="PhoneNumber2" Type="nvarchar(max)" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
         </EntityType>
@@ -101,6 +101,25 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="DeveloperId" Type="int" Nullable="false" />
           <Property Name="ProjectsId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="QueuedEmail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Priority" Type="int" Nullable="false" />
+          <Property Name="From" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="FromName" Type="nvarchar" MaxLength="500" />
+          <Property Name="To" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="ToName" Type="nvarchar" MaxLength="500" />
+          <Property Name="CC" Type="nvarchar" MaxLength="500" />
+          <Property Name="Bcc" Type="nvarchar" MaxLength="500" />
+          <Property Name="Subject" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Body" Type="nvarchar(max)" />
+          <Property Name="CreatedOnUtc" Type="datetime" Nullable="false" />
+          <Property Name="SentTries" Type="int" Nullable="false" />
+          <Property Name="SentOnUtc" Type="datetime" />
+          <Property Name="EmailAccountId" Type="int" Nullable="false" />
         </EntityType>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
@@ -216,6 +235,7 @@
           <EntitySet Name="Logs" EntityType="Self.Logs" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Projects" EntityType="Self.Projects" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProjectsDeveloper" EntityType="Self.ProjectsDeveloper" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="QueuedEmail" EntityType="Self.QueuedEmail" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
@@ -308,7 +328,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
           <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -319,8 +339,8 @@
           <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
           <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
           <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="PhoneNumber2" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PhoneNumber2" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="AspNetUserClaims" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
@@ -366,6 +386,25 @@
           <Property Name="ProjectsId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="AspNetUser" Relationship="Self.FK_DeveloperId_ProjectsDeveloper" FromRole="ProjectsDeveloper" ToRole="AspNetUsers" />
           <NavigationProperty Name="Project" Relationship="Self.FK_Projects_ProjectsDeveloper" FromRole="ProjectsDeveloper" ToRole="Projects" />
+        </EntityType>
+        <EntityType Name="QueuedEmail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Priority" Type="Int32" Nullable="false" />
+          <Property Name="From" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FromName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="To" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ToName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="CC" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Bcc" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Subject" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Body" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedOnUtc" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="SentTries" Type="Int32" Nullable="false" />
+          <Property Name="SentOnUtc" Type="DateTime" Precision="3" />
+          <Property Name="EmailAccountId" Type="Int32" Nullable="false" />
         </EntityType>
         <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
           <End Role="AspNetRoles" Type="Self.AspNetRole" Multiplicity="1">
@@ -481,6 +520,7 @@
           <EntitySet Name="Logs" EntityType="Self.Log" />
           <EntitySet Name="Projects" EntityType="Self.Project" />
           <EntitySet Name="ProjectsDevelopers" EntityType="Self.ProjectsDeveloper" />
+          <EntitySet Name="QueuedEmails" EntityType="Self.QueuedEmail" />
           <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
             <End Role="AspNetRoles" EntitySet="AspNetRoles" />
             <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
@@ -620,6 +660,26 @@
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="DeveloperId" ColumnName="DeveloperId" />
                 <ScalarProperty Name="ProjectsId" ColumnName="ProjectsId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="QueuedEmails">
+            <EntityTypeMapping TypeName="ProjectManagerAppModel.QueuedEmail">
+              <MappingFragment StoreEntitySet="QueuedEmail">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Priority" ColumnName="Priority" />
+                <ScalarProperty Name="From" ColumnName="From" />
+                <ScalarProperty Name="FromName" ColumnName="FromName" />
+                <ScalarProperty Name="To" ColumnName="To" />
+                <ScalarProperty Name="ToName" ColumnName="ToName" />
+                <ScalarProperty Name="CC" ColumnName="CC" />
+                <ScalarProperty Name="Bcc" ColumnName="Bcc" />
+                <ScalarProperty Name="Subject" ColumnName="Subject" />
+                <ScalarProperty Name="Body" ColumnName="Body" />
+                <ScalarProperty Name="CreatedOnUtc" ColumnName="CreatedOnUtc" />
+                <ScalarProperty Name="SentTries" ColumnName="SentTries" />
+                <ScalarProperty Name="SentOnUtc" ColumnName="SentOnUtc" />
+                <ScalarProperty Name="EmailAccountId" ColumnName="EmailAccountId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -177,7 +177,6 @@ namespace ProjectManagerApp.Models.DAL
 
 
 
-
         public StoredProContext()
         {
             this.InitializeStoredProcs();

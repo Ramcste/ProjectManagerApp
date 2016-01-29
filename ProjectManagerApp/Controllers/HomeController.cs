@@ -17,7 +17,8 @@ using System.Threading.Tasks;
 
 namespace ProjectManagerApp.Controllers
 {
-    [Authorize]
+    //Roles ="Developer,Admin,SuperAdmin"
+    [Authorize()]
     public class HomeController : Controller
     {
         private ProjectManagerAppContext db = new ProjectManagerAppContext();

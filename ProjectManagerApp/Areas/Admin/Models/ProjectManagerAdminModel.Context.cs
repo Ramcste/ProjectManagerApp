@@ -34,5 +34,6 @@ namespace ProjectManagerApp.Areas.Admin.Models
         public virtual DbSet<Log> Logs { get; set; }
         public virtual DbSet<Project> Projects { get; set; }
         public virtual DbSet<ProjectsDeveloper> ProjectsDevelopers { get; set; }
+        public virtual DbSet<QueuedEmail> QueuedEmails { get; set; }
     }
 }

@@ -88,9 +88,6 @@ namespace ProjectManagerApp.Controllers
                 {
                     string callbackUrl = await SendEmailConfirmationTokenAsync(user.Id, "Confirm your account-Resend");
 
-                    // Uncomment to debug locally  
-                    // ViewBag.Link = callbackUrl;
-
                     ViewBag.errorMessage = "You must have a confirmed email to log on.";
                     return View("Error");
                 }
@@ -133,9 +130,6 @@ namespace ProjectManagerApp.Controllers
                     {
                         return RedirectToLocal(returnUrl);
                     }
-
-                //return RedirectToLocal(returnUrl);
-
 
                 case SignInStatus.LockedOut:
                     return View("Lockout");
@@ -215,11 +209,8 @@ namespace ProjectManagerApp.Controllers
                     Address = model.Address,
                     PhoneNumber = model.PhoneNumber1,
                     PhoneNumber2 = model.PhoneNumber2,
-                    EmailConfirmed=true,
                     IsActive=true,
-                    IsDeleted=false
-                    
-
+                    IsDeleted=false                    
                 };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
@@ -232,7 +223,7 @@ namespace ProjectManagerApp.Controllers
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                    //await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
                     string callbackUrl = await SendEmailConfirmationTokenAsync(user.Id, "Confirm your account");
 
@@ -240,7 +231,9 @@ namespace ProjectManagerApp.Controllers
                                     + "before you can log in.";
 
                     return View("Info");
-                    // return RedirectToAction("Index", "Home");
+
+
+              
                 }
                 AddErrors(result);
             }
@@ -506,7 +499,7 @@ namespace ProjectManagerApp.Controllers
             var callbackUrl = Url.Action("ConfirmEmail", "Account",
                new { userId = userID, code = code }, protocol: Request.Url.Scheme);
             await UserManager.SendEmailAsync(userID, subject,
-               "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+             /*  "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>"*/callbackUrl.ToString());
 
             return callbackUrl;
         }

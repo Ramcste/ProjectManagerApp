@@ -80,3 +80,6 @@ E:\Workspace\ProjectManagerApp\ProjectManagerApp\obj\Release\ProjectManagerApp.c
 E:\Workspace\ProjectManagerApp\ProjectManagerApp\obj\Release\ProjectManagerApp.dll
 E:\Workspace\ProjectManagerApp\ProjectManagerApp\obj\Release\ProjectManagerApp.pdb
 E:\Workspace\ProjectManagerApp\ProjectManagerApp\obj\Release\ProjectManagerApp.csprojResolveAssemblyReference.cache
+E:\Workspace\ProjectManagerApp\ProjectManagerApp\bin\SendGrid.dll
+E:\Workspace\ProjectManagerApp\ProjectManagerApp\bin\SendGrid.SmtpApi.dll
+E:\Workspace\ProjectManagerApp\ProjectManagerApp\bin\SendGridMail.dll

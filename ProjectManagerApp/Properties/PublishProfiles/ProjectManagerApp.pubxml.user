@@ -10,7 +10,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
   </PropertyGroup>
   <ItemGroup>
     <File Include="Areas/Admin/Models/ProjectManagerAdminModel.edmx.diagram">
-      <publishTime>01/07/2016 16:06:52</publishTime>
+      <publishTime>01/29/2016 11:09:23</publishTime>
     </File>
     <File Include="Areas/Admin/Views/AspNetRoles/Create.cshtml">
       <publishTime>01/28/2016 12:47:02</publishTime>
@@ -67,7 +67,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>01/24/2016 20:42:28</publishTime>
     </File>
     <File Include="Areas/Admin/Views/AspNetUsers/Index.cshtml">
-      <publishTime>01/28/2016 17:20:24</publishTime>
+      <publishTime>01/29/2016 16:27:43</publishTime>
     </File>
     <File Include="Areas/Admin/Views/AspNetUsers/_AspNetUsersList.cshtml">
       <publishTime>01/28/2016 17:53:31</publishTime>
@@ -211,7 +211,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/27/2015 10:20:35</publishTime>
     </File>
     <File Include="bin/ProjectManagerApp.dll">
-      <publishTime>01/28/2016 18:10:53</publishTime>
+      <publishTime>01/29/2016 18:02:24</publishTime>
     </File>
     <File Include="bin/roslyn/csc.exe">
       <publishTime>11/27/2015 10:20:36</publishTime>
@@ -248,6 +248,15 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     </File>
     <File Include="bin/roslyn/VBCSCompiler.exe.config">
       <publishTime>11/27/2015 10:20:37</publishTime>
+    </File>
+    <File Include="bin/SendGrid.dll">
+      <publishTime>01/29/2016 12:41:31</publishTime>
+    </File>
+    <File Include="bin/SendGrid.SmtpApi.dll">
+      <publishTime>01/29/2016 12:41:16</publishTime>
+    </File>
+    <File Include="bin/SendGridMail.dll">
+      <publishTime>01/29/2016 12:41:31</publishTime>
     </File>
     <File Include="bin/System.Net.Http.Formatting.dll">
       <publishTime>12/04/2015 10:46:36</publishTime>
@@ -766,7 +775,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>12/28/2015 12:21:51</publishTime>
     </File>
     <File Include="packages.config">
-      <publishTime>12/28/2015 12:11:37</publishTime>
+      <publishTime>01/29/2016 12:41:33</publishTime>
     </File>
     <File Include="Scripts/bootstrap-datetimepicker.js">
       <publishTime>11/27/2015 15:26:49</publishTime>
@@ -967,7 +976,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/27/2015 10:20:30</publishTime>
     </File>
     <File Include="Views/Account/Info.cshtml">
-      <publishTime>01/22/2016 16:10:52</publishTime>
+      <publishTime>01/29/2016 12:55:50</publishTime>
     </File>
     <File Include="Views/Account/Login.cshtml">
       <publishTime>01/27/2016 22:24:48</publishTime>
@@ -1033,13 +1042,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/27/2015 10:20:31</publishTime>
     </File>
     <File Include="Views/Shared/Error.cshtml">
-      <publishTime>11/27/2015 10:20:30</publishTime>
+      <publishTime>01/29/2016 11:42:48</publishTime>
     </File>
     <File Include="Views/Shared/Lockout.cshtml">
       <publishTime>11/27/2015 10:20:31</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
-      <publishTime>01/27/2016 15:38:34</publishTime>
+      <publishTime>01/28/2016 18:21:24</publishTime>
     </File>
     <File Include="Views/Shared/_Layout_old.cshtml">
       <publishTime>01/19/2016 11:12:10</publishTime>
@@ -1057,7 +1066,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/27/2015 10:20:10</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>01/26/2016 12:16:39</publishTime>
+      <publishTime>01/29/2016 18:02:29</publishTime>
     </File>
   </ItemGroup>
 </Project>

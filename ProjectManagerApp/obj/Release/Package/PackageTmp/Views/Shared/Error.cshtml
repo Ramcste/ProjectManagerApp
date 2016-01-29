@@ -1,9 +1,22 @@
 ﻿@model System.Web.Mvc.HandleErrorInfo
 
+@{ 
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+}
+
 @{
     ViewBag.Title = "Error";
 }
 
-<h1 class="text-danger">Error.</h1>
-<h2 class="text-danger">An error occurred while processing your request.</h2>
+@{
+    if (String.IsNullOrEmpty(ViewBag.errorMessage))
+    {
+        <center><h2 class="text-danger" style="margin-top:30px;">error occurred while processing your request.</h2></center>
+    }
+    else
+    {
+        <center><h2 class="text-danger" style="margin-top:30px;">@ViewBag.errorMessage</h2></center>
+    }
+}
+
 
