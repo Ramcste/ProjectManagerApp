@@ -8,8 +8,10 @@
 <br />
 <h2>Projects Index</h2>
 
-<div id="divLoader" class="modalPopUpBackground loadingCursor" style="display:none; position:absolute;"></div>
-
+<div id="divLoader" class="modalPopUpBackground loadingCursor" style="display:none; position:absolute;">
+    <img src="~/Images/ajax-loader.gif" />
+</div>
+<br />
 <div class="filter">
 @using (Ajax.BeginForm("GetProjectsResultSheetByFilter", "Projects", new AjaxOptions
 {

@@ -89,17 +89,16 @@
 <div id="message"></div>
 <br/>
 
-<br />
+
 
 <div id="tblDeveloperLog">
-    @Html.Partial("_TodaysDeveloperLog",Model)
+  
+        @Html.Partial("_TodaysDeveloperLog", Model)
+    
+  
 </div>
 
 <br/>
-
-<br/>
-
-
 
 
 <script type="text/javascript">
@@ -120,25 +119,21 @@
         });
     });
     $(document).ready(function(){
-    
-   $('#datetimepicker3').datetimepicker({
-       format: 'YYYY-M-D'
+        var dateNow = new Date();
+        $('#datetimepicker3').datetimepicker({
+        
+       format: 'YYYY-M-D',
+       defaultDate:moment(dateNow)
      
         });
           
-        
-        //$('#date').datetimepicker({
-        //            format: 'YYYY-M-D'
-        //        });
+      
     
     });
 
     $(function(){
 
-        //$('#date').datetimepicker({
-        //        format: 'YYYY-M-D'
-        //    });
-
+       
         $('#workendingtime').datetimepicker({
                 format: 'h:mm a'
             });
@@ -186,21 +181,17 @@
         $('#workendingtime').focusout(function () {
             var starttime = parseFloat(ConvertTimeFormat("24", $('#workstartingtime').val()));
             var endtime = parseFloat(ConvertTimeFormat("24", $('#workendingtime').val()));
-
-            console.log("starttime",starttime);
-
-            console.log("endtime",endtime);
-
             var workstime = starttime.toFixed(2).split('.');
             var worketime = endtime.toFixed(2).split('.');
             var shours = parseInt(workstime[0]);
             var sminute = parseInt(workstime[1]);
             var ehours = parseInt(worketime[0]);
-            console.log(worketime[1]);
             var eminute = parseInt(worketime[1]);
           
             var hdiff = ehours - shours;
-            var mdiff = eminute - sminute;
+            var mdiff = eminute - sminute;  
+
+            console.log("starttime: endtime",starttime,endtime);
 
             if (endtime > starttime) {
 
@@ -214,16 +205,17 @@
                 }
 
             }
-            else if (endtime == starttime && mdiff>=0) {
-               var hdiff1 = 0;
-                mdiff = eminute - sminute;
-                $('#duration').val(hdiff1 + ":" + mdiff);
+            if (endtime == starttime) {
+                $('#duration').val('');
+                
             }
 
            
-            else {
+            if(starttime>endtime) {
+                $('#duration').val('');
                 $('#message').html('<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> Work finished time must be greater than work start time!!</div>');
-                $('#duration').val("00" + ":" + "00");
+                
+              
             }
 
         });
@@ -231,21 +223,18 @@
         $('#workstartingtime').focusout(function () {
             var starttime = parseFloat(ConvertTimeFormat("24", $('#workstartingtime').val()));
             var endtime = parseFloat(ConvertTimeFormat("24", $('#workendingtime').val()));
-
-            console.log("starttime", starttime);
-
-            console.log("endtime", endtime);
-
             var workstime = starttime.toFixed(2).split('.');
             var worketime = endtime.toFixed(2).split('.');
             var shours = parseInt(workstime[0]);
             var sminute = parseInt(workstime[1]);
             var ehours = parseInt(worketime[0]);
-            console.log(worketime[1]);
             var eminute = parseInt(worketime[1]);
 
             var hdiff = ehours - shours;
             var mdiff = eminute - sminute;
+         
+
+            console.log("starttime: endtime",starttime,endtime);
 
             if (endtime > starttime) {
                 if (mdiff < 0) {
@@ -259,15 +248,17 @@
             }
 
 
-            else if (endtime == starttime && mdiff >= 0) {
-                var hdiff1 = 0;
-                mdiff = eminute - sminute;
-                $('#duration').val(hdiff1 + ":" + mdiff);
+            if (endtime == starttime) {
+                
+                $('#duration').val('');   
+              
             }
 
-            else {
-                $('#duration').val("00" + ":" + "00");
+         
+            if(starttime>endtime) {
+                         
                 $('#message').html('<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> Work finished time must be greater than work start time!!</div>');
+                $('#duration').val('');
             }
 
         });
@@ -277,7 +268,8 @@
     var count = 0;
 
     $(function () {
-        $('#addbutton').click(function () {      
+        $('#addbutton').click(function () {  
+           
             var description = $('#description').val();
             var name = $('#dropdown option:selected').text();
             var projectid = $("#dropdown option:selected").val();
@@ -305,6 +297,8 @@
 
                     else
                     {
+                        event.stopPropagation();
+
                         var html = new Array();
                         html.push('<logs>');
                         html.push('<LineItem ');
@@ -438,14 +432,12 @@
                 }]
             });  
         
-         ob.stopPropagation();
+         event.stopPropagation();
         }
 
 
     function editlog(logid, description, projectname, duration, workstime, worketime, date, developerid) {
-        
-        console.log(description);
-
+       
         dialogAddItem = new BootstrapDialog({
             title: 'Are you sure you want to edit it?',
             message:
@@ -542,97 +534,92 @@
                 });
 
                 getprojectname();
-              
-                                    
+                                                 
                 $('#editworkstime').focusout(function () {
                     var starttime = parseFloat(ConvertTimeFormat("24", $('#editworkstime').val()));
                     var endtime = parseFloat(ConvertTimeFormat("24", $('#editworketime').val()));
 
-                        console.log("starttime",starttime);
+                    console.log("starttime",starttime);
 
-                        console.log("endtime",endtime);
+                    console.log("endtime",endtime);
 
-                        var workstime = starttime.toFixed(2).split('.');
-                        var worketime = endtime.toFixed(2).split('.');
-                        var shours = parseInt(workstime[0]);
-                        var sminute = parseInt(workstime[1]);
-                        var ehours = parseInt(worketime[0]);
+                    var workstime = starttime.toFixed(2).split('.');
+                    var worketime = endtime.toFixed(2).split('.');
+                    var shours = parseInt(workstime[0]);
+                    var sminute = parseInt(workstime[1]);
+                    var ehours = parseInt(worketime[0]);
                        
-                        var eminute = parseInt(worketime[1]);
+                    var eminute = parseInt(worketime[1]);
           
-                        var hdiff = ehours - shours;
-                        var mdiff = eminute - sminute;
+                    var hdiff = ehours - shours;
+                    var mdiff = eminute - sminute;
 
-                        if (endtime > starttime) {
+                    if (endtime > starttime) {
 
-                            if (mdiff<0) {
-                                mdiff = mdiff + 60;
-                                hdiff = hdiff - 1;
-                                $('#editduration').val(hdiff + ":" + mdiff);
-                            }
-                            else {
-                                $('#editduration').val(hdiff + ":" + mdiff);
-                            }
-
+                        if (mdiff<0) {
+                            mdiff = mdiff + 60;
+                            hdiff = hdiff - 1;
+                            $('#editduration').val(hdiff + ":" + mdiff);
                         }
-                        else if (endtime == starttime && mdiff>=0) {
-                            var hdiff1 = 0;
-                            mdiff = eminute - sminute;
-                            $('#editduration').val(hdiff1 + ":" + mdiff);
-                        }
-
-           
                         else {
-                            
-                            alert("work finished time must be greater than work start time");
-                            $('#editduration').val("00" + ":" + "00");
+                            $('#editduration').val(hdiff + ":" + mdiff);
                         }
 
-                    });
+                    }
+                    if (endtime == starttime) {
+                         
+                        $('#editduration').val('');
+                    }
+                        
+                    if(starttime>endtime) {
+                            
+                        alert("work finished time must be greater than work start time");
+                        $('#editduration').val('');
+                    }
+
+                });
 
                 $('#editworketime').focusout(function () {
                     var starttime = parseFloat(ConvertTimeFormat("24", $('#editworkstime').val()));
                     var endtime = parseFloat(ConvertTimeFormat("24", $('#editworketime').val()));
 
-                        console.log("starttime", starttime);
+                    console.log("starttime", starttime);
 
-                        console.log("endtime", endtime);
+                    console.log("endtime", endtime);
 
-                        var workstime = starttime.toFixed(2).split('.');
-                        var worketime = endtime.toFixed(2).split('.');
-                        var shours = parseInt(workstime[0]);
-                        var sminute = parseInt(workstime[1]);
-                        var ehours = parseInt(worketime[0]);
+                    var workstime = starttime.toFixed(2).split('.');
+                    var worketime = endtime.toFixed(2).split('.');
+                    var shours = parseInt(workstime[0]);
+                    var sminute = parseInt(workstime[1]);
+                    var ehours = parseInt(worketime[0]);
                        
-                        var eminute = parseInt(worketime[1]);
+                    var eminute = parseInt(worketime[1]);
 
-                        var hdiff = ehours - shours;
-                        var mdiff = eminute - sminute;
+                    var hdiff = ehours - shours;
+                    var mdiff = eminute - sminute;
 
-                        if (endtime > starttime) {
-                            if (mdiff < 0) {
-                                mdiff = mdiff + 60;
-                                hdiff = hdiff - 1;
-                                $('#editduration').val(hdiff + ":" + mdiff);
-                            }
-                            else {
-                                $('#editduration').val(hdiff + ":" + mdiff);
-                            }
+                    if (endtime > starttime) {
+                        if (mdiff < 0) {
+                            mdiff = mdiff + 60;
+                            hdiff = hdiff - 1;
+                            $('#editduration').val(hdiff + ":" + mdiff);
                         }
-
-
-                        else if (endtime == starttime && mdiff >= 0) {
-                            var hdiff1 = 0;
-                            mdiff = eminute - sminute;
-                            $('#editduration').val(hdiff1 + ":" + mdiff);
-                        }
-
                         else {
-                            alert("work finished time must be greater than work start time");
-                            $('#editduration').val("00" + ":" + "00");
+                            $('#editduration').val(hdiff + ":" + mdiff);
                         }
+                    }
 
-                    });
+
+                    else if (endtime == starttime) {
+                        $('#editduration').val('');
+                    }
+
+                    else {
+                        alert("work finished time must be greater than work start time");
+                        $('#editduration').val('');
+                    }
+
+                });
                 
            
 
@@ -651,77 +638,78 @@
                     var worketime=$('#editworketime').val();
                     var duration=$('#editduration').val();
 
-                    console.log(duration);
+                    if (description !== "" && duration !== "" && workstime !== "" && worketime !== "" && edate !== "") 
+                    {
+                        var len=0;
+                        var url='/API/Log/GetTodayLogTimeCheck';
+                        $.get(url,{developerid:developerid,starttime:workstime,endtime:worketime,date:date},function(result,status){
+                            console.log(result,status);
+                            len = result.length;
+                        
+                            if(len>1)
+                            {
+                                alert("There is already log saved  for this timeline.So enter correct time line");
+                            }
 
-                    var len=0;
-                    var url='/API/Log/GetTodayLogTimeCheck';
-                    $.get(url,{developerid:developerid,starttime:workstime,endtime:worketime,date:date},function(result,status){
-                        console.log(result,status);
-                        len = result.length;
-                        console.log("length:",len);
-
-                        if(len>1)
-                        {
-                
-                            alert("There is already log saved  for this timeline.So enter correct time line");
-                            // $('#message').html('<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>There is already log saved  for this timeline.So enter correct time line </div>');              
-                            // $('.alert-success').hide();
-                        }
-
-                        else
-                        {
-					
-                            var html = new Array();
-                            html.push('<logs>');
-                            html.push('<LineItem ');
-                            html.push('Id="' + logid + '"');
-                            html.push('D="' + description + '"');
-                            html.push('pr="' + projectid + '"');
-                            html.push('wst="' + workstime + '"');
-                            html.push('wet="' + worketime + '"');
-                            html.push('d="' + duration + '"');
-                            html.push('date="' + edate + '"');
-                            html.push('did="' + developerid + '"');
-                            html.push('></LineItem>');
-                            html.push('</logs>');
-                            console.log(html.join(''));
-                            var editlogXML = html.join(' ');
+                            else
+                            {					                                                     
+                                var html = new Array();
+                                html.push('<logs>');
+                                html.push('<LineItem ');
+                                html.push('Id="' + logid + '"');
+                                html.push('D="' + description + '"');
+                                html.push('pr="' + projectid + '"');
+                                html.push('wst="' + workstime + '"');
+                                html.push('wet="' + worketime + '"');
+                                html.push('d="' + duration + '"');
+                                html.push('date="' + edate + '"');
+                                html.push('did="' + developerid + '"');
+                                html.push('></LineItem>');
+                                html.push('</logs>');
+                                console.log(html.join(''));
+                                var editlogXML = html.join(' ');
                     
-                            var json = '{"editlogXML":' + JSON.stringify(editlogXML) + '}';
-                            console.log(json);
+                                var json = '{"editlogXML":' + JSON.stringify(editlogXML) + '}';
+                                console.log(json);
 
-                            //console.log(json);
-                            $.ajax({
-                                type: 'POST',
-                                url: '/API/Log/GetLogsUpdate',
-                                data: json,
-                                dataType: 'json',
-                                contentType: 'application/json; charset=utf-8',
-                                success: function(data) {
+                                //console.log(json);
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '/API/Log/GetLogsUpdate',
+                                    data: json,
+                                    dataType: 'json',
+                                    contentType: 'application/json; charset=utf-8',
+                                    success: function(data) {
 
-                                    //alert("Data Updated Successfully");
-                                    $('.alert-danger').hide();
+                                        //alert("Data Updated Successfully");
+                                        $('.alert-danger').hide();
                            
-                                    $('#tblDeveloperLog').load('/Home/GetTodaysLog');
+                                        $('#tblDeveloperLog').load('/Home/GetTodaysLog');
 
-                                    $('#message').html('<div class="alert alert-success"> <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> Log Record Updated  Successfully </div>');
+                                        $('#message').html('<div class="alert alert-success"> <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> Log Record Updated  Successfully </div>');
                           
-                                },
-                                error: function() {
+                                    },
+                                    error: function() {
 
-                                    $('.alert-success').hide();
+                                        $('.alert-success').hide();
                           
-                                    $('#message').html('<div class="alert alert-danger"> <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> something went wrong while  saving. try again!!</div>');
-                                }
-                            });
-                        }
+                                        $('#message').html('<div class="alert alert-danger"> <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> something went wrong while  saving. try again!!</div>');
+                                    }
+                                });
+                            }
+                        
+                        });
 
-                    });
+                        dialog.close();
 
-                    dialog.close();
-
+                    }
+                   
+                    else{
+                        alert("Fill out all the blanks before applying for saving");
+                    }
                 }
-            },{
+                   
+                },{
                 cssClass:'btn-warning',
                 label: 'Close',
                 action: function(dialog) {
@@ -732,10 +720,10 @@
         });
 
         dialogAddItem.open();
-
-     
+    
     }
-
+    
+    
 
     //loading projectsname in dropdown
     function getprojectname() {

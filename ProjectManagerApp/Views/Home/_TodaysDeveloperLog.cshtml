@@ -5,71 +5,74 @@
 {
    <h2>Today's Log</h2>
     <br />
-    <table class="table table-striped">
-        <tr>
-            <th></th>
-            <th>@Html.DisplayNameFor(model => model.Description)</th>
-            <th>@Html.DisplayNameFor(model => model.Name)</th>
-            <th>@Html.DisplayNameFor(model => model.WorkStartTime)</th>
-            <th>@Html.DisplayNameFor(model => model.WorkEndTime)</th>
-            <th>@Html.DisplayNameFor(model => model.Duration)</th>
-            <th>@Html.DisplayNameFor(model => model.Date)</th>
-            <th>@Html.DisplayName("Operation")</th>
-
-        </tr>
-
-        @foreach (var item in Model)
-        {
+    <div class="table-responsive">
+        <table class="table table-striped">
             <tr>
-                
-                <td>
-                    @Html.HiddenFor(modelItem => item.Id, new { @class = "logid" })
-                </td>
-
-                <td>
-                    <span class="description">@item.Description</span>
-
-                </td>
-                <td>
-                    <span class="projectname">@item.Name</span>
-
-                </td>
-                <td>
-                    <span class="workstime">@item.WorkStartTime</span>
-
-                </td>
-                <td>
-                    <span class="worketime">@item.WorkEndTime</span>
-
-                </td>
-                <td>
-                    <span class="duration">@item.Duration</span>
-
-                </td>
-                <td>
-                    @{
-                        var val = item.Date.ToShortDateString();
-                    }
-                    <span class="date"> @item.Date.ToShortDateString()</span>
-
-                </td>
-
-                <td>
-
-                    <span style="display:inline;">
-
-                        <input type="button" id="editbutton" onclick="editbuttonclick(this);" value="Edit" />
-                        <input type="button" id="deletebutton" onclick="deletebuttonclick(this);" value="Delete" />
-
-                    </span>
-
-                </td>
+                <th></th>
+                <th>@Html.DisplayNameFor(model => model.Description)</th>
+                <th>@Html.DisplayNameFor(model => model.Name)</th>
+                <th>@Html.DisplayNameFor(model => model.WorkStartTime)</th>
+                <th>@Html.DisplayNameFor(model => model.WorkEndTime)</th>
+                <th>@Html.DisplayNameFor(model => model.Duration)</th>
+                <th>@Html.DisplayNameFor(model => model.Date)</th>
+                <th>@Html.DisplayName("Operation")</th>
 
             </tr>
-        }
 
-    </table>
+            @foreach (var item in Model)
+            {
+                <tr>
 
+                    <td>
+                        @Html.HiddenFor(modelItem => item.Id, new { @class = "logid" })
+                    </td>
+
+                    <td>
+                        <span class="description">@item.Description</span>
+
+                    </td>
+                    <td>
+                        <span class="projectname">@item.Name</span>
+
+                    </td>
+                    <td>
+                        <span class="workstime">@item.WorkStartTime</span>
+
+                    </td>
+                    <td>
+                        <span class="worketime">@item.WorkEndTime</span>
+
+                    </td>
+                    <td>
+                        <span class="duration">@item.Duration</span>
+
+                    </td>
+                    <td>
+                        @{
+                            var val = item.Date.ToShortDateString();
+                        }
+                        <span class="date"> @item.Date.ToShortDateString()</span>
+
+                    </td>
+
+                    <td>
+
+                        <span style="display:inline;">
+
+                            <input type="button" id="editbutton" onclick="editbuttonclick(this);" value="Edit" />
+                            <input type="button" id="deletebutton" onclick="deletebuttonclick(this);" value="Delete" />
+
+                        </span>
+
+                    </td>
+
+                </tr>
+                            }
+
+        </table>
+
+    </div>
+ 
    }
     else
         {

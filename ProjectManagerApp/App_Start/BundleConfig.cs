@@ -54,7 +54,7 @@ namespace ProjectManagerApp
                       "~/Scripts/libs/app.config.js",
                       "~/Scripts/libs/demo.min.js",
                       "~/Scripts/libs/app.min.js",
-                      "~/Scripts/libs/plugins/jquery-touch/jquery.ui.touch-punch.min.js",
+                      //"~/Scripts/libs/plugins/jquery-touch/jquery.ui.touch-punch.min.js",
                       "~/Scripts/libs/notification/SmartNotification.min.js",
                       "~/Scripts/libs/smartwidgets/jarvis.widget.min.js",
                       "~/Scripts/libs/plugins/jquery-validate/jquery.validate.min.js",

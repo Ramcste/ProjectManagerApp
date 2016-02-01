@@ -30,75 +30,78 @@
 
     <br />
 
-<table class="table table-striped">
-    <tr>
-        <th>@Html.DisplayName("Option")</th>
-        <th></th>
-        <th>@Html.DisplayNameFor(model => model.Description)</th>
-        <th>@Html.DisplayNameFor(model => model.Name)</th>
-        <th>@Html.DisplayNameFor(model => model.WorkStartTime)</th>
-        <th>@Html.DisplayNameFor(model => model.WorkEndTime)</th>
-        <th>@Html.DisplayNameFor(model => model.Duration)</th>
-        <th>@Html.DisplayNameFor(model => model.Date)</th>
-        <th>@Html.DisplayName("Operation")</th>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <tr>
+                <th>@Html.DisplayName("Option")</th>
+                <th></th>
+                <th>@Html.DisplayNameFor(model => model.Description)</th>
+                <th>@Html.DisplayNameFor(model => model.Name)</th>
+                <th>@Html.DisplayNameFor(model => model.WorkStartTime)</th>
+                <th>@Html.DisplayNameFor(model => model.WorkEndTime)</th>
+                <th>@Html.DisplayNameFor(model => model.Duration)</th>
+                <th>@Html.DisplayNameFor(model => model.Date)</th>
+                <th>@Html.DisplayName("Operation")</th>
 
-    </tr>
+            </tr>
 
 
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                <input type="checkbox" class="rowcheckbox" onclick="check(this);" />
-            </td>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <input type="checkbox" class="rowcheckbox" onclick="check(this);" />
+                    </td>
 
-            <td>
-                @Html.HiddenFor(modelItem => item.Id, new { @class = "logid" })
-            </td>
+                    <td>
+                        @Html.HiddenFor(modelItem => item.Id, new { @class = "logid" })
+                    </td>
 
-            <td>
-                <span class="description">@item.Description</span>
+                    <td>
+                        <span class="description">@item.Description</span>
 
-            </td>
-            <td>
-                <span class="projectname">@item.Name</span>
+                    </td>
+                    <td>
+                        <span class="projectname">@item.Name</span>
 
-            </td>
-            <td>
-                <span class="workstime">@item.WorkStartTime</span>
+                    </td>
+                    <td>
+                        <span class="workstime">@item.WorkStartTime</span>
 
-            </td>
-            <td>
-                <span class="worketime">@item.WorkEndTime</span>
+                    </td>
+                    <td>
+                        <span class="worketime">@item.WorkEndTime</span>
 
-            </td>
-            <td>
-                <span class="duration">@item.Duration</span>
+                    </td>
+                    <td>
+                        <span class="duration">@item.Duration</span>
 
-            </td>
-            <td>
-                @{
-                    var val = item.Date.ToShortDateString();
-                }
-                <span class="date"> @item.Date.ToShortDateString()</span>
+                    </td>
+                    <td>
+                        @{
+                            var val = item.Date.ToShortDateString();
+                        }
+                        <span class="date"> @item.Date.ToShortDateString()</span>
 
-            </td>
+                    </td>
 
-            <td>
+                    <td>
 
-                <span style="display:inline;">
+                        <span style="display:inline;">
 
-                    <input type="button" id="editbutton" onclick="editbuttonclick(this);" value="Edit" />
-                    <input type="button" id="deletebutton" onclick="deletebuttonclick(this);" value="Delete" />
-                
-                </span>
+                            <input type="button" id="editbutton" onclick="editbuttonclick(this);" value="Edit" />
+                            <input type="button" id="deletebutton" onclick="deletebuttonclick(this);" value="Delete" />
 
-            </td>
+                        </span>
 
-        </tr>
-                    }
+                    </td>
 
-</table>
+                </tr>
+                            }
+
+        </table>
+    </div>
+
 }
 else
 {

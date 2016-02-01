@@ -62,14 +62,6 @@
 
 <br/>
 
-<br/>
-
-
-<br />
-
-
-
-
 
 <script>
    // $('.logrowcheckbox').hide();
@@ -192,7 +184,7 @@
             }]
         }); 
         
-        ob.stopPropagation();
+        event.stopPropagation();
     }
 
   
@@ -329,8 +321,6 @@
                     format:'M/D/YYYY'
                 });
                 getprojectname();
-
-
                                      
                 $('#editworkstime').focusout(function () {
                     var starttime = parseFloat(ConvertTimeFormat("24", $('#editworkstime').val()));
@@ -363,17 +353,16 @@
                         }
 
                     }
-                    else if (endtime == starttime && mdiff>=0) {
-                        var hdiff1 = 0;
-                        mdiff = eminute - sminute;
-                        $('#editduration').val(hdiff1 + ":" + mdiff);
+                    else if (endtime == starttime) {
+                        
+                        $('#editduration').val('');
                     }
 
            
                     else {
                             
                         alert("work finished time must be greater than work start time");
-                        $('#editduration').val("00" + ":" + "00");
+                        $('#editduration').val('');
                     }
 
                 });
@@ -381,10 +370,6 @@
                 $('#editworketime').focusout(function () {
                     var starttime = parseFloat(ConvertTimeFormat("24", $('#editworkstime').val()));
                     var endtime = parseFloat(ConvertTimeFormat("24", $('#editworketime').val()));
-
-                    console.log("starttime", starttime);
-
-                    console.log("endtime", endtime);
 
                     var workstime = starttime.toFixed(2).split('.');
                     var worketime = endtime.toFixed(2).split('.');
@@ -409,15 +394,14 @@
                     }
 
 
-                    else if (endtime == starttime && mdiff >= 0) {
-                        var hdiff1 = 0;
-                        mdiff = eminute - sminute;
-                        $('#editduration').val(hdiff1 + ":" + mdiff);
+                     if (endtime == starttime) {
+                       
+                        $('#editduration').val('');
                     }
 
-                    else {
+                    if(starttime>endtime) {
                         alert("work finished time must be greater than work start time");
-                        $('#editduration').val("00" + ":" + "00");
+                        $('#editduration').val('');
                     }
 
                 });
@@ -438,72 +422,79 @@
                     var worketime=$('#editworketime').val();
                     var duration=$('#editduration').val();
 
+                    if (description !== "" && duration !== "" && workstime !== "" && worketime !== "" && edate !== "") 
+                    {
 
-                    var len=0;
-                    var url='/API/Log/GetTodayLogTimeCheck';
-                    $.get(url,{developerid:developerid,starttime:workstime,endtime:worketime,date:date},function(result,status){
-                        console.log(result,status);
-                        len = result.length;
-                        console.log("length:",len);
+                        var len=0;
+                        var url='/API/Log/GetTodayLogTimeCheck';
+                        $.get(url,{developerid:developerid,starttime:workstime,endtime:worketime,date:date},function(result,status){
+                            console.log(result,status);
+                            len = result.length;
+                            console.log("length:",len);
 
-                        if(len>1)
-                        {
+                            if(len>1)
+                            {
                 
-                            alert("There is already log saved  for this timeline.So enter correct time line");
-                            // $('#message').html('<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>There is already log saved  for this timeline.So enter correct time line </div>');              
-                            // $('.alert-success').hide();
-                        }
+                                alert("There is already log saved  for this timeline.So enter correct time line");
+                            
+                            }
 
-                        else
-                        {
+                            else
+                            {
 					
-                            var html = new Array();
-                            html.push('<logs>');
-                            html.push('<LineItem ');
-                            html.push('Id="' + logid + '"');
-                            html.push('D="' + description + '"');
-                            html.push('pr="' + projectid + '"');
-                            html.push('wst="' + workstime + '"');
-                            html.push('wet="' + worketime + '"');
-                            html.push('d="' + duration + '"');
-                            html.push('date="' + edate + '"');
-                            html.push('did="' + developerid + '"');
-                            html.push('></LineItem>');
-                            html.push('</logs>');
-                            console.log(html.join(''));
-                            var editlogXML = html.join(' ');
+                                var html = new Array();
+                                html.push('<logs>');
+                                html.push('<LineItem ');
+                                html.push('Id="' + logid + '"');
+                                html.push('D="' + description + '"');
+                                html.push('pr="' + projectid + '"');
+                                html.push('wst="' + workstime + '"');
+                                html.push('wet="' + worketime + '"');
+                                html.push('d="' + duration + '"');
+                                html.push('date="' + edate + '"');
+                                html.push('did="' + developerid + '"');
+                                html.push('></LineItem>');
+                                html.push('</logs>');
+                                console.log(html.join(''));
+                                var editlogXML = html.join(' ');
                     
-                            var json = '{"editlogXML":' + JSON.stringify(editlogXML) + '}';
-                            console.log(json);
+                                var json = '{"editlogXML":' + JSON.stringify(editlogXML) + '}';
+                                console.log(json);
 
-                            //console.log(json);
-                            $.ajax({
-                                type: 'POST',
-                                url: '/API/Log/GetLogsUpdate',
-                                data: json,
-                                dataType: 'json',
-                                contentType: 'application/json; charset=utf-8',
-                                success: function(data) {
-                                    $('.alert-danger').hide();
-                                    $('#tblDeveloperLogList').load('/Home/GetDeveloperLogResultSheetByFilter')
-                                    $('#message').html('<div class="alert alert-success"> <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> Log Record Updated  Successfully </div>');
+                                //console.log(json);
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '/API/Log/GetLogsUpdate',
+                                    data: json,
+                                    dataType: 'json',
+                                    contentType: 'application/json; charset=utf-8',
+                                    success: function(data) {
+                                        $('.alert-danger').hide();
+                                        $('#tblDeveloperLogList').load('/Home/GetDeveloperLogResultSheetByFilter')
+                                        $('#message').html('<div class="alert alert-success"> <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> Log Record Updated  Successfully </div>');
                            
                            
-                                },
-                                error: function() {
+                                    },
+                                    error: function() {
 
-                                    $('.alert-success').hide();
+                                        $('.alert-success').hide();
                           
-                                    $('#message').html('<div class="alert alert-danger"> <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> something went wrong while  saving. try again!!</div>');
-                                }
-                            });					
-                        }
+                                        $('#message').html('<div class="alert alert-danger"> <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> something went wrong while  saving. try again!!</div>');
+                                    }
+                                });					
+                            }
 
-                    });
+                        });
 
-                    dialog.close();
+                        dialog.close();
 
+                    }
+                    else{
+                        alert("Fill out all the blanks before applying for saving");
+                    }
                 }
+
+            
             },{
                 cssClass:'btn-warning',
                 label: 'Close',

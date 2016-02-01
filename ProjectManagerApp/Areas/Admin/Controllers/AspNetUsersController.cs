@@ -44,11 +44,11 @@ namespace ProjectManagerApp.Areas.Admin.Controllers
             ViewBag.Roles = daluser.GetRoles(0);
             ViewBag.Users = dal.GetAspNetUsersResultSheet();
 
-            //List<AspNetUser> users = (from user in db.AspNetUsers
-            //                          where user.IsActive == true 
-            //                          && user.IsDeleted == false select user).ToList<AspNetUser>(); 
-
+        
+    
             List<AspNetUser> users = new List<AspNetUser>();
+
+           // users = dal.GetAspNetUsersResultSheetByFilter(0,"","","",0);
 
             return View(users);
         }
@@ -241,11 +241,11 @@ namespace ProjectManagerApp.Areas.Admin.Controllers
 
 
         // for filtering aspnet user
-        public ActionResult GetAspNetUsersResultSheetByFilter(int? developerid, string email, string isActive,string isDeleted,int ?roleid)
+        public ActionResult GetAspNetUsersResultSheetByFilter(int? developerid, string email, string status, string isDeleted,int ?roleid)
 
         {
 
-            var users = dal.GetAspNetUsersResultSheetByFilter(developerid,email,isActive,isDeleted,roleid);
+            var users = dal.GetAspNetUsersResultSheetByFilter(developerid,email, status, isDeleted,roleid);
             return PartialView("_AspNetUsersList",users);
 
         }
