@@ -268,8 +268,9 @@
     var count = 0;
 
     $(function () {
-        $('#addbutton').click(function () {  
-           
+        $('#addbutton').click(function (event) {  
+            
+            event.stopPropagation();
             var description = $('#description').val();
             var name = $('#dropdown option:selected').text();
             var projectid = $("#dropdown option:selected").val();
@@ -281,11 +282,11 @@
          
             if (description !== "" && name !== "" && duration !== "" && workstime !== "" && worketime !== "" && date !== "") 
             {
-                var len=0;
+                
                 var url='/API/Log/GetTodayLogTimeCheck';
                 $.get(url,{developerid:developerid,starttime:workstime,endtime:worketime,date:date},function(result,status){
                     console.log(result,status);
-                    len = result.length;
+                    var len = result.length;
                     console.log("length:",len);
 
                     if(len>0)
@@ -297,9 +298,8 @@
 
                     else
                     {
-                        event.stopPropagation();
-
-                        var html = new Array();
+                        
+                       var html = new Array();
                         html.push('<logs>');
                         html.push('<LineItem ');
                         html.push('Description="' + description + '"');
@@ -322,18 +322,19 @@
                             dataType: 'json',
                             contentType: 'application/json; charset=utf-8',
                             success: function (data) {                
-                                $('.alert-danger').hide();
                                 $('#message').html('<div class="alert alert-success"> <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> Log Record Saved Successfully </div>');
-                          
+                                $('.alert-danger').hide();
+                                reset();
                                 var url='/Home/GetTodaysLog';
                                 $.get(url,function(data){
                                     $('#tblDeveloperLog').html(data);
-                            
+                                    $('.alert-sucess').show();
                                 });
-                                reset();
+                              
                             },
                             error: function () {
                                 $('#message').html('<div class="alert alert-danger">  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> something went wrong while  saving. try again!!</div>');
+                                $('.alert-success').hide();
                             }
                         });
 
@@ -349,7 +350,7 @@
                 $('.alert-success').hide();
             }
          
-       
+  
 
         });
     });
@@ -365,7 +366,7 @@
    
     // for deleting specific log columns from database
     function deletebuttonclick(ob) {
-      
+        event.stopPropagation();
         BootstrapDialog.show({
             title: 'Log Delete',
             message: 'Are you sure you want to delete it?',
@@ -380,8 +381,8 @@
                         console.log("successfully deleted");
                         var url='/Home/GetTodaysLog';
                         $.get(url,function(data){
-                            $('#tblDeveloperLog').html(data);
-                            
+                        $('#tblDeveloperLog').html(data);
+                       
                         });
                         
                     });
@@ -396,6 +397,8 @@
                 }
             }]
         });
+
+    
     }
     
     // for editing specific log columns from database
@@ -431,13 +434,13 @@
                     }
                 }]
             });  
-        
-         event.stopPropagation();
+        ob.stopPropagation();
+       
         }
 
 
     function editlog(logid, description, projectname, duration, workstime, worketime, date, developerid) {
-       
+ 
         dialogAddItem = new BootstrapDialog({
             title: 'Are you sure you want to edit it?',
             message:
@@ -640,12 +643,12 @@
 
                     if (description !== "" && duration !== "" && workstime !== "" && worketime !== "" && edate !== "") 
                     {
-                        var len=0;
+                       
                         var url='/API/Log/GetTodayLogTimeCheck';
                         $.get(url,{developerid:developerid,starttime:workstime,endtime:worketime,date:date},function(result,status){
                             console.log(result,status);
-                            len = result.length;
-                        
+                           var len = result.length;
+                           console.log("len:",len);
                             if(len>1)
                             {
                                 alert("There is already log saved  for this timeline.So enter correct time line");
@@ -720,7 +723,7 @@
         });
 
         dialogAddItem.open();
-    
+       
     }
     
     

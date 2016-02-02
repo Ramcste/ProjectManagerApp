@@ -156,7 +156,7 @@
 
 
             if (endtime > starttime) {
-                //  alert(" endtime is greater");
+               
 
                 $('#Duration').val(hdiff + ":" + mdiff);
 
@@ -173,14 +173,13 @@
             }
 
 
-            else if (endtime == starttime && mdiff >= 0) {
-                var hdiff1 = 0;
-                mdiff = eminute - sminute;
-                $('#Duration').val(hdiff1 + ":" + mdiff);
+            if (endtime == starttime) {
+                
+                $('#Duration').val('');
             }
-            else {
+            if(starttime>endtime) {
                 alert("work finished time must be greater than work start time");
-                $('#Duration').val("00" + ":" + "00");
+                $('#Duration').val('');
             }
 
         });
@@ -215,18 +214,17 @@
                     $('#Duration').val(hdiff + ":" + mdiff);
                 }
 
-                //alert(endtime);
+               
             }
 
 
-            else if (endtime == starttime && mdiff >= 0) {
-                var hdiff1 = 0;
-                mdiff = eminute - sminute;
-                $('#Duration').val(hdiff1 + ":" + mdiff);
+            else if (endtime == starttime) {
+               
+                $('#Duration').val('');
             }
             else {
                 alert("work finished time must be greater than work start time");
-                $('#Duration').val("00" + ":" + "00");
+                $('#Duration').val('');
             }
 
         });

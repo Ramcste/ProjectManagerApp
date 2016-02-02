@@ -125,7 +125,7 @@
 
     // for deleting specific log columns from database
     function deletebuttonclick(ob) {
-
+        event.stopPropagation();
         BootstrapDialog.show({
             title: 'Log Delete',
             message: 'Are you sure you want to delete it?',
@@ -139,7 +139,8 @@
                     $.get(url, { id: logid }, function(data) {
                         console.log("successfully deleted");
                         var url='/Home/GetTodaysLog';
-                        $('#tblDeveloperLogList').load('/Home/GetDeveloperLogResultSheetByFilter')
+                        $('#tblDeveloperLogList').load('/Home/GetDeveloperLogResultSheetByFilter');
+                        $('#message').html('<div class="alert alert-success"> <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> Log Record Deleted Successfully </div>');
                     });
                     
                     dialog.close();                  
@@ -155,7 +156,8 @@
     }
     // for editing specific log columns from database
     function editbuttonclick(ob) {
-  
+        event.stopPropagation();
+     
         BootstrapDialog.show({
             title: 'Log Edit',
             message: 'Are you sure you want to edit it?',
@@ -184,7 +186,7 @@
             }]
         }); 
         
-        event.stopPropagation();
+       
     }
 
   
@@ -425,11 +427,11 @@
                     if (description !== "" && duration !== "" && workstime !== "" && worketime !== "" && edate !== "") 
                     {
 
-                        var len=0;
+                    
                         var url='/API/Log/GetTodayLogTimeCheck';
                         $.get(url,{developerid:developerid,starttime:workstime,endtime:worketime,date:date},function(result,status){
                             console.log(result,status);
-                            len = result.length;
+                            var len = result.length;
                             console.log("length:",len);
 
                             if(len>1)
@@ -470,7 +472,7 @@
                                     contentType: 'application/json; charset=utf-8',
                                     success: function(data) {
                                         $('.alert-danger').hide();
-                                        $('#tblDeveloperLogList').load('/Home/GetDeveloperLogResultSheetByFilter')
+                                        $('#tblDeveloperLogList').load('/Home/GetDeveloperLogResultSheetByFilter');
                                         $('#message').html('<div class="alert alert-success"> <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> Log Record Updated  Successfully </div>');
                            
                            
@@ -573,10 +575,9 @@
                     var developerid = @HttpContext.Current.User.Identity.GetUserId();
                     console.log("selectedlogid 1111:", selectedlogid);
                     $.get(url, { logids: selectedlogid.toString(), developerid: developerid }, function(data) {
-
-                        //alert(data);
                         console.log("success");
-                        location.reload();
+                        $('#tblDeveloperLogList').load('/Home/GetDeveloperLogResultSheetByFilter');
+
                     });
 
                     dialog.close();

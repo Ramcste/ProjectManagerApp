@@ -90,7 +90,6 @@ namespace ProjectManagerApp.Areas.Admin.Controllers
         // GET: Admin/Logs/Create
         public ActionResult Create()
         {
-           // ViewBag.Projects = dal.GetProjectsResultSheet();
             ViewBag.Users = dal.GetAspNetUsersResultSheet();
 
             return View();
