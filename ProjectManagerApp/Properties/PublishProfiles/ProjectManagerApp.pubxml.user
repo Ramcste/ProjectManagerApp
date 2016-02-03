@@ -91,7 +91,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>02/01/2016 15:06:41</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Logs/_LogList.cshtml">
-      <publishTime>02/01/2016 17:56:01</publishTime>
+      <publishTime>02/02/2016 16:51:14</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Logs/_UpdateLog.cshtml">
       <publishTime>02/02/2016 15:46:07</publishTime>
@@ -211,7 +211,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/27/2015 10:20:35</publishTime>
     </File>
     <File Include="bin/ProjectManagerApp.dll">
-      <publishTime>02/02/2016 15:53:46</publishTime>
+      <publishTime>02/03/2016 15:47:59</publishTime>
     </File>
     <File Include="bin/roslyn/csc.exe">
       <publishTime>11/27/2015 10:20:36</publishTime>
@@ -1006,10 +1006,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/27/2015 10:20:10</publishTime>
     </File>
     <File Include="Views/Home/Index.cshtml">
-      <publishTime>02/02/2016 15:40:39</publishTime>
+      <publishTime>02/03/2016 16:39:13</publishTime>
     </File>
     <File Include="Views/Home/Logshistory.cshtml">
-      <publishTime>02/02/2016 15:43:32</publishTime>
+      <publishTime>02/03/2016 16:54:27</publishTime>
     </File>
     <File Include="Views/Home/UsersEdit.cshtml">
       <publishTime>01/27/2016 23:23:43</publishTime>
@@ -1021,7 +1021,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>02/02/2016 10:25:34</publishTime>
     </File>
     <File Include="Views/Home/_TodaysDeveloperLog.cshtml">
-      <publishTime>02/02/2016 10:25:28</publishTime>
+      <publishTime>02/03/2016 14:36:35</publishTime>
     </File>
     <File Include="Views/Manage/AddPhoneNumber.cshtml">
       <publishTime>11/27/2015 10:20:31</publishTime>

@@ -9,8 +9,17 @@
 @Styles.Render("~/Content/bootstrap-dialog-css")
 
 
+
+
 <h2>Logs History </h2>
 
+
+<div id="divLoader" class="modalPopUpBackground loadingCursor" style="display:none; position:absolute;">
+
+    <img src="~/Images/ajax-loader.gif" />
+</div>
+<br />
+<br />
 <div class="filter">
 
 @using (Ajax.BeginForm("GetDeveloperLogResultSheetByFilter", "Home", new AjaxOptions
@@ -78,6 +87,10 @@
         $('#todate').datetimepicker({
             format: 'YYYY-M-D'
         });
+        
+        $('*').dblclick(function(e){
+            e.preventDefault();
+        });
     });
   
  
@@ -125,7 +138,7 @@
 
     // for deleting specific log columns from database
     function deletebuttonclick(ob) {
-        event.stopPropagation();
+      
         BootstrapDialog.show({
             title: 'Log Delete',
             message: 'Are you sure you want to delete it?',
@@ -156,7 +169,7 @@
     }
     // for editing specific log columns from database
     function editbuttonclick(ob) {
-        event.stopPropagation();
+      
      
         BootstrapDialog.show({
             title: 'Log Edit',
@@ -408,6 +421,8 @@
 
                 });
                 
+           
+
 
             },
             draggable: true,
@@ -417,6 +432,45 @@
                 cssClass: 'btn-success',
                 action: function(dialog) {
 
+                    
+                    function startimefortimelinechecking()
+                    {
+                        var starttime = parseFloat(ConvertTimeFormat("24", $('#editworkstime').val()));
+                        var workstime = starttime.toFixed(2).split('.');
+                        var shours = parseInt(workstime[0]);
+                        var sminute = parseInt(workstime[1]);
+
+                        if(sminute==0){
+                            shours=shours+1;
+                            sminute=1;
+                        }
+                        else{
+                            sminute=sminute+1;
+                        }
+
+                        return(shours+":"+sminute);
+        
+                    }
+
+                    function endtimefortimelinechecking(){
+                        var starttime = parseFloat(ConvertTimeFormat("24", $('#editworketime').val()));
+                        var workstime = starttime.toFixed(2).split('.');
+                        var shours = parseInt(workstime[0]);
+                        var sminute = parseInt(workstime[1]);
+
+       
+                        if(sminute==0){
+                            
+                            sminute=59;
+                        }
+                        else{
+                            sminute=sminute-1;
+                        }
+
+                        return(shours+":"+sminute);
+        
+                    }
+
                     var description = $('#editdescription').val();
                     var edate = $('#editdate').val();
                     var projectid = $('#projects option:selected').val();
@@ -424,12 +478,17 @@
                     var worketime=$('#editworketime').val();
                     var duration=$('#editduration').val();
 
+
+                    var startwork=startimefortimelinechecking();
+                    var endwork=endtimefortimelinechecking();
+
+
                     if (description !== "" && duration !== "" && workstime !== "" && worketime !== "" && edate !== "") 
                     {
 
                     
                         var url='/API/Log/GetTodayLogTimeCheck';
-                        $.get(url,{developerid:developerid,starttime:workstime,endtime:worketime,date:date},function(result,status){
+                        $.get(url,{developerid:developerid,starttime:startwork,endtime:endwork,date:date},function(result,status){
                             console.log(result,status);
                             var len = result.length;
                             console.log("length:",len);
@@ -594,6 +653,16 @@
 
     }
 
+
+
+    $(function(){
+   
+        setTimeout(function () {
+            $("#searchbutton").trigger("click");
+            $("#divLoader").addClass("modalPopUpBackground").addClass("loadingCursor");
+        }, 1);
+   
+    });
 
 
 
