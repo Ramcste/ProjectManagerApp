@@ -123,7 +123,7 @@ namespace ProjectManagerApp.Controllers
 
                     else if (UserManager.IsInRole(user.Id, "SuperAdmin"))
                     {
-                        return RedirectToAction("Index", "Projects", new { Area = "Admin" });
+                        return RedirectToAction("Index", "Logs", new { Area = "Admin" });
                     }
 
                     else

@@ -1,5 +1,9 @@
 ﻿@model ProjectManagerApp.Areas.Admin.Models.Log
 
+
+<div id="message">@ViewBag.Message</div>
+<br />
+<br />
 @using (Html.BeginForm(null,null,FormMethod.Post,new { id="frmlog"}))
 {
     @Html.AntiForgeryToken()
@@ -10,10 +14,11 @@
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
         <div class="form-group">
-            @Html.LabelFor(model => model.AspNetUser.UserName, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Developer Name", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
 
                 @Html.DropDownList("DeveloperId", new SelectList(ViewBag.Users, "Id", "UserName"), new { @class = "form-control", id = "dropdown" })
+                @Html.Hidden("DeveloperId")
                 @Html.ValidationMessageFor(model => model.AspNetUser.UserName, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -21,7 +26,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.TextAreaFor(model => model.Description,6,50, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -73,7 +78,7 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save"  class="btn btn-default" />
+                <input type="submit" value="Save" id="btnSave"  class="btn btn-primary" />
             </div>
         </div>
     </div>
@@ -81,10 +86,6 @@
 
 
 <script>
-
-
-
-
 
     // for making editor to take date and time
     $(document).ready(function () {
@@ -178,12 +179,12 @@
                 $('#Duration').val('');
             }
             if(starttime>endtime) {
-                alert("work finished time must be greater than work start time");
+                $('#message').html('<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> Work finished time must be greater than work start time!!</div>');
+              
                 $('#Duration').val('');
             }
 
         });
-
 
         $('#WorkEndTime').focusout(function () {
             var starttime = parseFloat(ConvertTimeFormat("24", $('#WorkStartTime').val()));
@@ -223,7 +224,8 @@
                 $('#Duration').val('');
             }
             else {
-                alert("work finished time must be greater than work start time");
+                $('#message').html('<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> Work finished time must be greater than work start time!!</div>');
+
                 $('#Duration').val('');
             }
 
@@ -282,7 +284,7 @@
             },
 
             Duration: {
-                required: 'Please enter time needed to complete the task'
+                required: 'Please correct the work start time and work end time to get duration'
             },
             Date: {
                 required: 'Please enter date'
@@ -354,8 +356,12 @@
 
         });
 
-     
-    
+
+
+
     });
+
+
+    
 </script>
 

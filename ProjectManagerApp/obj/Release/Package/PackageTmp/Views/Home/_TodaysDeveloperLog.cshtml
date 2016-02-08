@@ -2,16 +2,21 @@
 @model IEnumerable<ProjectManagerApp.Models.DAL.Output.LogFiltered>
 
 
+@{
+
+    int totalhour = 0, totalminutes = 0;
+}
+
 @if (Model.Count() > 0)
 {
    <h2>Today's Log</h2>
     <br />
     <div class="table-responsive">
-        <table class="table table-striped">
+        <table class="table table-striped table-hover table-bordered">
             <tr>
-                <th></th>
+          
                 <th>@Html.DisplayNameFor(model => model.Description)</th>
-                <th>@Html.DisplayNameFor(model => model.Name)</th>
+                <th>@Html.DisplayName("Project Name")</th>
                 <th>@Html.DisplayNameFor(model => model.WorkStartTime)</th>
                 <th>@Html.DisplayNameFor(model => model.WorkEndTime)</th>
                 <th>@Html.DisplayNameFor(model => model.Duration)</th>
@@ -24,11 +29,8 @@
             {
                 <tr>
 
-                    <td>
-                        @Html.HiddenFor(modelItem => item.Id, new { @class = "logid" })
-                    </td>
-
                     <td class="td-description">
+                        @Html.HiddenFor(modelItem => item.Id, new { @class = "logid" })
                         <span class="description">@item.Description</span>
 
                     </td>
@@ -60,15 +62,58 @@
 
                         <span style="display:inline;">
 
-                            <input type="button" id="editbutton" onclick="editbutton(this);" value="Edit" />
-                            <input type="button" id="deletebutton" onclick="deletebutton(this);" value="Delete" />
+                            <button type="button" id="editbutton" onclick="editbutton(this);" title="Edit"><i class="fa fa-pencil-square-o"></i></button>
+                            <button type="button" id="deletebutton" onclick="deletebutton(this);" title="Delete" > <i class="fa fa-trash-o"></i></button>
 
                         </span>
 
                     </td>
 
+                    @{
+
+                        string[] totalduration;
+                        string duration;
+
+                        duration = item.Duration;
+
+                        totalduration = duration.Split(':');
+                        int hour = int.Parse(totalduration[0]);
+                        int len = totalduration[1].Length;
+                        int min = int.Parse(totalduration[1]);
+
+
+                        totalminutes += min;
+                        totalhour += hour;
+
+                        if (totalminutes > 60)
+                        {
+                            int h = totalminutes / 60;
+                            totalhour += h;
+                            totalminutes = totalminutes % 60;
+                        }
+
+
+                    }
+
+
+
+
+
                 </tr>
                             }
+
+            <tr>
+
+
+                <td></td>
+                <td></td>
+                <td colspan="2">Total Duration</td>
+                <td>@totalhour:@totalminutes</td>
+                <td></td>
+                <td></td>
+
+
+            </tr>
 
         </table>
 

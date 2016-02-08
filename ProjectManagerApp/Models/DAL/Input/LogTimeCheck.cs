@@ -28,7 +28,7 @@ namespace ProjectManagerApp.Models.DAL.Input
         [StoredProcAttributes.Name("Date")]
         [StoredProcAttributes.Direction(System.Data.ParameterDirection.Input)]
         [StoredProcAttributes.ParameterType(System.Data.SqlDbType.Date)]
-        public DateTime Date { get; set; }
+        public string Date { get; set; }
       
     }
 }

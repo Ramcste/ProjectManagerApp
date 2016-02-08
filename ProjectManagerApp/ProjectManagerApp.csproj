@@ -201,7 +201,6 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
-    <Compile Include="Areas\Admin\Controllers\AspNetRolesController.cs" />
     <Compile Include="Areas\Admin\Controllers\AspNetUsersController.cs" />
     <Compile Include="Areas\Admin\Controllers\LogsController.cs" />
     <Compile Include="Areas\Admin\Controllers\ProjectsController.cs" />
@@ -503,13 +502,6 @@
     <Content Include="Areas\Admin\Views\Logs\_UpdateLog.cshtml" />
     <Content Include="Areas\Admin\Views\AspNetUsers\_AspNetUsersList.cshtml" />
     <Content Include="Areas\Admin\Views\AspNetUsers\_UpdateAspNetUsers.cshtml" />
-    <Content Include="Areas\Admin\Views\AspNetRoles\Create.cshtml" />
-    <Content Include="Areas\Admin\Views\AspNetRoles\Delete.cshtml" />
-    <Content Include="Areas\Admin\Views\AspNetRoles\Details.cshtml" />
-    <Content Include="Areas\Admin\Views\AspNetRoles\Edit.cshtml" />
-    <Content Include="Areas\Admin\Views\AspNetRoles\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\AspNetRoles\_AspNetRolesList.cshtml" />
-    <Content Include="Areas\Admin\Views\AspNetRoles\_UpdateAspNetRoles.cshtml" />
     <Content Include="Areas\Admin\Views\Projects\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Projects\Delete.cshtml" />
     <Content Include="Areas\Admin\Views\Projects\Details.cshtml" />

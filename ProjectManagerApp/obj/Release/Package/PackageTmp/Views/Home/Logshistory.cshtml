@@ -11,7 +11,6 @@
 
 
 
-<h2>Logs History </h2>
 
 
 <div id="divLoader" class="modalPopUpBackground loadingCursor" style="display:none; position:absolute;">
@@ -20,6 +19,9 @@
 </div>
 <br />
 <br />
+<h2>Logs History </h2>
+<br />
+
 <div class="filter">
 
 @using (Ajax.BeginForm("GetDeveloperLogResultSheetByFilter", "Home", new AjaxOptions
@@ -47,7 +49,7 @@
         </div>
         <div class="col-md-2">
             <div class="form-group">
-                <input type="submit" value="Search" id="searchbutton" class="btn btn-default" onclick="$(this.form).submit();" />
+                <input type="submit" value="Search" id="searchbutton" class="btn btn-primary" onclick="$(this.form).submit();" />
             </div>
         </div>
 
@@ -55,7 +57,6 @@
 
 }
 </div>
-
 
 <br/>
 <div id="message"></div>
@@ -290,7 +291,7 @@
                     '<div class="row">' +
                     '<div class="col-md-2">Duration</div>'+
                     '<div class="col-md-3">' +
-                    '<input type="text" class="form-control" value="' + duration + '" id="editduration" />' +
+                    '<input type="text" class="form-control" value="' + duration + '" id="editduration" readonly="readonly"  />' +
                     '</div>' +
                      '<div class="col-md-2">Date</div>'+
                     '<div class="col-md-5">' +
@@ -376,7 +377,7 @@
            
                     else {
                             
-                        alert("work finished time must be greater than work start time");
+                     
                         $('#editduration').val('');
                     }
 
@@ -415,7 +416,7 @@
                     }
 
                     if(starttime>endtime) {
-                        alert("work finished time must be greater than work start time");
+                      
                         $('#editduration').val('');
                     }
 
@@ -433,43 +434,7 @@
                 action: function(dialog) {
 
                     
-                    function startimefortimelinechecking()
-                    {
-                        var starttime = parseFloat(ConvertTimeFormat("24", $('#editworkstime').val()));
-                        var workstime = starttime.toFixed(2).split('.');
-                        var shours = parseInt(workstime[0]);
-                        var sminute = parseInt(workstime[1]);
-
-                        if(sminute==0){
-                            shours=shours+1;
-                            sminute=1;
-                        }
-                        else{
-                            sminute=sminute+1;
-                        }
-
-                        return(shours+":"+sminute);
-        
-                    }
-
-                    function endtimefortimelinechecking(){
-                        var starttime = parseFloat(ConvertTimeFormat("24", $('#editworketime').val()));
-                        var workstime = starttime.toFixed(2).split('.');
-                        var shours = parseInt(workstime[0]);
-                        var sminute = parseInt(workstime[1]);
-
-       
-                        if(sminute==0){
-                            
-                            sminute=59;
-                        }
-                        else{
-                            sminute=sminute-1;
-                        }
-
-                        return(shours+":"+sminute);
-        
-                    }
+                  
 
                     var description = $('#editdescription').val();
                     var edate = $('#editdate').val();
@@ -477,26 +442,22 @@
                     var workstime=$('#editworkstime').val();
                     var worketime=$('#editworketime').val();
                     var duration=$('#editduration').val();
-
-
-                    var startwork=startimefortimelinechecking();
-                    var endwork=endtimefortimelinechecking();
-
+                
+                
 
                     if (description !== "" && duration !== "" && workstime !== "" && worketime !== "" && edate !== "") 
                     {
 
                     
                         var url='/API/Log/GetTodayLogTimeCheck';
-                        $.get(url,{developerid:developerid,starttime:startwork,endtime:endwork,date:date},function(result,status){
+                        $.get(url,{developerid:developerid,starttime:workstime,endtime:worketime,date:date},function(result,status){
                             console.log(result,status);
                             var len = result.length;
                             console.log("length:",len);
 
                             if(len>1)
                             {
-                
-                                alert("There is already log saved  for this timeline.So enter correct time line");
+                               alert("There is already log saved  for this timeline.So enter correct time line");
                             
                             }
 
@@ -548,6 +509,11 @@
                         });
 
                         dialog.close();
+
+                    }
+
+                    else if(duration==""){
+                        alert("Please enter correct timeline before saving(Work start time should be less than work end time).")
 
                     }
                     else{
@@ -670,28 +636,6 @@
 
 
 
-<style>
-    .logtable{
-        border: 1px solid #666;   
-        width: 100%;
-    }
-    td {
-        background: #f8f8f8; 
-        font-weight: bold;    
-        padding: 2px;
-    }
 
-      thead {
-    background-color: #4CAF50;
-    height:50px;
-    color: black;
-}
-
- .highlight {
-         background-color: red;
-     }
-
-      
-</style>
 
 

@@ -1,7 +1,5 @@
 ﻿@model ProjectManagerApp.Areas.Admin.Models.Project
 
-
-
 @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "frmProjects" }))
 {
     @Html.AntiForgeryToken()
@@ -72,7 +70,7 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Save" id="btnSave" class="btn btn-primary" />
             </div>
         </div>
     </div>
@@ -149,7 +147,5 @@
             }
         });
     };
-
-
 </script>
 

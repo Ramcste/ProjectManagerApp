@@ -1,8 +1,6 @@
 ﻿@model ProjectManagerApp.Models.RegisterViewModel
 @using ProjectManagerApp.Areas.Admin.DAL
 
-
-
 @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "frmUser"}))
 {
     @Html.AntiForgeryToken()
@@ -58,10 +56,11 @@
             @Html.LabelFor(model => model.IsActive, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
 
-                @Html.DropDownList("status", new SelectList(new List<Object> {
-                                                                                    new { value="True", text="True"},
-                                                                                    new { value="False", text="False" }
-                                                                                        }, "value", "text"), new { @class = "form-control" })
+                @Html.DropDownListFor(model=>model.IsActive, new SelectList(new List<Object> {
+                                                                        new { value = "True", text = "True" },
+                                                                        new { value = "False", text = "False" }
+                                                                            },"value", "text"), new { @class = "form-control" })
+
                 @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -70,8 +69,8 @@
             @Html.LabelFor(model => model.IsDeleted, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
              
-                   @Html.DropDownList("IsDeleted", new SelectList(new List<Object> {   new { value="False", text="False" },
-                                                                                       new { value="True", text="True"}
+                   @Html.DropDownListFor(model=>model.IsDeleted, new SelectList(new List<Object> {   new { value = "False", text = "False" },
+                                                                                                     new { value = "True", text = "True"}
                                                                                           }, "value", "text"), new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.IsDeleted, "", new { @class = "text-danger" })
             </div>
@@ -145,7 +144,7 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </div>
     

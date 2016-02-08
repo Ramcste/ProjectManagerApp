@@ -3,11 +3,11 @@
 
 @{
     ViewBag.Title = "Edit";
-}
+} 
 
-@Scripts.Render("~/bundles/datetimepicker")
 
- 
+<br />
+
 
 <h2>Log Edit</h2>
 
@@ -16,9 +16,13 @@
 </div>
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink(" ", "Index", new { controller = "Logs" }, new { @class = "fa fa-backward", title = "Back to List" })
 </div>
 
 <script>
-    $("#DeveloperId").attr("disabled", "disabled").parent().addClass("state-disabled");
+    $('#dropdown').attr("disabled", "disabled").parent().addClass("state-disabled");
+
+   
+   
+
 </script>

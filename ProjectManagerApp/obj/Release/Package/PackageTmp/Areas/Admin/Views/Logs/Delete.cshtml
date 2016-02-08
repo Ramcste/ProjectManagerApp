@@ -65,7 +65,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.AspNetUser.UserName)
+            @Html.DisplayName("Developer Name")
         </dt>
 
         <dd>
@@ -78,8 +78,8 @@
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            <input type="submit" value="Delete" class="btn btn-primary" /> |
+            @Html.ActionLink(" ", "Index", new { controller = "Logs" }, new { @class = "fa fa-backward", title = "Back to List" })
         </div>
     }
 </div>

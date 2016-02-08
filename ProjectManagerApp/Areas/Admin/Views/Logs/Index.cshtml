@@ -5,13 +5,15 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
-
-<div id="divLoader" class="modalPopUpBackground loadingCursor" style="display:none; position:absolute;">
+<div id="divLoader" class="modalPopUpBackground loadingCursor">
 
     <img src="~/Images/ajax-loader.gif" />
 
 </div>
+<br />
+<br />
+<h2>Index</h2>
+<br />
 <br />
 <div class="filter">
 
@@ -104,7 +106,7 @@
             </div>
 
             <div class="col-md-1">
-                <input type="submit" value="Search" id="searchbutton" class="btn btn-default" onclick="saveFilterValues();" />
+                <input type="submit" value="Search" id="searchbutton" class="btn btn-primary" onclick="saveFilterValues();" />
             </div>
 
         </div>
@@ -115,7 +117,7 @@
 <br />
 
 <div class="row">
-    <p class="form-group">@Html.ActionLink("Create New", "Create") </p>
+    <p class="form-group">@Html.ActionLink("Create New", "Create", new { @class="btncreate"}) </p>
 
 </div>
 
@@ -153,8 +155,8 @@
             format: 'M/D/YYYY'
         });
 
-
         $('#tblLogsList').hide();
+
     });
 
 

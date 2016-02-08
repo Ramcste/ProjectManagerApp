@@ -93,7 +93,7 @@ namespace ProjectManagerApp.Models
         [Display(Name = "Address")]
         public string Address { get; set; }
 
-        [Required]
+        ////[Required]
         [Display(Name = "PhoneNumber 2")]
         [DataType(DataType.PhoneNumber, ErrorMessage = "Please enter a second valid phone number")]
         public string PhoneNumber2 { get; set; }

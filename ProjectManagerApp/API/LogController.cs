@@ -124,13 +124,14 @@ namespace ProjectManagerApp.API
 
         [HttpGet]
         [Route("API/Log/GetTodayLogTimeCheck")]
-        public JsonResult<List<LogFiltered>> GetTodayLogTimeCheck(int developerid, DateTime starttime, DateTime endtime,DateTime date)
+        public JsonResult<List<LogFiltered>> GetTodayLogTimeCheck(int developerid, string starttime, string endtime,string date)
         {
+            
+            string starttime1 = (DateTime.Parse(starttime).AddMinutes(1)).ToString("t");
+            string endtime1 = (DateTime.Parse(endtime).AddMinutes(-1)).ToString("t");
+        
 
-            string starttime1 = starttime.ToString("t");
-            string endtime1 = endtime.ToString("t");
-
-            var logs = dal.GetLogTimeCheckToday(developerid,starttime1,endtime1,date.Date);
+            var logs = dal.GetLogTimeCheckToday(developerid,starttime1,endtime1,date);
 
                 return Json(logs);
             }

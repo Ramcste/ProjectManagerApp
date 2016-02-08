@@ -30,7 +30,9 @@ namespace ProjectManagerApp.Areas.Admin.Controllers
             ViewBag.Users = dal.GetAspNetUsersResultSheet();
             ViewBag.Projects = dal.GetProjectsResultSheet();
 
-            var logs = dal.GetLogResultSheetByFilter(0,0,"",null,null).ToList<LogFiltered>();
+            List<LogFiltered> logs = new List<LogFiltered>();
+
+          // var logs = dal.GetLogResultSheetByFilter(0,0,"",null,null).ToList<LogFiltered>();
            
             ViewBag.Messsage = "Please select developer name or project name to view the log result sheet";
 
@@ -104,18 +106,28 @@ namespace ProjectManagerApp.Areas.Admin.Controllers
         {
                     
             ViewBag.Users = dal.GetAspNetUsersResultSheet();
-         
+            int developerid = log.DeveloperId;
+            string starttime = (DateTime.Parse(log.WorkStartTime).AddMinutes(1)).ToString("t");
+            string endtime = (DateTime.Parse(log.WorkEndTime).AddMinutes(-1)).ToString("t");
+            string date = log.Date.ToString("yyyy/M/d");
+            List<LogFiltered> logs = dal.GetLogTimeCheckToday(developerid,starttime,endtime,date);
 
-            if (ModelState.IsValid)
+            if (logs.Count > 0)
+            {
+               
+                ViewBag.Message = "There is log already for this timeline so enter correct timeline";
+                
+            }
+            else
             {
                 db.Logs.Add(log);
                 db.SaveChanges();
                 return RedirectToAction("Index");
+                
             }
-
           
 
-            return View(log);
+            return View();
         }
 
         // GET: Admin/Logs/Edit/5
@@ -150,13 +162,26 @@ namespace ProjectManagerApp.Areas.Admin.Controllers
             ViewBag.Projects = dal.GetProjectsDeveloperResultSheet(log.DeveloperId);
             ViewBag.Users = dal.GetAspNetUsersResultSheet();
 
-            if (ModelState.IsValid)
+
+            int developerid = log.DeveloperId;
+            string starttime = (DateTime.Parse(log.WorkStartTime).AddMinutes(1)).ToString("t");
+            string endtime = (DateTime.Parse(log.WorkEndTime).AddMinutes(-1)).ToString("t");
+            string date = log.Date.ToString("yyyy/M/d");
+            var logs = dal.GetLogTimeCheckToday(developerid,starttime,endtime,date);
+
+            if (logs.Count > 1)
             {
+                ViewBag.Message = "There is log already for this timeline so enter correct timeline";
+            }
+            else
+            {
+                log.DeveloperId = log.DeveloperId;
+
                 db.Entry(log).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
+              
             }
-           
             return View(log);
         }
 

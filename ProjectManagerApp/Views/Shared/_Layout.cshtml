@@ -16,10 +16,7 @@
     @Styles.Render("~/Content/css")
     @Styles.Render("~/Content/Site")
     @Styles.Render("~/Content/bootstrap-datetimepicker")
-  
-
-    @*<link href="~/Content/css/Site.css" rel="stylesheet" />*@
-    
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
     
 
     @Scripts.Render("~/bundles/jquery")
@@ -173,7 +170,7 @@
                                 <li><a id="menuProjects" href='@(Url.Action("Index", "Projects", new { Area="Admin" }))'><i class="fa fa-lg fa-fw fa-reorder"></i> <span class="menu-item-parent">Projects List</span></a></li>
                                 <li><a id="menuLogs" href='@(Url.Action("Index", "Logs", new { Area="Admin" }))'><i class="fa fa-lg fa-fw fa-cutlery"></i> <span class="menu-item-parent">Logs List</span></a></li>
                                 <li><a id="menuUsers" href='@(Url.Action("Index", "AspNetUsers", new { Area="Admin" }))'><i class="fa fa-lg fa-fw fa-reorder"></i> <span class="menu-item-parent">User List</span></a></li>
-                                <li><a id="menuRoles" href='@(Url.Action("Index", "AspNetRoles", new { Area="Admin" }))'><i class="fa fa-lg fa-fw fa-cutlery"></i> <span class="menu-item-parent">Role List</span></a></li>
+                             
                             </ul>
                         </li>
 

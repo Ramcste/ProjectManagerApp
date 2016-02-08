@@ -22,7 +22,10 @@ namespace ProjectManagerApp.Areas.Admin.Controllers
         public ActionResult Index()
         {
             ViewBag.Projects = dal.GetProjectsResultSheet();
-            return View(db.Projects.ToList());
+
+            List<Project> projects = new List<Project>();
+
+            return View(projects);
         }
 
         // GET: Admin/Projects/Details/5

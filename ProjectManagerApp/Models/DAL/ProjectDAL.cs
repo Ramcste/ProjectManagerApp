@@ -337,7 +337,7 @@ namespace ProjectManagerApp.Models.DAL
         // for checking if the log exists it or not before saving log
 
 
-        public List<LogFiltered> GetLogTimeCheckToday(int developerid,string starttime,string endtime,DateTime date)
+        public List<LogFiltered> GetLogTimeCheckToday(int developerid,string starttime,string endtime,string date)
         {
             LogTimeCheck inputparams = new LogTimeCheck
             {

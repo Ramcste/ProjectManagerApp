@@ -5,19 +5,16 @@
 }
 
 
-
-
-
-<h2>User Index</h2>
-
-<div id="divLoader" class="modalPopUpBackground loadingCursor" style="display:none; position:absolute;">
+    <div id="divLoader" class="modalPopUpBackground loadingCursor">
     <img src="~/Images/ajax-loader.gif" />
 </div>
+    <br />
+    <br />
+    <br />
+    <h2>User Index</h2>
+    <div class="filter">
 
-<br />
-<div class="filter">
-
-@using (Ajax.BeginForm("GetAspNetUsersResultSheetByFilter", "AspNetUsers", new AjaxOptions
+        @using (Ajax.BeginForm("GetAspNetUsersResultSheetByFilter", "AspNetUsers", new AjaxOptions
 {
     HttpMethod = "GET",
     InsertionMode = InsertionMode.Replace,
@@ -25,97 +22,98 @@
     LoadingElementId = "divLoader"
 }))
 {
-    <div class="row">
-
-        <div class="col-md-5">
             <div class="row">
-                <div class="col-md-2">
-                    <p>Developer</p>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        @Html.DropDownList("developerid", new SelectList(ViewBag.Users, "Id", "UserName"), "Select Name", new { @class = "form-control" })
-                    </div>
-                </div>
 
-                <div class="col-md-1">
-                    <p>Email</p>
-                </div>
                 <div class="col-md-5">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <p>Developer</p>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                @Html.DropDownList("developerid", new SelectList(ViewBag.Users, "Id", "UserName"), "Select Name", new { @class = "form-control" })
+                            </div>
+                        </div>
 
-                    <div class="form-group">
-                        @Html.Editor("email", new { htmlAttributes = new { @class = "form-control", id = "email" } })
+                        <div class="col-md-1">
+                            <p>Email</p>
+                        </div>
+                        <div class="col-md-5">
+
+                            <div class="form-group">
+                                @Html.Editor("email", new { htmlAttributes = new { @class = "form-control", id = "email" } })
+                            </div>
+
+
+
+                        </div>
+
                     </div>
-
-
-
                 </div>
 
-            </div>
-        </div>
 
+                <div class="col-md-6">
 
-        <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-md-1">
+                            <p>Active</p>
+                        </div>
 
-            <div class="row">
-                <div class="col-md-1">
-                    <p>Active</p>
-                </div>
-
-                <div class="col-md-3">
-                    <div class="form-group">
-                        @Html.DropDownList("status", new SelectList(new List<Object> {
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                @Html.DropDownList("status", new SelectList(new List<Object> {
                                                                       new { value = "True", text = "True" },
                                                                       new { value = "False", text = "False" } }, "value", "text" ), "All", new { @class = "form-control" })
-                    </div>
-                </div>
+                            </div>
+                        </div>
 
-                <div class="col-md-1">
-                    <p>Deleted</p>
-                </div>
+                        <div class="col-md-1">
+                            <p>Deleted</p>
+                        </div>
 
-                <div class="col-md-3">
-                    <div class="form-group">
-                        @Html.DropDownList("isDeleted", new SelectList(new List<Object> {
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                @Html.DropDownList("isDeleted", new SelectList(new List<Object> {
                                                                        new { value = "True", text = "True" },
                                                                        new { value = "False",text = "False" } }, "value", "text" ), "All", new { @class = "form-control" })
+                            </div>
+                        </div>
+
+                        <div class="col-md-1">
+                            <p>Role</p>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                @Html.DropDownList("roleid", new SelectList(ViewBag.Roles, "Id","Name"), "All", new { @class = "form-control" })
+                            </div>
+
+                        </div>
+
                     </div>
+
                 </div>
+
 
                 <div class="col-md-1">
-                    <p>Role</p>
-                </div>
-                <div class="col-md-3">
-                    <div class="form-group">
-                        @Html.DropDownList("roleid", new SelectList(ViewBag.Roles, "Id","Name"), "All", new { @class = "form-control" })
-                    </div>
-
+                    <input type="submit" value="Search" id="btnSearch" class="btn btn-primary" onclick="saveFilterValues();" />
                 </div>
 
             </div>
-
-        </div>
-
-
-        <div class="col-md-1">
-            <input type="submit" value="Search" id="btnSearch" class="btn btn-default"  onclick="saveFilterValues();"/>
-        </div>
-
-    </div>
 }
 
 
     </div>
-<br />
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+    <br />
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
 
-<br />
+    <br />
 
-<div id="tblAspNetUsers">
-    @Html.Partial("_AspNetUsersList",Model)
-</div>
+    <div id="tblAspNetUsers">
+        @Html.Partial("_AspNetUsersList",Model)
+    </div>
+
 
 
 
