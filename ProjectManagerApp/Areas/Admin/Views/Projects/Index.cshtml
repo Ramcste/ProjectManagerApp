@@ -70,7 +70,8 @@
    
     <div class="row">
         <p>
-            @Html.ActionLink("Create New", "Create")
+            @Html.ActionLink(" ", "Create", new { controller = "Projects"}, new { @class = "fa fa-plus-square-o", title = "Create New Projects", id = "btncreate" }) 
+            
         </p>
     </div>
 
@@ -93,6 +94,7 @@
      
         $("#divLoader").removeClass("modalPopUpBackground").removeClass("loadingCursor");
         setTimeout(function () {
+            $('#btncreate').click();
             $("#btnSearch").trigger("click");
             $("#divLoader").addClass("modalPopUpBackground").addClass("loadingCursor");
         }, 1);
@@ -106,4 +108,18 @@
     };
 
     loadFilterValues();
+
+
+    $(function () {
+        $('#btncreate').click(function () {
+
+            $('#divLoader').show();
+            setTimeout(function () {
+
+            }, 1);
+
+        })
+
+    })
+
 </script>

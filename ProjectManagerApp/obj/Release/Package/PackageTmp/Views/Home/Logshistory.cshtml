@@ -1,5 +1,5 @@
 ﻿@using Microsoft.AspNet.Identity
-@model List<ProjectManagerApp.Models.DAL.Output.LogFiltered>
+@model List<ProjectManagerApp.Models.DAL.Output.LogListByDate>
 
 @{
     ViewBag.Title = "Logshistory";
@@ -7,10 +7,6 @@
 }
 
 @Styles.Render("~/Content/bootstrap-dialog-css")
-
-
-
-
 
 
 <div id="divLoader" class="modalPopUpBackground loadingCursor" style="display:none; position:absolute;">
@@ -66,12 +62,9 @@
 <div id="tblDeveloperLogList">
     @Html.Partial("_DeveloperLogList")
 
-    
-
 </div>
 
 <br/>
-
 
 <script>
    // $('.logrowcheckbox').hide();
@@ -187,9 +180,10 @@
                     duration = $(ob).closest("tr").find(".duration").text();
                     workstime = $(ob).closest("tr").find(".workstime").text();
                     worketime = $(ob).closest("tr").find(".worketime").text();
-                    date = $(ob).closest("tr").find(".date").text();
+                    date = $(ob).closest("tr").find(".date").val();
                     dialog.close();
                     editlog(logid, description, projectname, duration, workstime, worketime, date, developerid);
+                   
                 }
             }, {
                 cssClass:'btn-warning',

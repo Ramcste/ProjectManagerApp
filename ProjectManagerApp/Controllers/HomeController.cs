@@ -14,6 +14,7 @@ using ProjectManagerApp.Areas.Admin.Models;
 using System.Net;
 using Microsoft.AspNet.Identity.Owin;
 using System.Threading.Tasks;
+using ProjectManagerApp.API;
 
 namespace ProjectManagerApp.Controllers
 {
@@ -57,7 +58,9 @@ namespace ProjectManagerApp.Controllers
 
             ViewBag.Projects = dal.GetProjectsDeveloperResultSheet(developerid);
 
-            var logs = new ProjectDal().GetDeveloperLogResulSheet(developerid, 0, null, null);
+            // var logs = new ProjectDal().GetDeveloperLogResulSheet(developerid, 0, null, null);
+
+            List<LogListByDate> logs = new LogController().SearchLog(developerid, 0, null, null);
 
             return View(logs);
         }
@@ -91,7 +94,9 @@ namespace ProjectManagerApp.Controllers
             int developerId = User.Identity.GetUserId<int>();
 
 
-            var logs = dal.GetDeveloperLogResulSheet(developerId, projectId, fromdate, todate);
+            //var logs = dal.GetDeveloperLogResulSheet(developerId, projectId, fromdate, todate);
+
+            List<LogListByDate> logs = new LogController().SearchLog(developerId, projectId, fromdate, todate);
 
             return PartialView("_DeveloperLogList", logs);
         }

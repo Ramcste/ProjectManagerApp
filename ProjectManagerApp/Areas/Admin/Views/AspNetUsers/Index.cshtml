@@ -105,7 +105,8 @@
     </div>
     <br />
     <p>
-        @Html.ActionLink("Create New", "Create")
+        @Html.ActionLink(" ", "Create", new { controller = "AspNetUsers"}, new { @class = "fa fa-user-plus", title = "Create New User", id = "btncreate" }) 
+       
     </p>
 
     <br />
@@ -190,6 +191,14 @@
    
     loadFilterValues();
 
+    $(function () {
+        $('#btncreate').click(function () {
+            $('#divLoader').show();
+            setTimeout(function () {
+
+            }, 1);
+        });
+    });
   
 
 </script>

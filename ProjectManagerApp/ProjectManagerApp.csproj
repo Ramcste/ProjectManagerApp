@@ -296,6 +296,7 @@
     <Compile Include="Models\DAL\Output\LogFiltered.cs" />
     <Compile Include="Models\DAL\Output\Loghistory.cs" />
     <Compile Include="Models\DAL\Output\LogHistoryByDeveloperId.cs" />
+    <Compile Include="Models\DAL\Output\LogListByDate.cs" />
     <Compile Include="Models\DAL\Output\LogResultSheetByOption.cs" />
     <Compile Include="Models\DAL\Output\Projects.cs" />
     <Compile Include="Models\DAL\Output\ProjectsDeveloper.cs" />

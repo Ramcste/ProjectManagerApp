@@ -117,7 +117,7 @@
 <br />
 
 <div class="row">
-    <p class="form-group">@Html.ActionLink("Create New", "Create", new { @class="btncreate"}) </p>
+    @Html.ActionLink(" ", "Create", new { controller = "Logs"}, new { @class = "fa fa-plus-square-o", title = "Create New Log", id = "btncreate" }) 
 
 </div>
 
@@ -157,6 +157,14 @@
 
         $('#tblLogsList').hide();
 
+        $('#btncreate').click(function () {
+
+            $('#divLoader').show();
+            setTimeout(function () {
+
+            }, 1);
+        });
+        
     });
 
 

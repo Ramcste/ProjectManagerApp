@@ -4,11 +4,11 @@ using System.Web.Http;
 using System.Web.Http.Results;
 using Newtonsoft.Json.Linq;
 using ProjectManagerApp.Areas.Admin.Models;
-using ProjectManagerApp.Models;
 using ProjectManagerApp.Models.DAL;
 using ProjectManagerApp.Models.DAL.Input;
-using Projects = ProjectManagerApp.Models.DAL.Output.Projects;
 using ProjectManagerApp.Models.DAL.Output;
+using ProjectManagerApp.Helpers;
+using System.Linq;
 
 namespace ProjectManagerApp.API
 {
@@ -135,7 +135,42 @@ namespace ProjectManagerApp.API
 
                 return Json(logs);
             }
-            
 
+
+
+
+        // for displaying history in group according to date
+
+        [HttpGet]
+        public List<LogListByDate> SearchLog(int developerid,int ? projectid,DateTime? fromdate,DateTime? todate)
+        {
+             List<LogFiltered> Logs = dal.GetDeveloperLogResulSheet(developerid,projectid,fromdate,todate);
+            List<LogFiltered> logs = new List<LogFiltered>();
+
+            List<LogListByDate> log = (from item in Logs
+                            group item by new { item.Date} into g
+                            select new LogListByDate
+                            {
+                                Date = g.Key.Date,
+                                LogFilteredList = (from p in Logs
+                                         where p.Date == g.Key.Date
+                                         select new LogFiltered
+                                         {
+                                             Description = p.Description,
+                                             Id = p.Id,
+                                             ProjectId = p.ProjectId,
+                                             Name=p.Name,
+                                             WorkStartTime = p.WorkStartTime,
+                                             WorkEndTime = p.WorkEndTime,
+                                             Duration = p.Duration,
+                                             Date=p.Date,
+
+                                         }).ToList<LogFiltered>()
+
+                            }).ToList<LogListByDate>();
+
+            return log;
         }
+
+    }
     }

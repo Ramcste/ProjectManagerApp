@@ -67,7 +67,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>02/08/2016 12:31:45</publishTime>
     </File>
     <File Include="Areas/Admin/Views/AspNetUsers/Index.cshtml">
-      <publishTime>02/08/2016 12:24:56</publishTime>
+      <publishTime>02/09/2016 16:46:33</publishTime>
     </File>
     <File Include="Areas/Admin/Views/AspNetUsers/_AspNetUsersList.cshtml">
       <publishTime>02/08/2016 16:33:56</publishTime>
@@ -88,7 +88,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>02/08/2016 12:13:38</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Logs/Index.cshtml">
-      <publishTime>02/08/2016 12:12:31</publishTime>
+      <publishTime>02/09/2016 16:56:11</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Logs/_LogList.cshtml">
       <publishTime>02/08/2016 17:47:06</publishTime>
@@ -112,7 +112,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>02/08/2016 11:52:48</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Projects/Index.cshtml">
-      <publishTime>02/08/2016 11:59:35</publishTime>
+      <publishTime>02/09/2016 16:49:31</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Projects/_ProjectsList.cshtml">
       <publishTime>02/08/2016 16:36:19</publishTime>
@@ -211,7 +211,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/27/2015 10:20:35</publishTime>
     </File>
     <File Include="bin/ProjectManagerApp.dll">
-      <publishTime>02/08/2016 17:35:56</publishTime>
+      <publishTime>02/09/2016 16:04:27</publishTime>
     </File>
     <File Include="bin/roslyn/csc.exe">
       <publishTime>11/27/2015 10:20:36</publishTime>
@@ -1009,7 +1009,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>02/08/2016 16:25:01</publishTime>
     </File>
     <File Include="Views/Home/Logshistory.cshtml">
-      <publishTime>02/08/2016 16:24:56</publishTime>
+      <publishTime>02/09/2016 14:34:09</publishTime>
     </File>
     <File Include="Views/Home/UsersEdit.cshtml">
       <publishTime>02/08/2016 12:41:29</publishTime>
@@ -1018,7 +1018,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>01/19/2016 12:52:51</publishTime>
     </File>
     <File Include="Views/Home/_DeveloperLogList.cshtml">
-      <publishTime>02/08/2016 14:07:06</publishTime>
+      <publishTime>02/09/2016 15:23:12</publishTime>
     </File>
     <File Include="Views/Home/_TodaysDeveloperLog.cshtml">
       <publishTime>02/08/2016 14:32:07</publishTime>
