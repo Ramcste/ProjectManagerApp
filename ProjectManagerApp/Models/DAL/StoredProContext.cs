@@ -176,7 +176,6 @@ namespace ProjectManagerApp.Models.DAL
         public StoredProc<ProjectsDeveloperList> ProjectsDeveloperFilterResultSheet { get; set; }
 
 
-
         public StoredProContext()
         {
             this.InitializeStoredProcs();

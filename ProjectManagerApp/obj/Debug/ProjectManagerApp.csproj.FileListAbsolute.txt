@@ -82,3 +82,4 @@ E:\Workspace\ProjectManagerApp\ProjectManagerApp\obj\Debug\ProjectManagerApp.Mig
 E:\Workspace\ProjectManagerApp\ProjectManagerApp\obj\Debug\ProjectManagerApp.csproj.GenerateResource.Cache
 E:\Workspace\ProjectManagerApp\ProjectManagerApp\obj\Debug\ProjectManagerApp.dll
 E:\Workspace\ProjectManagerApp\ProjectManagerApp\obj\Debug\ProjectManagerApp.pdb
+E:\Workspace\ProjectManagerApp\ProjectManagerApp\obj\Debug\ProjectManagerApp.csprojResolveAssemblyReference.cache

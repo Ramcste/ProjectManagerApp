@@ -45,7 +45,7 @@ namespace ProjectManagerApp.API
         [Route("API/Log/GetLogsHistory")]
         public JsonResult<List<Report>> GetLogsHistory(int id, int? projectid, DateTime? fromdate, DateTime? todate)
         {
-            //int DeveloperId = 1;//(developerid.HasValue) ? developerid.Value : User.Identity.GetUserId<int>();
+           
 
             var reports = dal.GetLogsHistory(id, projectid, fromdate, todate);
             return Json(reports);
@@ -135,9 +135,6 @@ namespace ProjectManagerApp.API
 
                 return Json(logs);
             }
-
-
-
 
         // for displaying history in group according to date
 
