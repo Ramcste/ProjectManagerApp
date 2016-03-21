@@ -57,7 +57,7 @@
 
                         @Html.ActionLink(" ", "Edit", new { controller = "Logs", id = item.Id }, new { @class = "fa fa-edit",title="Edit", id = "btnedit" }) |
                         @Html.ActionLink(" ", "Details", new { controller = "Logs", id = item.Id }, new { @class = "fa fa-list",title="Details", id = "btndetails" }) |
-                        @Html.ActionLink(" ", "Delete", new { controller = "Logs", id = item.Id }, new { @class = "fa fa-trash-o" ,title= "Delete", id = "btndelete"})
+                        @Html.ActionLink(" ", "Delete", new { controller = "Logs", id = item.Id }, new { @class = "fa fa-trash-o",title="Delete", id = "btndelete" })
 
                     </td>
 
@@ -134,6 +134,7 @@
          }, 1);
 
      });
+
      $('#btndelete').click(function () {
          $('#divLoader').show();
          setTimeout(function () {
@@ -141,12 +142,7 @@
          }, 1);
 
      });
-     $('#btncreate').click(function () {
-         $('#divLoader').show();
-         setTimeout(function () {
-         }, 1);
-
-     });
+   
     });
     
    

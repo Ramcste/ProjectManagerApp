@@ -5,15 +5,15 @@
     ViewBag.Title = "Index";
 }
 
-<div id="divLoader" class="modalPopUpBackground loadingCursor">
+<div id="divLoader" class="modalPopUpBackground loadingCursor" style="position:absolute; margin: 300px 500px;">
 
     <img src="~/Images/ajax-loader.gif" />
 
 </div>
 <br />
 <br />
-<h2>Index</h2>
 <br />
+<h2>Logs Index</h2>
 <br />
 <div class="filter">
 
@@ -117,8 +117,8 @@
 <br />
 
 <div class="row">
-    @Html.ActionLink(" ", "Create", new { controller = "Logs"}, new { @class = "fa fa-plus-square-o", title = "Create New Log", id = "btncreate" }) 
-
+ 
+    @Html.ActionLink("Create New Logs", "Create")
 </div>
 
 
@@ -126,7 +126,7 @@
 
 
 
-<h2>@ViewBag.Messsage</h2>
+
 
 <div id="tblLogsList">
 
@@ -182,7 +182,7 @@
     });
 
     $('#searchbutton').click(function () {
-        $('h2').hide();
+       
         $('#tblLogsList').show();
 
     });

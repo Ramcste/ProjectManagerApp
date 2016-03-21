@@ -154,7 +154,7 @@ namespace ProjectManagerApp.Controllers
 
                
             }
-            return RedirectToAction("Logshistory", "Home");
+            return RedirectToAction("Index", "Home");
         }
 
     

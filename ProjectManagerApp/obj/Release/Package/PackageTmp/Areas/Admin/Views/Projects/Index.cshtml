@@ -5,7 +5,7 @@
 }
 
 
-<div id="divLoader" class="modalPopUpBackground loadingCursor" style="display:none; position:absolute;">
+<div id="divLoader" class="modalPopUpBackground loadingCursor" style="position:absolute; margin: 300px 500px;">
     <img src="~/Images/ajax-loader.gif" />
 
 </div>
@@ -70,8 +70,10 @@
    
     <div class="row">
         <p>
-            @Html.ActionLink(" ", "Create", new { controller = "Projects"}, new { @class = "fa fa-plus-square-o", title = "Create New Projects", id = "btncreate" }) 
+       
             
+            @Html.ActionLink("Create New Projects", "Create")
+
         </p>
     </div>
 

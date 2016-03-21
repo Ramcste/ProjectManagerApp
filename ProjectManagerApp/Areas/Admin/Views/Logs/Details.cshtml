@@ -72,6 +72,6 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink(" ", "Edit", new { controller = "Logs", id = Model.Id }, new { @class = "fa fa-edit", title = "Edit" }) |
-    @Html.ActionLink(" ", "Index", new { controller = "Logs" }, new { @class = "fa fa-backward", title = "Back to List" })
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
 </p>

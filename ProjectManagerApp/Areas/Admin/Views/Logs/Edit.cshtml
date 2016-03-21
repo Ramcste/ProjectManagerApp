@@ -15,9 +15,7 @@
     @Html.Partial("_UpdateLog")
 </div>
 
-<div>
-    @Html.ActionLink(" ", "Index", new { controller = "Logs" }, new { @class = "fa fa-backward", title = "Back to List" })
-</div>
+<div>  @Html.ActionLink("Back to List", "Index")</div>
 
 <script>
     $('#dropdown').attr("disabled", "disabled").parent().addClass("state-disabled");

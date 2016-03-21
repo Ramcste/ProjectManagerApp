@@ -55,43 +55,43 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>01/19/2016 17:46:41</publishTime>
     </File>
     <File Include="Areas/Admin/Views/AspNetUsers/Create.cshtml">
-      <publishTime>02/08/2016 12:29:53</publishTime>
+      <publishTime>02/17/2016 11:35:00</publishTime>
     </File>
     <File Include="Areas/Admin/Views/AspNetUsers/Delete.cshtml">
-      <publishTime>02/08/2016 12:30:17</publishTime>
+      <publishTime>02/17/2016 11:35:10</publishTime>
     </File>
     <File Include="Areas/Admin/Views/AspNetUsers/Details.cshtml">
-      <publishTime>02/08/2016 12:31:11</publishTime>
+      <publishTime>02/17/2016 11:34:35</publishTime>
     </File>
     <File Include="Areas/Admin/Views/AspNetUsers/Edit.cshtml">
-      <publishTime>02/08/2016 12:31:45</publishTime>
+      <publishTime>02/17/2016 11:35:19</publishTime>
     </File>
     <File Include="Areas/Admin/Views/AspNetUsers/Index.cshtml">
-      <publishTime>02/09/2016 16:46:33</publishTime>
+      <publishTime>02/17/2016 11:58:26</publishTime>
     </File>
     <File Include="Areas/Admin/Views/AspNetUsers/_AspNetUsersList.cshtml">
-      <publishTime>02/08/2016 16:33:56</publishTime>
+      <publishTime>02/17/2016 12:39:22</publishTime>
     </File>
     <File Include="Areas/Admin/Views/AspNetUsers/_UpdateAspNetUsers.cshtml">
       <publishTime>02/08/2016 12:29:12</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Logs/Create.cshtml">
-      <publishTime>02/08/2016 12:15:10</publishTime>
+      <publishTime>02/17/2016 11:36:47</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Logs/Delete.cshtml">
-      <publishTime>02/08/2016 17:47:31</publishTime>
+      <publishTime>02/17/2016 11:48:40</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Logs/Details.cshtml">
-      <publishTime>02/08/2016 17:47:52</publishTime>
+      <publishTime>02/17/2016 11:34:26</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Logs/Edit.cshtml">
-      <publishTime>02/08/2016 12:13:38</publishTime>
+      <publishTime>02/17/2016 11:36:25</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Logs/Index.cshtml">
-      <publishTime>02/09/2016 16:56:11</publishTime>
+      <publishTime>02/17/2016 11:56:46</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Logs/_LogList.cshtml">
-      <publishTime>02/11/2016 10:58:01</publishTime>
+      <publishTime>02/17/2016 12:50:54</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Logs/_UpdateLog.cshtml">
       <publishTime>02/08/2016 17:46:35</publishTime>
@@ -100,19 +100,19 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>01/13/2016 16:21:10</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Projects/Create.cshtml">
-      <publishTime>02/08/2016 12:00:26</publishTime>
+      <publishTime>02/17/2016 11:37:41</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Projects/Delete.cshtml">
-      <publishTime>02/08/2016 11:58:54</publishTime>
+      <publishTime>02/17/2016 12:34:10</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Projects/Details.cshtml">
-      <publishTime>02/08/2016 11:53:56</publishTime>
+      <publishTime>02/17/2016 11:34:09</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Projects/Edit.cshtml">
-      <publishTime>02/08/2016 11:52:48</publishTime>
+      <publishTime>02/17/2016 11:37:21</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Projects/Index.cshtml">
-      <publishTime>02/09/2016 16:49:31</publishTime>
+      <publishTime>02/17/2016 11:37:14</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Projects/_ProjectsList.cshtml">
       <publishTime>02/08/2016 16:36:19</publishTime>
@@ -211,7 +211,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/27/2015 10:20:35</publishTime>
     </File>
     <File Include="bin/ProjectManagerApp.dll">
-      <publishTime>02/11/2016 10:58:54</publishTime>
+      <publishTime>03/21/2016 18:08:42</publishTime>
     </File>
     <File Include="bin/roslyn/csc.exe">
       <publishTime>11/27/2015 10:20:36</publishTime>
@@ -970,16 +970,16 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/27/2015 10:20:30</publishTime>
     </File>
     <File Include="Views/Account/ForgotPassword.cshtml">
-      <publishTime>11/27/2015 10:20:30</publishTime>
+      <publishTime>03/21/2016 15:36:35</publishTime>
     </File>
     <File Include="Views/Account/ForgotPasswordConfirmation.cshtml">
-      <publishTime>11/27/2015 10:20:30</publishTime>
+      <publishTime>03/21/2016 15:36:26</publishTime>
     </File>
     <File Include="Views/Account/Info.cshtml">
       <publishTime>01/29/2016 12:55:50</publishTime>
     </File>
     <File Include="Views/Account/Login.cshtml">
-      <publishTime>01/27/2016 22:24:48</publishTime>
+      <publishTime>03/21/2016 15:20:03</publishTime>
     </File>
     <File Include="Views/Account/Register.cshtml">
       <publishTime>01/25/2016 17:11:44</publishTime>
@@ -1009,10 +1009,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>02/08/2016 16:25:01</publishTime>
     </File>
     <File Include="Views/Home/Logshistory.cshtml">
-      <publishTime>02/09/2016 14:34:09</publishTime>
+      <publishTime>02/17/2016 12:28:52</publishTime>
     </File>
     <File Include="Views/Home/UsersEdit.cshtml">
-      <publishTime>02/08/2016 12:41:29</publishTime>
+      <publishTime>02/17/2016 12:22:46</publishTime>
     </File>
     <File Include="Views/Home/WelcomePage.cshtml">
       <publishTime>01/19/2016 12:52:51</publishTime>
@@ -1021,7 +1021,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>02/11/2016 10:57:33</publishTime>
     </File>
     <File Include="Views/Home/_TodaysDeveloperLog.cshtml">
-      <publishTime>02/11/2016 10:57:48</publishTime>
+      <publishTime>02/19/2016 15:13:07</publishTime>
     </File>
     <File Include="Views/Manage/AddPhoneNumber.cshtml">
       <publishTime>11/27/2015 10:20:31</publishTime>

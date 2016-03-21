@@ -144,6 +144,6 @@
 </div>
 <br />
 <p>
-    @Html.ActionLink(" ", "Index", new { controller = "AspNetUsers",id=Model.Id }, new { @class = "fa fa-edit", title = "Back to List" })|
-    @Html.ActionLink(" ", "Index", new { controller = "AspNetUsers" }, new { @class = "fa fa-backward", title = "Back to List" })
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
 </p>
